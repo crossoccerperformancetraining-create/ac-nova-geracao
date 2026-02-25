@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema AC Nova Geração - Definitivo</title>
+    <title>Sistema Premium Nuvem - AC Nova Geração</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -73,11 +73,9 @@
         .atleta-info { display: flex; align-items: center; gap: 10px; }
         .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); background: #eee; }
 
-        /* MODAL */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; }
         .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 500px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
         .close-modal { position: absolute; right: 15px; top: 10px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
-        .perfil-header { border-bottom: 2px solid var(--dourado); padding-bottom: 15px; margin-bottom: 15px; }
         .perfil-foto { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--azul-escuro); object-fit: cover; margin: auto; display: block; background: #eee; }
         .perfil-stats { display: flex; justify-content: space-around; background: #f4f4f9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
         .radar-container { width: 100%; max-width: 320px; margin: auto; margin-bottom: 20px; }
@@ -86,6 +84,9 @@
         .historico-table { width: 100%; font-size: 12px; text-align: center; border-collapse: collapse; }
         .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
+
+        /* MENSAGEM DE CONEXÃO COM A NUVEM */
+        #nuvem-status { background: #28a745; color: white; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; }
 
         /* CONFIGURAÇÃO DA IMAGEM OFICIAL DO BOLETIM */
         #relatorio-print-container { display: none; position: fixed; top: -10000px; left: 0; width: 800px; background: white; z-index: -1; }
@@ -104,6 +105,7 @@
     </style>
 </head>
 <body>
+    <div id="nuvem-status"><i class="fa-solid fa-cloud"></i> Conectando ao Banco de Dados da Nuvem...</div>
 
     <div class="header">
         <div class="logo-area">
@@ -111,7 +113,7 @@
             <img id="escudo-topo" src="" class="escudo-img" style="display:none;">
             <div>
                 <h1>AC Nova Geração</h1>
-                <small style="color: #ccc;">Gestão Padrão Ouro</small>
+                <small style="color: #ccc;">Gestão em Nuvem (Firebase)</small>
             </div>
         </div>
     </div>
@@ -123,7 +125,7 @@
         <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
-        <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i> Config / Backup</button>
+        <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i> Configurações</button>
     </div>
 
     <div class="container">
@@ -195,7 +197,7 @@
                     <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3"></textarea></div>
                     
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                        <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar no Histórico</button>
+                        <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar na Nuvem</button>
                         <button class="btn-add" id="btn-pdf" style="background: #007bff; color: white; flex: 1;" onclick="gerarBoletimImagemEZap()"><i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta</button>
                     </div>
                 </div>
@@ -235,22 +237,13 @@
             </div>
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
-                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-cloud-arrow-down"></i> Exportar Dados (Faça Backup!)</h3>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="btn-add" style="background-color: #217346; color: white;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha Excel (.csv)</button>
-                    <button class="btn-add" style="background-color: #007bff; color: white;" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Salvar Arquivo de Backup (.json)</button>
-                </div>
-            </div>
-
-            <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 5px solid #ffc107; margin-bottom: 20px;">
-                <h3 style="margin-top:0; color:#856404;"><i class="fa-solid fa-upload"></i> Importar Backup</h3>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                    <input type="file" id="arquivo_import" accept=".json" style="max-width: 250px; background: white; padding: 5px;">
-                    <button class="btn-add" style="background: #ff8c00; color: white;" onclick="importarBackup()"><i class="fa-solid fa-cloud-arrow-up"></i> Restaurar Dados</button>
-                </div>
+                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-table"></i> Baixar Relatório Financeiro</h3>
+                <button class="btn-add" style="background-color: #217346; color: white;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha Excel (.csv)</button>
             </div>
 
             <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
+                <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
+                <p>Retorna todas as mensalidades para "Pendente" para o próximo mês.</p>
                 <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês (Zerar Pagamentos)</button>
             </div>
         </div>
@@ -278,13 +271,10 @@
             <div class="pdf-header">
                 <div class="circulo-pdf circulo-clube" id="img_letra_clube">AC</div>
                 <img id="img_logo_relatorio" src="" style="width: 70px; height: 70px; object-fit: contain; display:none;">
-                
                 <div class="pdf-title"><h1>AC NOVA GERAÇÃO</h1><h3>Boletim Oficial de Desempenho</h3></div>
-                
                 <div class="circulo-pdf circulo-atleta" id="img_letra_atleta">👤</div>
                 <img id="img_foto_relatorio" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #002244; display:none;">
             </div>
-            
             <div class="pdf-body">
                 <div class="pdf-info">
                     <p><strong>👤 Atleta:</strong> <span id="img_nome"></span></p>
@@ -293,11 +283,8 @@
                     <hr>
                     <p><strong>⚽ Jogo:</strong> Gols: <span id="img_gols" style="color:#000;font-weight:bold;"></span> | Cartões: <span id="img_amar" style="color:#ffc107;font-weight:bold;"></span> 🟨 / <span id="img_verm" style="color:#dc3545;font-weight:bold;"></span> 🟥</p>
                 </div>
-                <div class="pdf-radar">
-                    <canvas id="radarImagem" width="350" height="350"></canvas>
-                </div>
+                <div class="pdf-radar"><canvas id="radarImagem" width="350" height="350"></canvas></div>
             </div>
-            
             <div id="img_historico_box" style="margin-top: 15px;"></div>
             <div class="pdf-feedback"><strong>📝 Parecer Técnico Oficial:</strong><br><span id="img_obs"></span></div>
             <div style="text-align: center; margin-top: 30px; font-size: 16px; color: #888; font-weight: bold; padding-top: 20px; border-top: 2px solid #eee;">
@@ -306,34 +293,91 @@
         </div>
     </div>
 
-    <script>
-        let db = {
-            mensalidades: JSON.parse(localStorage.getItem('sys_mens')) || [], elenco: JSON.parse(localStorage.getItem('sys_elenco')) || [],
-            uniformes: JSON.parse(localStorage.getItem('sys_unif')) || [], jogos: JSON.parse(localStorage.getItem('sys_jogos')) || [],
-            despesas: JSON.parse(localStorage.getItem('sys_desp')) || []
+    <script type="module">
+        // Importa a biblioteca do Firebase direto da nuvem do Google
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // SUA CHAVE DO FIREBASE QUE VOCÊ COPIOU!
+        const firebaseConfig = {
+          apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
+          authDomain: "ac-nova-geracao.firebaseapp.com",
+          databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com",
+          projectId: "ac-nova-geracao",
+          storageBucket: "ac-nova-geracao.firebasestorage.app",
+          messagingSenderId: "409905433868",
+          appId: "1:409905433868:web:a9349a533b591df7310d29"
         };
-        db.elenco.forEach(j => { if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; if(!j.historico) j.historico = []; });
-        db.jogos.forEach(j => { if(j.confirmados === undefined) j.confirmados = 0; if(j.arrecadado === undefined) j.arrecadado = 0; });
 
-        let sys_logo = localStorage.getItem('sys_logo') || ""; 
-        if(sys_logo) { 
-            document.getElementById('escudo-topo').src = sys_logo; 
-            document.getElementById('escudo-topo').style.display = 'block';
-            document.getElementById('topo_letra').style.display = 'none';
-            document.getElementById('cfg_logo').value = sys_logo; 
-        }
+        // Liga o motor da nuvem
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const dbRef = ref(database, 'sistema_ac_dados');
 
+        // Banco de Dados Local (Espelho da Nuvem)
+        let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [] };
+        let sys_logo = "";
         let chartTela = null; let chartModal = null; let chartImagem = null;
 
+        // MAGIA: Puxa os dados da Nuvem em Tempo Real
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Se já tem dados na nuvem, usa eles!
+                db.mensalidades = data.mensalidades || [];
+                db.elenco = data.elenco || [];
+                db.uniformes = data.uniformes || [];
+                db.jogos = data.jogos || [];
+                db.despesas = data.despesas || [];
+                sys_logo = data.sys_logo || "";
+                
+                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
+                setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
+            } else {
+                // Se a nuvem está vazia, copia o que estava no seu celular (Local Storage Antigo) e joga pra nuvem!
+                let antigoMensalidades = JSON.parse(localStorage.getItem('sys_mens'));
+                if (antigoMensalidades) {
+                    db.mensalidades = antigoMensalidades;
+                    db.elenco = JSON.parse(localStorage.getItem('sys_elenco')) || [];
+                    db.uniformes = JSON.parse(localStorage.getItem('sys_unif')) || [];
+                    db.jogos = JSON.parse(localStorage.getItem('sys_jogos')) || [];
+                    db.despesas = JSON.parse(localStorage.getItem('sys_desp')) || [];
+                    sys_logo = localStorage.getItem('sys_logo') || "";
+                    salvarDB(); // Manda pra nuvem agora!
+                }
+            }
+
+            // Garante os formatos para evitar erros
+            db.elenco.forEach(j => { if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; if(!j.historico) j.historico = []; });
+            db.jogos.forEach(j => { if(j.confirmados === undefined) j.confirmados = 0; if(j.arrecadado === undefined) j.arrecadado = 0; });
+
+            if(sys_logo) { 
+                document.getElementById('escudo-topo').src = sys_logo; 
+                document.getElementById('escudo-topo').style.display = 'block';
+                document.getElementById('topo_letra').style.display = 'none';
+                document.getElementById('cfg_logo').value = sys_logo; 
+            }
+            renderizarTudo();
+        });
+
+        // Função que Salva na Nuvem do Google
         function salvarDB() {
-            localStorage.setItem('sys_mens', JSON.stringify(db.mensalidades)); localStorage.setItem('sys_elenco', JSON.stringify(db.elenco));
-            localStorage.setItem('sys_unif', JSON.stringify(db.uniformes)); localStorage.setItem('sys_jogos', JSON.stringify(db.jogos));
-            localStorage.setItem('sys_desp', JSON.stringify(db.despesas)); renderizarTudo();
+            set(dbRef, {
+                mensalidades: db.mensalidades,
+                elenco: db.elenco,
+                uniformes: db.uniformes,
+                jogos: db.jogos,
+                despesas: db.despesas,
+                sys_logo: sys_logo
+            });
         }
 
+        // =========================================================
+        // TODAS AS FUNÇÕES DE USO DO SISTEMA (Amarradas à Janela)
+        // =========================================================
         function formatarMoeda(v) { return `R$ ${parseFloat(v).toFixed(2).replace('.', ',')}`; }
         
-        function openTab(tabName) {
+        window.openTab = function(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active'); event.currentTarget.classList.add('active');
             document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao') ? 'none' : 'block';
@@ -344,7 +388,6 @@
 
         function atualizarAlertasIniciais() {
             let hoje = new Date(); let mesAtual = String(hoje.getMonth() + 1).padStart(2, '0'); let diaAtual = String(hoje.getDate()).padStart(2, '0');
-            
             let nivers = db.elenco.filter(j => { if(!j.nasc || j.nasc === '-') return false; return j.nasc.split('/')[1] === mesAtual; });
             nivers.sort((a, b) => parseInt(a.nasc.split('/')[0]) - parseInt(b.nasc.split('/')[0]));
             let listaNiver = document.getElementById('lista-niver'); listaNiver.innerHTML = '';
@@ -370,36 +413,35 @@
             } else { listaArt.innerHTML = `<div style="font-size:14px; color:#666;">Nenhum gol registrado.</div>`; }
         }
 
-        function addMensalidade() { let n=document.getElementById('m_nome').value; let t=document.getElementById('m_tel').value.replace(/\D/g, ''); let v=document.getElementById('m_venc').value; if(n&&t){db.mensalidades.push({id:Date.now(), nome:n, tel:t, venc:v, pago:false}); document.getElementById('m_nome').value=''; document.getElementById('m_tel').value=''; salvarDB();}else{alert("Preencha nome e Zap!");} }
-        function pagarMensalidade(id) { db.mensalidades.find(m => m.id===id).pago=true; salvarDB(); } function delMensalidade(id) { if(confirm('Excluir?')){db.mensalidades=db.mensalidades.filter(m=>m.id!==id); salvarDB();} }
+        window.addMensalidade = function() { let n=document.getElementById('m_nome').value; let t=document.getElementById('m_tel').value.replace(/\D/g, ''); let v=document.getElementById('m_venc').value; if(n&&t){db.mensalidades.push({id:Date.now(), nome:n, tel:t, venc:v, pago:false}); document.getElementById('m_nome').value=''; document.getElementById('m_tel').value=''; salvarDB();}else{alert("Preencha nome e Zap!");} }
+        window.pagarMensalidade = function(id) { db.mensalidades.find(m => m.id===id).pago=true; salvarDB(); } 
+        window.delMensalidade = function(id) { if(confirm('Excluir?')){db.mensalidades=db.mensalidades.filter(m=>m.id!==id); salvarDB();} }
         
-        function addJogador() { let n=document.getElementById('e_nome').value; let f=document.getElementById('e_foto').value; let c=document.getElementById('e_cat').value; let dn=document.getElementById('e_nasc').value; if(!n) return; db.elenco.push({ id: Date.now(), nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); document.getElementById('e_nome').value = ''; document.getElementById('e_foto').value = ''; salvarDB(); }
-        function addGol(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } function addAmarelo(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } function addVermelho(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } function delJogador(id) { if(confirm('Remover?')) { db.elenco=db.elenco.filter(j=>j.id!==id); salvarDB(); } }
+        window.addJogador = function() { let n=document.getElementById('e_nome').value; let f=document.getElementById('e_foto').value; let c=document.getElementById('e_cat').value; let dn=document.getElementById('e_nasc').value; if(!n) return; db.elenco.push({ id: Date.now(), nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); document.getElementById('e_nome').value = ''; document.getElementById('e_foto').value = ''; salvarDB(); }
+        window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
+        window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
+        window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
+        window.delJogador = function(id) { if(confirm('Remover?')) { db.elenco=db.elenco.filter(j=>j.id!==id); salvarDB(); } }
         
-        function addJogo() { let d=document.getElementById('j_data').value; let a=document.getElementById('j_adv').value; if(d&&a){db.jogos.push({id:Date.now(), data:d.split('-').reverse().join('/'), adv:a, tipo:document.getElementById('j_tipo').value, local:document.getElementById('j_local').value, confirmados: 0, arrecadado: 0}); document.getElementById('j_adv').value=''; salvarDB();} }
-        function addConfirmadoJogo(id) { db.jogos.find(j => j.id===id).confirmados += 1; salvarDB(); } function addTaxaJogo(id) { let v = prompt("Valor da taxa?"); if(v && !isNaN(parseFloat(v.replace(',','.')))) { db.jogos.find(j => j.id===id).arrecadado += parseFloat(v.replace(',','.')); salvarDB(); } } function delJogo(id) { db.jogos=db.jogos.filter(j=>j.id!==id); salvarDB(); }
+        window.addJogo = function() { let d=document.getElementById('j_data').value; let a=document.getElementById('j_adv').value; if(d&&a){db.jogos.push({id:Date.now(), data:d.split('-').reverse().join('/'), adv:a, tipo:document.getElementById('j_tipo').value, local:document.getElementById('j_local').value, confirmados: 0, arrecadado: 0}); document.getElementById('j_adv').value=''; salvarDB();} }
+        window.addConfirmadoJogo = function(id) { db.jogos.find(j => j.id===id).confirmados += 1; salvarDB(); } 
+        window.addTaxaJogo = function(id) { let v = prompt("Valor da taxa?"); if(v && !isNaN(parseFloat(v.replace(',','.')))) { db.jogos.find(j => j.id===id).arrecadado += parseFloat(v.replace(',','.')); salvarDB(); } } 
+        window.delJogo = function(id) { db.jogos=db.jogos.filter(j=>j.id!==id); salvarDB(); }
         
-        function addUniforme() { let n=document.getElementById('u_nome').value; if(n){db.uniformes.push({id:Date.now(), nome:n, tam:document.getElementById('u_tam').value, pago:false}); document.getElementById('u_nome').value=''; salvarDB();} }
-        function pagarUniforme(id) { db.uniformes.find(u=>u.id===id).pago=true; salvarDB(); } function delUniforme(id) { db.uniformes=db.uniformes.filter(u=>u.id!==id); salvarDB(); }
+        window.addUniforme = function() { let n=document.getElementById('u_nome').value; if(n){db.uniformes.push({id:Date.now(), nome:n, tam:document.getElementById('u_tam').value, pago:false}); document.getElementById('u_nome').value=''; salvarDB();} }
+        window.pagarUniforme = function(id) { db.uniformes.find(u=>u.id===id).pago=true; salvarDB(); } 
+        window.delUniforme = function(id) { db.uniformes=db.uniformes.filter(u=>u.id!==id); salvarDB(); }
         
-        function addDespesa() { let d=document.getElementById('d_desc').value; let v=document.getElementById('d_valor').value; if(d&&v){db.despesas.push({id:Date.now(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:document.getElementById('d_cat').value, valor:v}); document.getElementById('d_desc').value=''; document.getElementById('d_valor').value=''; salvarDB();} }
-        function delDespesa(id) { db.despesas=db.despesas.filter(d=>d.id!==id); salvarDB(); }
+        window.addDespesa = function() { let d=document.getElementById('d_desc').value; let v=document.getElementById('d_valor').value; if(d&&v){db.despesas.push({id:Date.now(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:document.getElementById('d_cat').value, valor:v}); document.getElementById('d_desc').value=''; document.getElementById('d_valor').value=''; salvarDB();} }
+        window.delDespesa = function(id) { db.despesas=db.despesas.filter(d=>d.id!==id); salvarDB(); }
         
-        function salvarLogo() { 
+        window.salvarLogo = function() { 
             let n = document.getElementById('cfg_logo').value; 
-            localStorage.setItem('sys_logo', n); 
-            if(n) { 
-                document.getElementById('escudo-topo').src = n; 
-                document.getElementById('escudo-topo').style.display = 'block';
-                document.getElementById('topo_letra').style.display = 'none';
-            } else {
-                document.getElementById('escudo-topo').style.display = 'none';
-                document.getElementById('topo_letra').style.display = 'flex';
-            }
-            sys_logo = n; 
-            alert('Escudo atualizado no sistema!'); 
+            if(n) { document.getElementById('escudo-topo').src = n; document.getElementById('escudo-topo').style.display = 'block'; document.getElementById('topo_letra').style.display = 'none'; } 
+            else { document.getElementById('escudo-topo').style.display = 'none'; document.getElementById('topo_letra').style.display = 'flex'; }
+            sys_logo = n; salvarDB(); alert('Escudo atualizado na Nuvem!'); 
         }
-        function resetarMensalidades() { if(confirm("Zerar pagamentos do mês?")) { db.mensalidades.forEach(m => m.pago = false); salvarDB(); } }
+        window.resetarMensalidades = function() { if(confirm("Zerar pagamentos do mês?")) { db.mensalidades.forEach(m => m.pago = false); salvarDB(); } }
 
         function renderizarTudo() {
             atualizarAlertasIniciais();
@@ -432,11 +474,10 @@
             document.getElementById('tb-despesas').innerHTML = db.despesas.map(d => `<tr><td>${d.data}</td><td>${d.desc}</td><td>${d.cat}</td><td style="color:red; font-weight:bold;">${formatarMoeda(d.valor)}</td><td class="action-btns"><button class="btn-sm btn-del" onclick="delDespesa(${d.id})">X</button></td></tr>`).join('');
         }
 
-        // ================= AVALIAÇÃO E RADAR =================
-        function atualizarSelectAtletas() { let s = document.getElementById('av_atleta'); s.innerHTML = '<option value="">-- Escolha --</option>'; db.elenco.forEach(j => { s.innerHTML += `<option value="${j.id}">${j.nome} (${j.cat})</option>`; }); document.getElementById('av_mes').value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`; }
-        function carregarNotas() { let id = parseInt(document.getElementById('av_atleta').value); if(!id) return; let a = db.elenco.find(j => j.id === id); if(a && a.notas) { document.getElementById('av_fis').value = a.notas.fis||0; document.getElementById('av_chute').value = a.notas.chute||0; document.getElementById('av_passe').value = a.notas.passe||0; document.getElementById('av_coord').value = a.notas.coord||0; document.getElementById('av_cab').value = a.notas.cab||0; document.getElementById('av_disc').value = a.notas.disc||0; document.getElementById('av_obs').value = a.notas.obs||''; atualizarRadarTela(); } }
-        function salvarAvaliacao() { let id = parseInt(document.getElementById('av_atleta').value); if(!id) return alert("Selecione!"); let a = db.elenco.find(j => j.id === id); let m = document.getElementById('av_mes').value; let nn = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value, obs: document.getElementById('av_obs').value }; a.notas = nn; if(!a.historico) a.historico = []; let i = a.historico.findIndex(h => h.mes === m); if(i >= 0) { a.historico[i] = { mes: m, notas: nn }; } else { a.historico.push({ mes: m, notas: nn }); } salvarDB(); alert("Salvo no Histórico!"); atualizarRadarTela(); }
-        function gerarFeedbackIA() { let n = { "Físico": +document.getElementById('av_fis').value, "Finalização": +document.getElementById('av_chute').value, "Passe": +document.getElementById('av_passe').value, "Tática": +document.getElementById('av_coord').value, "Cabeceio": +document.getElementById('av_cab').value, "Disciplina": +document.getElementById('av_disc').value }; let max = Object.keys(n).reduce((a, b) => n[a] > n[b] ? a : b); let min = Object.keys(n).reduce((a, b) => n[a] < n[b] ? a : b); let feed = `O atleta tem grande capacidade em ${max}. Nosso foco nos próximos treinos será evoluir especificamente a área de ${min}. A Nova Geração é Nossa!`; if(n[max] === 0 && n[min] === 0) feed = "Preencha as notas primeiro."; document.getElementById('av_obs').value = feed; }
+        window.atualizarSelectAtletas = function() { let s = document.getElementById('av_atleta'); s.innerHTML = '<option value="">-- Escolha --</option>'; db.elenco.forEach(j => { s.innerHTML += `<option value="${j.id}">${j.nome} (${j.cat})</option>`; }); document.getElementById('av_mes').value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`; }
+        window.carregarNotas = function() { let id = parseInt(document.getElementById('av_atleta').value); if(!id) return; let a = db.elenco.find(j => j.id === id); if(a && a.notas) { document.getElementById('av_fis').value = a.notas.fis||0; document.getElementById('av_chute').value = a.notas.chute||0; document.getElementById('av_passe').value = a.notas.passe||0; document.getElementById('av_coord').value = a.notas.coord||0; document.getElementById('av_cab').value = a.notas.cab||0; document.getElementById('av_disc').value = a.notas.disc||0; document.getElementById('av_obs').value = a.notas.obs||''; atualizarRadarTela(); } }
+        window.salvarAvaliacao = function() { let id = parseInt(document.getElementById('av_atleta').value); if(!id) return alert("Selecione!"); let a = db.elenco.find(j => j.id === id); let m = document.getElementById('av_mes').value; let nn = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value, obs: document.getElementById('av_obs').value }; a.notas = nn; if(!a.historico) a.historico = []; let i = a.historico.findIndex(h => h.mes === m); if(i >= 0) { a.historico[i] = { mes: m, notas: nn }; } else { a.historico.push({ mes: m, notas: nn }); } salvarDB(); alert("Salvo na Nuvem!"); atualizarRadarTela(); }
+        window.gerarFeedbackIA = function() { let n = { "Físico": +document.getElementById('av_fis').value, "Finalização": +document.getElementById('av_chute').value, "Passe": +document.getElementById('av_passe').value, "Tática": +document.getElementById('av_coord').value, "Cabeceio": +document.getElementById('av_cab').value, "Disciplina": +document.getElementById('av_disc').value }; let max = Object.keys(n).reduce((a, b) => n[a] > n[b] ? a : b); let min = Object.keys(n).reduce((a, b) => n[a] < n[b] ? a : b); let feed = `O atleta tem grande capacidade em ${max}. Nosso foco nos próximos treinos será evoluir especificamente a área de ${min}. A Nova Geração é Nossa!`; if(n[max] === 0 && n[min] === 0) feed = "Preencha as notas primeiro."; document.getElementById('av_obs').value = feed; }
 
         function criarGraficoRadar(canvasId, notasAtuais, historicoArray, chartInstance) {
             let ctx = document.getElementById(canvasId).getContext('2d'); if(chartInstance) chartInstance.destroy(); 
@@ -448,7 +489,7 @@
             }
             return new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: dFinal }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { stepSize: 2 } } }, plugins: { legend: { position: 'bottom' } }, animation: false } });
         }
-        function atualizarRadarTela() { let id = parseInt(document.getElementById('av_atleta').value); let a = db.elenco.find(j => j.id === id); let d = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value }; chartTela = criarGraficoRadar('radarTela', d, (a ? a.historico : []), chartTela); }
+        window.atualizarRadarTela = function() { let id = parseInt(document.getElementById('av_atleta').value); let a = db.elenco.find(j => j.id === id); let d = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value }; chartTela = criarGraficoRadar('radarTela', d, (a ? a.historico : []), chartTela); }
 
         function gerarTabelaEvolucaoHTML(hArr) {
             if(!hArr || hArr.length === 0) return `<p style="font-size:13px; color:#666; text-align:center;">Nenhuma avaliação salva.</p>`;
@@ -457,7 +498,7 @@
             return ht + `</table>`;
         }
 
-        function abrirPerfil(id) {
+        window.abrirPerfil = function(id) {
             let a = db.elenco.find(j => j.id === id);
             document.getElementById('perf_letra').innerText = a.nome.charAt(0).toUpperCase();
             document.getElementById('perf_nome').innerText = a.nome; document.getElementById('perf_cat').innerText = "Cat: " + a.cat; document.getElementById('perf_gols').innerText = a.gols; document.getElementById('perf_amar').innerText = a.amarelos; document.getElementById('perf_verm').innerText = a.vermelhos;
@@ -465,41 +506,24 @@
             document.getElementById('modalPerfil').style.display = 'flex'; chartModal = criarGraficoRadar('radarModal', a.notas, a.historico, chartModal);
         }
 
-        // ================= GERAR CARD IMAGEM OFICIAL (COM FOTO/ESCUDO REAIS) =================
-        function gerarBoletimImagemEZap() {
+        window.gerarBoletimImagemEZap = function() {
             let id = parseInt(document.getElementById('av_atleta').value); if(!id) return alert("Selecione um atleta!");
             let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Foto...';
             
             let a = db.elenco.find(j => j.id === id); let mIn = document.getElementById('av_mes').value;
             
-            // Lida com o Escudo no Card
-            if(sys_logo) {
-                document.getElementById('img_logo_relatorio').src = sys_logo;
-                document.getElementById('img_logo_relatorio').style.display = 'block';
-                document.getElementById('img_letra_clube').style.display = 'none';
-            } else {
-                document.getElementById('img_logo_relatorio').style.display = 'none';
-                document.getElementById('img_letra_clube').style.display = 'flex';
-            }
+            if(sys_logo) { document.getElementById('img_logo_relatorio').src = sys_logo; document.getElementById('img_logo_relatorio').style.display = 'block'; document.getElementById('img_letra_clube').style.display = 'none'; } 
+            else { document.getElementById('img_logo_relatorio').style.display = 'none'; document.getElementById('img_letra_clube').style.display = 'flex'; }
 
-            // Lida com a Foto do Atleta no Card
-            if(a.foto && a.foto !== '') {
-                document.getElementById('img_foto_relatorio').src = a.foto;
-                document.getElementById('img_foto_relatorio').style.display = 'block';
-                document.getElementById('img_letra_atleta').style.display = 'none';
-            } else {
-                document.getElementById('img_foto_relatorio').style.display = 'none';
-                document.getElementById('img_letra_atleta').style.display = 'flex';
-                document.getElementById('img_letra_atleta').innerText = a.nome.charAt(0).toUpperCase();
-            }
+            if(a.foto && a.foto !== '') { document.getElementById('img_foto_relatorio').src = a.foto; document.getElementById('img_foto_relatorio').style.display = 'block'; document.getElementById('img_letra_atleta').style.display = 'none'; } 
+            else { document.getElementById('img_foto_relatorio').style.display = 'none'; document.getElementById('img_letra_atleta').style.display = 'flex'; document.getElementById('img_letra_atleta').innerText = a.nome.charAt(0).toUpperCase(); }
 
             document.getElementById('img_nome').innerText = a.nome; document.getElementById('img_cat').innerText = a.cat; document.getElementById('img_mes').innerText = mIn.split('-').reverse().join('/'); document.getElementById('img_gols').innerText = a.gols; document.getElementById('img_amar').innerText = a.amarelos; document.getElementById('img_verm').innerText = a.vermelhos; document.getElementById('img_obs').innerText = document.getElementById('av_obs').value || '-';
             document.getElementById('img_historico_box').innerHTML = `<h4 style="margin-bottom:5px; color:#002244;">📈 Histórico de Avaliações</h4>` + gerarTabelaEvolucaoHTML(a.historico);
 
             chartImagem = criarGraficoRadar('radarImagem', a.notas, a.historico, chartImagem);
             
-            let container = document.getElementById('relatorio-print-container');
-            container.style.display = 'block';
+            let container = document.getElementById('relatorio-print-container'); container.style.display = 'block';
 
             setTimeout(() => {
                 html2canvas(document.getElementById('relatorio-print'), { scale: 2, useCORS: true }).then(canvas => {
@@ -512,18 +536,12 @@
                     if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
                     else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
                 }).catch(err => {
-                    container.style.display = 'none'; btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("A foto externa usada no cadastro bloqueou a imagem por segurança de internet. Tente remover a foto do atleta.");
+                    container.style.display = 'none'; btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("Erro de bloqueio de imagem (CORS). Tente usar o atleta sem foto.");
                 });
             }, 500); 
         }
 
-        // ================= EXPORTAR / IMPORTAR =================
-        function exportarExcel() { let c = "data:text/csv;charset=utf-8,\uFEFF=== MENSALIDADES ===\nNome;WhatsApp;Vencimento;Status\n"; db.mensalidades.forEach(m => { c += `${m.nome};${m.tel};Dia ${m.venc};${m.pago ? "Pago" : "Pendente"}\n`; }); c += "\n=== ELENCO (JOGADORES) ===\nJogador;Categoria;Data Nasc;Gols;Amarelos;Vermelhos\n"; db.elenco.forEach(e => { c += `${e.nome};${e.cat};${e.nasc};${e.gols};${e.amarelos || 0};${e.vermelhos || 0}\n`; }); let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); }
-        function exportarBackup() { let b={bancoDados:db, logoEquipe:sys_logo}; let l=document.createElement('a'); l.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(b)); l.download='backup_ac.json'; document.body.appendChild(l); l.click(); l.remove(); }
-        function importarBackup() { let f=document.getElementById('arquivo_import').files[0]; if(!f)return; let r=new FileReader(); r.onload=function(e){try{let b=JSON.parse(e.target.result); if(b.bancoDados){ localStorage.setItem('sys_mens',JSON.stringify(b.bancoDados.mensalidades||[])); localStorage.setItem('sys_elenco',JSON.stringify(b.bancoDados.elenco||[])); localStorage.setItem('sys_unif',JSON.stringify(b.bancoDados.uniformes||[])); localStorage.setItem('sys_jogos',JSON.stringify(b.bancoDados.jogos||[])); localStorage.setItem('sys_desp',JSON.stringify(b.bancoDados.despesas||[])); if(b.logoEquipe)localStorage.setItem('sys_logo',b.logoEquipe); alert("Sucesso! Os dados foram restaurados."); location.reload(); }}catch(err){alert("Erro ao ler o arquivo de backup.");}}; r.readAsText(f); }
-
-        renderizarTudo();
+        window.exportarExcel = function() { let c = "data:text/csv;charset=utf-8,\uFEFF=== MENSALIDADES ===\nNome;WhatsApp;Vencimento;Status\n"; db.mensalidades.forEach(m => { c += `${m.nome};${m.tel};Dia ${m.venc};${m.pago ? "Pago" : "Pendente"}\n`; }); c += "\n=== ELENCO (JOGADORES) ===\nJogador;Categoria;Data Nasc;Gols;Amarelos;Vermelhos\n"; db.elenco.forEach(e => { c += `${e.nome};${e.cat};${e.nasc};${e.gols};${e.amarelos || 0};${e.vermelhos || 0}\n`; }); let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); }
     </script>
 </body>
 </html>
-
