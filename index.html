@@ -27,6 +27,7 @@
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
+        .tab-btn.settings { background-color: #444; color: white; }
 
         .container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; overflow-x: auto; }
         .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
@@ -84,7 +85,9 @@
         .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-atrasado { background-color: #dc3545; } .badge-bolsa { background-color: #17a2b8; }
         .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
         
-        .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
+        .atleta-info { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); background: #eee; }
+        .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; }
         .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
@@ -109,6 +112,9 @@
         .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
 
+        /* Ocultar Valores CSS */
+        .blurred-text { filter: blur(5px); user-select: none; color: transparent; text-shadow: 0 0 8px #000; }
+
         /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
         #relatorio-print-container { position: absolute; left: -9999px; top: -9999px; width: 800px; background: white; z-index: -100; opacity: 0; pointer-events: none;}
         #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
@@ -126,7 +132,7 @@
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
 
     <div class="header">
         <div class="logo-area">
@@ -148,7 +154,8 @@
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
         <button class="tab-btn" onclick="openTab('patrocinadores')"><i class="fa-solid fa-handshake"></i> Patrocínios</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
-        <button class="tab-btn highlight" onclick="openTab('inscricao')"><i class="fa-solid fa-user-plus"></i> Inscrição Online</button>
+        <button class="tab-btn highlight" onclick="openTab('relatorios')"><i class="fa-solid fa-print"></i> Relatórios</button>
+        <button class="tab-btn" onclick="openTab('inscricao')"><i class="fa-solid fa-user-plus"></i> Ficha Online</button>
         <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
     </div>
 
@@ -190,9 +197,9 @@
                 <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
                 <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
                     <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista">Bolsista (Isento)</label>
+                    <label for="m_bolsista" style="margin-bottom:0;">Bolsista</label>
                 </div>
-                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
@@ -206,21 +213,17 @@
                 <input type="hidden" id="e_id">
                 <div class="form-group" style="flex: 2;"><label>Nome do Atleta</label><input type="text" id="e_nome"></div>
                 <div class="form-group" style="flex: 2;">
-                    <label>Foto do Atleta (Opcional)</label>
+                    <label>Foto do Atleta (URL ou Arquivo)</label>
                     <div style="display: flex; gap: 5px;">
-                        <input type="hidden" id="e_foto_url">
-                        <div class="upload-btn-wrapper" style="margin-top: 0; width: 100%;">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px; width: 100%;"><i class="fa-solid fa-camera"></i> Escolher Foto do Celular</button>
-                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url')" />
+                        <input type="url" id="e_foto_url" placeholder="Link da foto..." style="flex: 1;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Arquivo</button>
+                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url', null)" />
                         </div>
                     </div>
                 </div>
                 <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
                 <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
-                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
-                    <input type="checkbox" id="e_bolsista">
-                    <label for="e_bolsista">Bolsista</label>
-                </div>
                 <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
@@ -283,7 +286,7 @@
                 <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
                 <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
                 <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
-                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar / Salvar</button>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
                 <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
@@ -323,7 +326,7 @@
                 <div class="form-group" style="flex: 2;"><label>Descrição</label><input type="text" id="d_desc" placeholder="Ex: Arbitragem, Água..."></div>
                 <div class="form-group"><label>Cat.</label><select id="d_cat"><option>Professores</option><option>Logística</option><option>Materiais</option><option>Arbitragem</option><option>Transporte</option><option>Outros</option></select></div>
                 <div class="form-group"><label>Valor (R$)</label><input type="number" id="d_valor" step="0.01"></div>
-                <button class="btn-add" id="btn-d-salvar" onclick="saveDespesa()"><i class="fa-solid fa-file-invoice-dollar"></i> Salvar</button>
+                <button class="btn-add" id="btn-d-salvar" onclick="saveDespesa()"><i class="fa-solid fa-file-invoice-dollar"></i> Lançar</button>
                 <button class="btn-cancel" id="btn-d-cancel" style="display:none;" onclick="resetFormD()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Descrição</th><th>Cat.</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="tb-despesas"></tbody></table></div>
@@ -371,7 +374,7 @@
                     </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Foto do Aluno(a) para carteirinha <span style="font-weight: normal; color: #888;">(Opcional - Escolha do Celular)</span></label>
+                    <label>Foto do Aluno(a) para carteirinha <span style="font-weight: normal; color: #888;">(Opcional)</span></label>
                     <div style="display: flex; gap: 10px;">
                         <input type="hidden" id="pub_foto_url">
                         <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
@@ -383,6 +386,7 @@
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
                     <select id="pub_camisa">
+                        <option value="" disabled selected>Selecione...</option>
                         <option value="10">Tamanho 10</option>
                         <option value="12">Tamanho 12</option>
                         <option value="14">Tamanho 14</option>
@@ -399,6 +403,7 @@
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Turno Escolar <span class="required">*</span></label>
                     <select id="pub_turno">
+                        <option value="" disabled selected>Selecione...</option>
                         <option value="Manhã">Manhã</option>
                         <option value="Tarde">Tarde</option>
                     </select>
@@ -412,6 +417,7 @@
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Grau de Parentesco <span class="required">*</span></label>
                     <select id="pub_parentesco">
+                        <option value="" disabled selected>Selecione...</option>
                         <option value="Pai">Pai</option>
                         <option value="Mãe">Mãe</option>
                         <option value="Outro">Outro</option>
@@ -419,7 +425,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
+                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Endereço Completo <span class="required">*</span></label>
@@ -435,13 +441,13 @@
                         <input type="hidden" id="pub_atestado_url">
                         <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
                             <button class="btn-add" id="btn-pub-atestado" style="background-color: #6c757d; font-size: 14px; width: 100%;"><i class="fa-solid fa-paperclip"></i> Anexar Foto do Atestado</button>
-                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_atestado_url', 'btn-pub-atestado')" />
+                            <input type="file" accept="image/*,.pdf" onchange="handleImageCompression(event, 'pub_atestado_url', 'btn-pub-atestado')" />
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
-                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
+                    <input type="checkbox" id="pub_auth_med">
                     <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
                 </div>
 
@@ -455,13 +461,21 @@
                 </div>
                 
                 <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
-                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
+                    <input type="checkbox" id="pub_auth_esc">
                     <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos. <span class="required">*</span></label>
+                </div>
+
+                <div class="form-group radio-group" style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 13px;">Participa do grupo oficial do WhatsApp? <span class="required">*</span></label>
+                    <input type="radio" id="wppSim" name="wppGroup" value="Sim">
+                    <label for="wppSim">Sim, já estou no grupo.</label><br>
+                    <input type="radio" id="wppNao" name="wppGroup" value="Não">
+                    <label for="wppNao">Não. (<a href="#" style="color: blue; text-decoration: underline;">Clique aqui para entrar</a>)</label>
                 </div>
                 
                 <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
-                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
-                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+                    <input type="checkbox" id="pub_auth_final">
+                    <label for="pub_auth_final">Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
                 </div>
                 
                 <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
@@ -492,7 +506,7 @@
             <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
                 <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
                 <p>Retorna todas as mensalidades e patrocínios para "Pendente" para iniciar um novo mês de cobrança (ignora Bolsistas).</p>
-                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês (Zerar Pagamentos)</button>
+                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês</button>
             </div>
         </div>
     </div> 
@@ -530,30 +544,34 @@
             </div>
             <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
                 <button class="btn-add" style="flex: 1; background-color: #28a745;" onclick="salvarConvocacao()"><i class="fa-solid fa-check"></i> Salvar Alterações</button>
-                <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarConvocacaoWpp()"><i class="fa-brands fa-whatsapp"></i> Enviar no Grupo</button>
+                <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarConvocacaoWpp()"><i class="fa-brands fa-whatsapp"></i> Convocar no Grupo</button>
             </div>
         </div>
     </div>
 
     <div id="modalPerfil" class="modal">
-        <div class="modal-content" id="modal-box">
+        <div class="modal-content" id="modal-box" style="max-width: 600px;">
             <span class="close-modal" onclick="document.getElementById('modalPerfil').style.display='none'">&times;</span>
             <div class="perfil-header" style="display: flex; flex-direction: column; align-items: center;">
                 <img id="perf_foto" src="" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; display: none; margin-bottom: 10px; border: 4px solid var(--azul-escuro);">
                 <div class="circulo-pdf circulo-atleta" style="margin-bottom:10px;" id="perf_letra">👤</div>
-                <h2 id="perf_nome" style="margin: 10px 0; color: var(--azul-escuro);"></h2>
+                <h2 id="perf_nome" style="margin: 10px 0 5px 0; color: var(--azul-escuro);"></h2>
                 <span id="perf_cat" class="cat-tag" style="font-size: 14px;"></span>
             </div>
+            
             <div class="perfil-stats" style="display: flex; justify-content: space-around; background: #f4f4f9; padding: 15px; border-radius: 8px; margin: 15px 0; font-weight: bold; text-align: center;">
                 <div>⚽ Gols<br><span id="perf_gols" style="font-size: 24px; color: #002244;">0</span></div>
                 <div>🟨 Amar<br><span id="perf_amar" style="font-size: 24px; color: #ffc107;">0</span></div>
                 <div>🟥 Verm<br><span id="perf_verm" style="font-size: 24px; color: #dc3545;">0</span></div>
             </div>
+
+            <div id="ficha-details" style="margin-top: 15px; line-height: 1.6; font-size: 14px; text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--azul-escuro);">
+                </div>
             
-            <h4 style="margin-bottom: 5px; text-align: center;">Evolução: Atual x 1ª Avaliação</h4>
+            <h4 style="margin-bottom: 5px; text-align: center; margin-top: 20px;">Evolução: Atual x 1ª Avaliação</h4>
             <div class="radar-container"><canvas id="radarModal"></canvas></div>
             <div class="historico-box" id="caixa-historico" style="max-height: 200px; overflow-y: auto;"></div>
-            <button class="btn-add" style="width: 100%; background: #dc3545; color: white; margin-top: 10px;" onclick="document.getElementById('modalPerfil').style.display='none'">Fechar Perfil ❌</button>
+            <button class="btn-add" style="width: 100%; background: #dc3545; color: white; margin-top: 10px;" onclick="document.getElementById('modalPerfil').style.display='none'">Fechar Ficha ❌</button>
         </div>
     </div>
 
@@ -585,7 +603,7 @@
     </div>
 
     <script type="text/javascript">
-        // CONFIGURAÇÃO DO SEU FIREBASE
+        // COLE SUAS CREDENCIAIS DO FIREBASE AQUI PARA SALVAR NA NUVEM!
         const firebaseConfig = {
             apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
             authDomain: "ac-nova-geracao.firebaseapp.com",
@@ -603,6 +621,7 @@
         const dbRef = database.ref('sistema_ac_dados');
 
         let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
+        
         let sys_logo = localStorage.getItem('sys_logo') || "";
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
@@ -617,6 +636,14 @@
                 document.getElementById('main-nav').style.display = 'none';
                 document.getElementById('main-dash').style.display = 'none';
                 openTab('inscricao');
+            } else {
+                 // Recupera dados locais primeiro para não ficar tela em branco
+                let localData = localStorage.getItem('acNovaGeracaoData');
+                if(localData) {
+                    db = JSON.parse(localData);
+                    sincronizarListas();
+                    renderizarTudo();
+                }
             }
         });
 
@@ -624,7 +651,7 @@
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Mescla os dados da nuvem com a estrutura básica
+                // Mescla os dados da nuvem
                 db.mensalidades = data.mensalidades || [];
                 db.elenco = data.elenco || [];
                 db.uniformes = data.uniformes || [];
@@ -632,44 +659,14 @@
                 db.despesas = data.despesas || [];
                 db.patrocinadores = data.patrocinadores || [];
                 db.presencas = data.presencas || [];
+                sys_logo = data.sys_logo || sys_logo;
                 
-                // Sincroniza alunos do elenco que faltam nas mensalidades (Caso o DB tenha desincronizado no passado)
-                let modified = false;
-                db.elenco.forEach(jogador => {
-                    let existeMensalidade = db.mensalidades.find(m => m.id === jogador.id);
-                    if (!existeMensalidade) {
-                        db.mensalidades.push({
-                            id: jogador.id,
-                            nome: jogador.nome,
-                            tel: "", 
-                            venc: "05",
-                            pago: false,
-                            bolsista: false
-                        });
-                        modified = true;
-                    }
-                });
-                
-                if(modified) { salvarDB(); } // Salva na nuvem a correção
+                sincronizarListas(); // Garante que quem ta no elenco ta na mensalidade
                 
                 document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
                 document.getElementById('nuvem-status').style.background = "#28a745";
                 setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
             } 
-
-            // Garante chaves nas listas
-            db.elenco.forEach(j => { 
-                if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; 
-                if(!j.historico) j.historico = []; 
-                if(!j.foto) j.foto = "";
-            });
-            db.jogos.forEach(j => { 
-                if(j.confirmados === undefined) j.confirmados = 0; 
-                if(j.arrecadado === undefined) j.arrecadado = 0; 
-                if(!j.convocados) j.convocados = [];
-                if(!j.presencas_jogo) j.presencas_jogo = [];
-                if(!j.taxas_pagas) j.taxas_pagas = [];
-            });
 
             if(sys_logo) { 
                 document.getElementById('escudo-topo').src = sys_logo; 
@@ -679,7 +676,11 @@
             }
             
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
-            renderizarTudo();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('tab') !== 'inscricao') {
+                renderizarTudo();
+            }
         });
 
         function salvarDB() {
@@ -695,6 +696,47 @@
             }).catch(e => console.error("Erro ao salvar no Firebase:", e));
             
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
+            renderizarTudo();
+        }
+
+        // Função para garantir que os arrays e relações existam sem apagar os antigos
+        function sincronizarListas() {
+            let modified = false;
+            if(db.elenco) {
+                db.elenco.forEach(j => { 
+                    if(!j.notas) { j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; modified = true; }
+                    if(!j.historico) { j.historico = []; modified = true; }
+                    if(j.foto === undefined) { j.foto = ""; modified = true; }
+                    if(j.gols === undefined) { j.gols = 0; modified = true; }
+                    if(j.amarelos === undefined) { j.amarelos = 0; modified = true; }
+                    if(j.vermelhos === undefined) { j.vermelhos = 0; modified = true; }
+                    
+                    // Garante que o jogador está na lista de mensalidades
+                    if(!db.mensalidades) db.mensalidades = [];
+                    let existeMensalidade = db.mensalidades.find(m => m.id === j.id);
+                    if (!existeMensalidade) {
+                        db.mensalidades.push({
+                            id: j.id,
+                            nome: j.nome,
+                            tel: j.telefone || "", 
+                            venc: j.venc || "05",
+                            pago: false,
+                            bolsista: false
+                        });
+                        modified = true;
+                    }
+                });
+            }
+            if(db.jogos) {
+                db.jogos.forEach(j => { 
+                    if(j.confirmados === undefined) { j.confirmados = 0; modified = true; }
+                    if(j.arrecadado === undefined) { j.arrecadado = 0; modified = true; }
+                    if(!j.convocados) { j.convocados = []; modified = true; }
+                    if(!j.presencas_jogo) { j.presencas_jogo = []; modified = true; }
+                    if(!j.taxas_pagas) { j.taxas_pagas = []; modified = true; }
+                });
+            }
+            if(modified) { salvarDB(); }
         }
 
         // =========================================================
@@ -741,13 +783,28 @@
             renderizarTudo(); 
         }
 
-        // Função para redimensionar a imagem antes de salvar (Evita estourar o limite do Firebase)
+        // Converte imagem upada em Base64 comprimida
         window.handleImageCompression = function(event, targetInputId, buttonId) {
             const file = event.target.files[0];
             if (!file) return;
             
-            if(buttonId) document.getElementById(buttonId).innerText = "Carregando...";
+            if(buttonId) document.getElementById(buttonId).innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
 
+            // Se for PDF (apenas para atestado), converte direto
+            if(file.type === "application/pdf") {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetInputId).value = e.target.result;
+                    if(buttonId) {
+                        document.getElementById(buttonId).innerHTML = '<i class="fa-solid fa-check"></i> PDF Anexado!';
+                        document.getElementById(buttonId).style.backgroundColor = "#28a745";
+                    }
+                };
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            // Para imagens, redimensiona
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function (e) {
@@ -755,22 +812,25 @@
                 img.src = e.target.result;
                 img.onload = function () {
                     const canvas = document.createElement("canvas");
-                    const MAX_WIDTH = 400; // Redimensiona para no máximo 400px
+                    const MAX_WIDTH = 300; 
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
                     const ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     
-                    const dataUrl = canvas.toDataURL("image/jpeg", 0.7); // Comprime qualidade para 70%
+                    const dataUrl = canvas.toDataURL("image/jpeg", 0.6); 
                     document.getElementById(targetInputId).value = dataUrl;
-                    if(buttonId) document.getElementById(buttonId).innerHTML = "<i class='fa-solid fa-check'></i> Imagem Carregada!";
+                    if(buttonId) {
+                        document.getElementById(buttonId).innerHTML = '<i class="fa-solid fa-check"></i> Foto Carregada!';
+                        document.getElementById(buttonId).style.backgroundColor = "#28a745";
+                    }
                 };
             };
         }
 
         // =========================================================
-        // INSCRIÇÃO ONLINE
+        // INSCRIÇÃO ONLINE (Substituindo Google Forms)
         // =========================================================
         window.enviarInscricao = function() {
             let authMed = document.getElementById('pub_auth_med').checked;
@@ -778,36 +838,61 @@
             let authFinal = document.getElementById('pub_auth_final').checked;
 
             if(!authMed || !authEsc || !authFinal) {
-                alert("Você precisa concordar com todos os termos e autorizações para concluir a inscrição.");
+                alert("Você precisa concordar com todos os termos (caixinhas no final) para concluir a inscrição.");
                 return;
             }
 
             let nome = document.getElementById('pub_nome').value;
             let nasc = document.getElementById('pub_nasc').value;
             let cat = document.getElementById('pub_cat').value;
+            let camisa = document.getElementById('pub_camisa').value;
+            let escola = document.getElementById('pub_escola').value;
+            let turno = document.getElementById('pub_turno').value;
             let resp = document.getElementById('pub_resp_nome').value;
+            let parentesco = document.getElementById('pub_parentesco').value;
             let tel = document.getElementById('pub_tel').value.replace(/\D/g, '');
+            let endereco = document.getElementById('pub_endereco').value;
+            let saude = document.getElementById('pub_saude').value;
             let venc = document.getElementById('pub_venc').value;
             let foto = document.getElementById('pub_foto_url').value;
+            let atestado = document.getElementById('pub_atestado_url').value;
+            
+            let wpp_radios = document.getElementsByName('wppGroup');
+            let wpp_group = "Não respondido";
+            for(let i=0; i<wpp_radios.length; i++){
+                if(wpp_radios[i].checked){ wpp_group = wpp_radios[i].value; break; }
+            }
 
-            if(!nome || !nasc || !resp || !tel) {
-                alert("Por favor, preencha os campos obrigatórios (*).");
+            if(!nome || !nasc || !resp || !tel || !camisa || !escola || !turno || !parentesco || !endereco || !saude) {
+                alert("Por favor, preencha todos os campos obrigatórios (*).");
                 return;
             }
 
             let newId = Date.now().toString();
 
+            if(!db.elenco) db.elenco = [];
             db.elenco.push({ 
                 id: newId, 
                 nome: nome, 
                 foto: foto, 
                 cat: cat, 
                 nasc: nasc.split('-').reverse().join('/'), 
+                camisa: camisa,
+                escola: escola,
+                turno: turno,
+                responsavel: resp,
+                parentesco: parentesco,
+                telefone: tel,
+                endereco: endereco,
+                saude: saude,
+                atestado: atestado,
+                wpp_group: wpp_group,
                 gols: 0, amarelos: 0, vermelhos: 0, 
                 notas: {fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, 
                 historico: [] 
             });
 
+            if(!db.mensalidades) db.mensalidades = [];
             db.mensalidades.push({
                 id: newId,
                 nome: resp + " (Resp. " + nome.split(' ')[0] + ")",
@@ -820,19 +905,15 @@
             salvarDB();
             
             let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
-            msg += `*Atleta:* ${nome}\n`;
-            msg += `*Categoria:* ${cat}\n`;
-            msg += `*Responsável:* ${resp}\n`;
-            msg += `*Telefone:* ${document.getElementById('pub_tel').value}\n`;
+            msg += `*Atleta:* ${nome} (${cat})\n`;
+            msg += `*Responsável:* ${resp} (${parentesco})\n`;
             msg += `*Vencimento Escolhido:* Dia ${venc}\n\n`;
-            msg += `_Ficha preenchida e enviada pelo sistema online._`;
+            msg += `_Sua ficha foi enviada com sucesso para o treinador!_`;
             
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(`https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`, '_blank');
             
-            alert("Inscrição enviada com sucesso! O treinador entrará em contato em breve.");
-            
-            // Limpa o form e recarrega para limpar cache de imagens
-            location.reload();
+            alert("Inscrição enviada com sucesso!");
+            location.reload(); 
         }
 
         window.copiarLinkInscricao = function() {
@@ -854,15 +935,18 @@
 
             if(!n) return alert("Preencha o nome!");
             
+            if(!db.mensalidades) db.mensalidades = [];
+
             if(id) {
                 let m = db.mensalidades.find(x => x.id === id);
                 m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
-                // Atualiza o nome no elenco se o professor mudar aqui
+                // Tenta atualizar no elenco também
                 let e = db.elenco.find(x => x.id === id);
                 if(e && !m.nome.includes("Resp.")) e.nome = n; 
             } else {
                 let newId = Date.now().toString();
                 db.mensalidades.push({id:newId, nome:n, tel:t, venc:v, pago:false, bolsista: bolsista});
+                if(!db.elenco) db.elenco = [];
                 db.elenco.push({id:newId, nome:n, foto:'', cat:'Sub-07', nasc:'', gols:0, amarelos:0, vermelhos:0, notas:{fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, historico:[]});
             }
             resetFormM(); salvarDB();
@@ -909,32 +993,43 @@
             let f=document.getElementById('e_foto_url').value; 
             let c=document.getElementById('e_cat').value; 
             let dn=document.getElementById('e_nasc').value; 
+            let bolsa = document.getElementById('e_bolsista').checked;
             if(!n) return alert("Preencha o nome!"); 
             
+            if(!db.elenco) db.elenco = [];
+
             if(id) {
                 let j = db.elenco.find(x => x.id === id);
                 j.nome = n; j.foto = f; j.cat = c; j.nasc = dn?dn.split('-').reverse().join('/'):'-';
+                let m = db.mensalidades.find(x => x.id === id);
+                if(m) {
+                    if(!m.nome.includes("Resp.")) m.nome = n;
+                    m.bolsista = bolsa;
+                }
             } else {
                 let newId = Date.now().toString();
                 db.elenco.push({ id: newId, nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); 
-                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: false});
+                if(!db.mensalidades) db.mensalidades = [];
+                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: bolsa});
             }
             resetFormE(); salvarDB(); 
         }
         window.editJogador = function(id) {
             let j = db.elenco.find(x => x.id === id);
+            let m = db.mensalidades.find(x => x.id === id);
             document.getElementById('e_id').value = j.id;
             document.getElementById('e_nome').value = j.nome;
             document.getElementById('e_foto_url').value = j.foto || "";
             document.getElementById('e_cat').value = j.cat;
-            document.getElementById('e_nasc').value = j.nasc !== '-' ? j.nasc.split('/').reverse().join('-') : '';
+            document.getElementById('e_nasc').value = j.nasc !== '-' && j.nasc ? j.nasc.split('/').reverse().join('-') : '';
+            document.getElementById('e_bolsista').checked = m ? m.bolsista : false;
             document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
             document.getElementById('btn-e-salvar').classList.add('btn-edit');
             document.getElementById('btn-e-cancel').style.display = 'inline-block';
             window.scrollTo(0,0);
         }
         window.resetFormE = function() {
-            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = '';
+            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = ''; document.getElementById('e_bolsista').checked = false;
             document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-user-plus'></i> Salvar";
             document.getElementById('btn-e-salvar').classList.remove('btn-edit');
             document.getElementById('btn-e-cancel').style.display = 'none';
@@ -943,7 +1038,7 @@
         window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
         window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
         window.delJogador = function(id) { 
-            if(confirm('Remover jogador do elenco?')) { 
+            if(confirm('Remover jogador do elenco e das mensalidades?')) { 
                 db.elenco=db.elenco.filter(j=>j.id!==id); 
                 db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
                 salvarDB(); 
@@ -978,6 +1073,7 @@
             let presentes = [];
             checks.forEach(c => { if(c.checked) presentes.push(c.dataset.id); });
             
+            if(!db.presencas) db.presencas = [];
             let jaExiste = db.presencas.findIndex(p => p.data === data);
             if(jaExiste >= 0) {
                 db.presencas[jaExiste].presentes = presentes;
@@ -998,6 +1094,8 @@
             let s = document.getElementById('p_status').value;
             
             if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
+            
+            if(!db.patrocinadores) db.patrocinadores = [];
 
             if(id) {
                 let p = db.patrocinadores.find(x => x.id === id);
@@ -1038,6 +1136,8 @@
             let l=document.getElementById('j_local').value;
             if(!d || !a) return alert("Preencha data e adversário!");
             
+            if(!db.jogos) db.jogos = [];
+
             if(id) {
                 let j = db.jogos.find(x => x.id === id);
                 j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l;
@@ -1077,18 +1177,20 @@
             if(!j.taxas_pagas) j.taxas_pagas = [];
 
             let tbody = document.getElementById('tb-convocacao');
-            tbody.innerHTML = db.elenco.map(atleta => {
-                let isConv = j.convocados.includes(atleta.id) ? 'checked' : '';
-                let isPres = j.presencas_jogo.includes(atleta.id) ? 'checked' : '';
-                let isPago = j.taxas_pagas.includes(atleta.id) ? 'checked' : '';
-                
-                return `<tr>
-                    <td>${atleta.nome} (${atleta.cat})</td>
-                    <td style="text-align:center;"><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
-                    <td style="text-align:center;"><input type="checkbox" class="chk-presente-jogo" data-id="${atleta.id}" ${isPres} style="width:20px; height:20px;"></td>
-                    <td style="text-align:center;"><input type="checkbox" class="chk-pago-jogo" data-id="${atleta.id}" ${isPago} style="width:20px; height:20px;"></td>
-                </tr>`;
-            }).join('');
+            if(db.elenco){
+                tbody.innerHTML = db.elenco.map(atleta => {
+                    let isConv = j.convocados.includes(atleta.id) ? 'checked' : '';
+                    let isPres = j.presencas_jogo.includes(atleta.id) ? 'checked' : '';
+                    let isPago = j.taxas_pagas.includes(atleta.id) ? 'checked' : '';
+                    
+                    return `<tr>
+                        <td>${atleta.nome} (${atleta.cat})</td>
+                        <td style="text-align:center;"><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
+                        <td style="text-align:center;"><input type="checkbox" class="chk-presente-jogo" data-id="${atleta.id}" ${isPres} style="width:20px; height:20px;"></td>
+                        <td style="text-align:center;"><input type="checkbox" class="chk-pago-jogo" data-id="${atleta.id}" ${isPago} style="width:20px; height:20px;"></td>
+                    </tr>`;
+                }).join('');
+            }
             
             document.getElementById('modalJogo').style.display = 'flex';
         }
@@ -1157,6 +1259,8 @@
             let t=document.getElementById('u_tam').value;
             if(!n) return alert("Preencha o nome!");
 
+            if(!db.uniformes) db.uniformes = [];
+
             if(id) {
                 let u = db.uniformes.find(x => x.id === id);
                 u.nome = n; u.tam = t;
@@ -1194,6 +1298,8 @@
             let c=document.getElementById('d_cat').value;
             if(!d || isNaN(v)) return alert("Preencha descrição e valor!");
             
+            if(!db.despesas) db.despesas = [];
+
             if(id) {
                 let desp = db.despesas.find(x => x.id === id);
                 desp.desc = d; desp.valor = v; desp.cat = c;
@@ -1316,10 +1422,11 @@
                     let imgHtml = j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>';
                     return `<tr>
                         <td>${imgHtml}</td>
-                        <td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span></td>
-                        <td class="action-btns"><button class="btn-sm btn-gol" onclick="addGol('${j.id}')">+⚽ ${j.gols}</button><button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')">+🟨 ${j.amarelos}</button><button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')">+🟥 ${j.vermelhos}</button></td>
+                        <td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span><br><small>Nasc: ${j.nasc||'-'}</small></td>
+                        <td class="action-btns"><button class="btn-sm btn-gol" onclick="addGol('${j.id}')">+⚽ ${j.gols || 0}</button><button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')">+🟨 ${j.amarelos || 0}</button><button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')">+🟥 ${j.vermelhos || 0}</button></td>
                         <td class="action-btns">
-                        <button class="btn-sm btn-perfil" onclick="abrirPerfil('${j.id}')">Evolução 📈</button> 
+                        <button class="btn-sm btn-perfil" onclick="abrirFicha('${j.id}')"><i class="fa-solid fa-address-card"></i> Ficha</button> 
+                        <button class="btn-sm btn-perfil" onclick="abrirPerfil('${j.id}')"><i class="fa-solid fa-chart-line"></i> Evolução</button> 
                         <button class="btn-sm btn-edit" onclick="editJogador('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
                         <button class="btn-sm btn-del" onclick="delJogador('${j.id}')"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>`
@@ -1351,7 +1458,7 @@
                         <td><span style="font-size:16px; font-weight:bold; color:var(--azul-escuro);">👥 ${j.confirmados||0}</span></td>
                         <td><span style="font-size:16px; font-weight:bold; color:green;" class="${valClass}">${formatarMoeda(j.arrecadado||0)}</span></td>
                         <td class="action-btns">
-                            <button class="btn-sm btn-azul" onclick="gerenciarJogo('${j.id}')"><i class="fa-solid fa-users-gear"></i> Gerenciar</button> 
+                            <button class="btn-sm btn-azul" onclick="gerenciarJogo('${j.id}')"><i class="fa-solid fa-users-gear"></i> Convocar</button> 
                             <button class="btn-sm btn-edit" onclick="editJogo('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
                             <button class="btn-sm btn-del" onclick="delJogo('${j.id}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -1423,34 +1530,39 @@
         }
 
         window.gerarFeedbackIA = function() { 
-            let fis = parseInt(document.getElementById('av_fis').value) || 0;
-            let chu = parseInt(document.getElementById('av_chute').value) || 0;
-            let pas = parseInt(document.getElementById('av_passe').value) || 0;
-            let tat = parseInt(document.getElementById('av_coord').value) || 0;
-            let cab = parseInt(document.getElementById('av_cab').value) || 0;
-            let dis = parseInt(document.getElementById('av_disc').value) || 0;
+            let f = parseInt(document.getElementById('av_fis').value) || 0;
+            let c = parseInt(document.getElementById('av_chute').value) || 0;
+            let p = parseInt(document.getElementById('av_passe').value) || 0;
+            let t = parseInt(document.getElementById('av_coord').value) || 0;
+            let h = parseInt(document.getElementById('av_cab').value) || 0;
+            let d = parseInt(document.getElementById('av_disc').value) || 0;
             
-            let n = { "Físico": fis, "Finalização": chu, "Passe": pas, "Tática": tat, "Cabeceio": cab, "Disciplina": dis }; 
-            let max = Object.keys(n).reduce((a, b) => n[a] > n[b] ? a : b); 
-            let min = Object.keys(n).reduce((a, b) => n[a] < n[b] ? a : b); 
-            
-            if(n[max] === 0 && n[min] === 0) {
-                 document.getElementById('av_obs').value = "Por favor, preencha as notas de 1 a 10 primeiro para gerar a análise."; 
-                 return;
+            if(f===0 && c===0 && p===0 && t===0 && h===0 && d===0){
+                document.getElementById('av_obs').value = "Por favor, preencha as notas de 1 a 10 antes de gerar a análise.";
+                return;
             }
 
-            let feed = `O atleta tem se destacado na área de ${max}. Nosso foco principal nos próximos treinos será trabalhar exercícios específicos para evoluir a área de ${min}, buscando um desenvolvimento completo. A Nova Geração é Nossa!`; 
+            let notas = { "Físico": f, "Finalização": c, "Passe": p, "Tática": t, "Cabeceio": h, "Disciplina": d }; 
+            let sorted = Object.keys(notas).sort((a,b) => notas[b] - notas[a]);
+            let best = sorted[0];
+            let worst = sorted[sorted.length-1];
+
+            let feedback = `O atleta demonstrou excelente desempenho em ${best}, mostrando grande potencial nessa área. `;
+            feedback += `Por outro lado, notamos que há espaço para evolução em ${worst}. Focaremos nossos próximos treinamentos para aprimorar esse fundamento. `;
             
-            if (dis < 5) {
-                feed += `\n\n*Nota: O atleta precisa melhorar o comportamento e a disciplina durante os treinamentos.`;
+            if(d >= 8) {
+                feedback += `Vale destacar o ótimo comportamento e disciplina demonstrados em campo! `;
+            } else if (d < 5) {
+                feedback += `É importante que o atleta tenha mais atenção à disciplina e respeito às orientações da comissão técnica. `;
             }
 
-            document.getElementById('av_obs').value = feed; 
+            feedback += `\n\nContinue se dedicando! A Nova Geração é Nossa! 🦅`;
+            document.getElementById('av_obs').value = feedback; 
         }
 
         window.atualizarRadar = function() {
             let id = document.getElementById('av_atleta').value;
-            let a = db.elenco.find(j => j.id == id);
+            let a = db.elenco.find(j => j.id === id);
             let ctx = document.getElementById('radarTela').getContext('2d');
             if(chartTela) chartTela.destroy();
             
@@ -1475,7 +1587,7 @@
         window.salvarAvaliacao = function() { 
             let id = document.getElementById('av_atleta').value; 
             if(!id) return alert("Selecione um atleta!"); 
-            let a = db.elenco.find(j => j.id == id); 
+            let a = db.elenco.find(j => j.id === id); 
             let m = document.getElementById('av_mes').value; 
             let n = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value, obs: document.getElementById('av_obs').value }; 
             a.notas = n; 
@@ -1493,9 +1605,48 @@
             return ht + `</table>`;
         }
 
+        window.abrirFicha = function(id) {
+            let a = db.elenco.find(j => j.id === id);
+            if(!a) return;
+            
+            let html = `
+                <div style="text-align: center; margin-bottom: 15px;">
+                    ${a.foto ? `<img src="${a.foto}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--azul-escuro);">` : `<div class="circulo-pdf circulo-atleta" style="margin:auto; width: 80px; height: 80px; font-size: 30px;">👤</div>`}
+                </div>
+                <p><strong>Nome:</strong> ${a.nome}</p>
+                <p><strong>Data de Nascimento:</strong> ${a.nasc || '-'}</p>
+                <p><strong>Categoria:</strong> ${a.cat || '-'}</p>
+                <p><strong>Camisa:</strong> ${a.camisa || '-'}</p>
+                <p><strong>Escola:</strong> ${a.escola || '-'} (${a.turno || '-'})</p>
+                <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
+                <p><strong>Responsável:</strong> ${a.responsavel || '-'} (${a.parentesco || '-'})</p>
+                <p><strong>Telefone:</strong> ${a.telefone || '-'}</p>
+                <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
+                <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
+                <p><strong>Condição de Saúde/Alergia:</strong> ${a.saude || 'Não informado'}</p>
+                <p><strong>Atestado Médico:</strong> ${a.atestado ? `<a href="${a.atestado}" target="_blank" style="color:blue; text-decoration:underline;">Ver Atestado</a>` : 'Não enviado'}</p>
+                <p><strong>No Grupo WhatsApp:</strong> ${a.wpp_group || '-'}</p>
+            `;
+            
+            // Reutilizar o modalPerfil para mostrar a Ficha
+            document.getElementById('perf_nome').innerText = "Ficha Cadastral";
+            document.getElementById('perf_cat').innerText = "";
+            document.querySelector('.perfil-stats').style.display = 'none';
+            document.querySelector('.radar-container').style.display = 'none';
+            document.getElementById('perf_foto').style.display = 'none';
+            document.getElementById('perf_letra').style.display = 'none';
+            
+            document.getElementById('caixa-historico').innerHTML = html;
+            document.getElementById('modalPerfil').style.display = 'flex'; 
+        }
+
         window.abrirPerfil = function(id) {
             let a = db.elenco.find(j => j.id === id);
             
+            // Restaura o layout do ModalPerfil
+            document.querySelector('.perfil-stats').style.display = 'flex';
+            document.querySelector('.radar-container').style.display = 'block';
+
             if(a.foto && a.foto !== '') {
                 document.getElementById('perf_foto').src = a.foto;
                 document.getElementById('perf_foto').style.display = 'block';
@@ -1508,9 +1659,9 @@
             
             document.getElementById('perf_nome').innerText = a.nome; 
             document.getElementById('perf_cat').innerText = "Cat: " + a.cat; 
-            document.getElementById('perf_gols').innerText = a.gols; 
-            document.getElementById('perf_amar').innerText = a.amarelos; 
-            document.getElementById('perf_verm').innerText = a.vermelhos;
+            document.getElementById('perf_gols').innerText = a.gols || 0; 
+            document.getElementById('perf_amar').innerText = a.amarelos || 0; 
+            document.getElementById('perf_verm').innerText = a.vermelhos || 0;
             document.getElementById('caixa-historico').innerHTML = `<h5>📈 Histórico de Evolução</h5>` + gerarTabelaEvolucaoHTML(a.historico);
             document.getElementById('modalPerfil').style.display = 'flex'; 
             
@@ -1536,7 +1687,7 @@
             let id = document.getElementById('av_atleta').value; if(!id) return alert("Selecione um atleta!");
             let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Foto...';
             
-            let a = db.elenco.find(j => j.id == id); let mIn = document.getElementById('av_mes').value;
+            let a = db.elenco.find(j => j.id === id); let mIn = document.getElementById('av_mes').value;
             
             if(sys_logo) { document.getElementById('img_logo_relatorio').src = sys_logo; document.getElementById('img_logo_relatorio').style.display = 'block'; document.getElementById('img_letra_clube').style.display = 'none'; } 
             else { document.getElementById('img_logo_relatorio').style.display = 'none'; document.getElementById('img_letra_clube').style.display = 'flex'; }
@@ -1544,7 +1695,7 @@
             if(a.foto && a.foto !== '') { document.getElementById('img_foto_relatorio').src = a.foto; document.getElementById('img_foto_relatorio').style.display = 'block'; document.getElementById('img_letra_atleta').style.display = 'none'; } 
             else { document.getElementById('img_foto_relatorio').style.display = 'none'; document.getElementById('img_letra_atleta').style.display = 'flex'; document.getElementById('img_letra_atleta').innerText = a.nome.charAt(0).toUpperCase(); }
 
-            document.getElementById('img_nome').innerText = a.nome; document.getElementById('img_cat').innerText = a.cat; document.getElementById('img_mes').innerText = mIn.split('-').reverse().join('/'); document.getElementById('img_gols').innerText = a.gols; document.getElementById('img_amar').innerText = a.amarelos; document.getElementById('img_verm').innerText = a.vermelhos; document.getElementById('img_obs').innerText = document.getElementById('av_obs').value || '-';
+            document.getElementById('img_nome').innerText = a.nome; document.getElementById('img_cat').innerText = a.cat; document.getElementById('img_mes').innerText = mIn.split('-').reverse().join('/'); document.getElementById('img_gols').innerText = a.gols || 0; document.getElementById('img_amar').innerText = a.amarelos || 0; document.getElementById('img_verm').innerText = a.vermelhos || 0; document.getElementById('img_obs').innerText = document.getElementById('av_obs').value || '-';
             document.getElementById('img_historico_box').innerHTML = `<h4 style="margin-bottom:5px; color:#002244;">📈 Histórico de Avaliações</h4>` + gerarTabelaEvolucaoHTML(a.historico);
 
             let ctx = document.getElementById('radarImagem').getContext('2d');
@@ -1565,7 +1716,7 @@
                     btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; 
                     
                     let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\n_(A imagem já foi salva na galeria do seu celular. Por favor, anexe a foto clicando no ícone do clipe 📎 ou câmera 📷 aqui na nossa conversa!)_\n\nA Nova Geração é Nossa!`;
-                    let mens = db.mensalidades.find(x => x.nome.toLowerCase().includes(a.nome.split(' ')[0].toLowerCase()));
+                    let mens = db.mensalidades.find(x => x.id === id);
                     if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
                     else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
                 }).catch(err => {
