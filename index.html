@@ -27,6 +27,7 @@
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
+        .tab-btn.settings { background-color: #444; color: white; }
 
         .container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; overflow-x: auto; }
         .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
@@ -52,6 +53,7 @@
         .ranking-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 5px solid #ffc107; }
         .alerta-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .niver-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #333; }
+        .niver-hoje { background: #ff4b82; color: white; border: none; box-shadow: 0 2px 5px rgba(255,75,130,0.4); }
 
         .form-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--dourado); }
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 130px; }
@@ -98,6 +100,7 @@
         .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
 
+        /* MENSAGEM DE CONEXÃO COM A NUVEM */
         #nuvem-status { background: #28a745; color: white; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
 
         /* Formulário Público */
@@ -124,7 +127,7 @@
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
 
     <div class="header">
         <div class="logo-area">
@@ -153,6 +156,17 @@
     <div class="container">
         
         <div id="main-dash">
+            <div class="painel-alertas">
+                <div id="box-aniversarios" class="niver-box">
+                    <div class="alerta-title" style="color: #006064;"><i class="fa-solid fa-cake-candles" style="color: #ff4b82;"></i> Aniversariantes do Mês</div>
+                    <div id="lista-niver"></div>
+                </div>
+                <div class="ranking-box">
+                    <div class="alerta-title" style="color: #856404;"><i class="fa-solid fa-trophy" style="color: #d39e00;"></i> Top 3 Artilheiros</div>
+                    <div id="lista-artilheiros"></div>
+                </div>
+            </div>
+
             <div class="dashboard-header">
                 <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
                 <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
@@ -165,17 +179,6 @@
                 <div class="card bg-previsao"><h3>A Receber (Mês)</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
                 <div class="card bg-despesa"><h3>Saídas</h3><div class="valor money-val" id="dash-despesa">R$ 0,00</div></div>
                 <div class="card bg-saldo"><h3>Saldo em Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
-            </div>
-
-            <div class="painel-alertas">
-                <div id="box-aniversarios" class="niver-box">
-                    <div class="alerta-title" style="color: #006064;"><i class="fa-solid fa-cake-candles" style="color: #ff4b82;"></i> Aniversariantes do Mês</div>
-                    <div id="lista-niver"></div>
-                </div>
-                <div class="ranking-box">
-                    <div class="alerta-title" style="color: #856404;"><i class="fa-solid fa-trophy" style="color: #d39e00;"></i> Top 3 Artilheiros</div>
-                    <div id="lista-artilheiros"></div>
-                </div>
             </div>
         </div>
 
@@ -223,127 +226,8 @@
             </div>
         </div>
 
-        <div id="inscricao" class="tab-content">
-            <div class="public-form-container">
-                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
-                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>. Os dados serão enviados diretamente para o sistema do treinador.</p>
-                
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
-                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Data de Nascimento <span class="required">*</span></label>
-                    <input type="date" id="pub_nasc">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
-                    <select id="pub_cat">
-                        <option value="Sub-07">Sub-07</option>
-                        <option value="Sub-09">Sub-09</option>
-                        <option value="Sub-11">Sub-11</option>
-                        <option value="Sub-13">Sub-13</option>
-                        <option value="Sub-15">Sub-15</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Foto do Aluno(a) para carteirinha <span class="required">*</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="pub_foto_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
-                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Escolher Foto</button>
-                            <input type="file" id="pub_foto_file" accept="image/*" onchange="handleFileUpload(event, 'pub_foto_url')" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
-                    <select id="pub_camisa">
-                        <option value="10">Tamanho 10</option>
-                        <option value="12">Tamanho 12</option>
-                        <option value="14">Tamanho 14</option>
-                        <option value="P">Tamanho P (Adulto)</option>
-                        <option value="M">Tamanho M (Adulto)</option>
-                        <option value="G">Tamanho G (Adulto)</option>
-                        <option value="GG">Tamanho GG (Adulto)</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Escola onde estuda <span class="required">*</span></label>
-                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Turno Escolar <span class="required">*</span></label>
-                    <select id="pub_turno">
-                        <option value="Manhã">Manhã</option>
-                        <option value="Tarde">Tarde</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Responsável <span class="required">*</span></label>
-                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Grau de Parentesco <span class="required">*</span></label>
-                    <select id="pub_parentesco">
-                        <option value="Pai">Pai</option>
-                        <option value="Mãe">Mãe</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Endereço Completo <span class="required">*</span></label>
-                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
-                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Anexe aqui o Atestado Médico (Obrigatório) <span class="required">*</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="pub_atestado_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
-                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Anexar Atestado</button>
-                            <input type="file" id="pub_atestado_file" accept="image/*,.pdf" onchange="handleFileUpload(event, 'pub_atestado_url')" />
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
-                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
-                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
-                    <select id="pub_venc">
-                        <option value="05">Dia 05</option>
-                        <option value="10">Dia 10</option>
-                        <option value="15">Dia 15</option>
-                    </select>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
-                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
-                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
-                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
-                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
-                </div>
-                
-                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
-            </div>
-        </div>
-
         <div id="chamada" class="tab-content">
-            <h2>Chamada de Treino</h2>
+            <h2>Lista de Presença - Treino</h2>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group"><label>Data do Treino</label><input type="date" id="pres_data"></div>
                 <div class="form-group"><label>Filtrar Categoria</label><select id="pres_cat_filtro" onchange="renderizarChamada()"><option value="Todos">Todas as Categorias</option><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
@@ -354,7 +238,7 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
@@ -457,6 +341,133 @@
                 </div>
             </div>
             <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none;"></div>
+        </div>
+
+        <div id="inscricao" class="tab-content">
+            <div class="public-form-container">
+                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>. Os dados serão enviados diretamente para o sistema do treinador.</p>
+                
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
+                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Data de Nascimento <span class="required">*</span></label>
+                    <input type="date" id="pub_nasc">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
+                    <select id="pub_cat">
+                        <option value="Sub-07">Sub-07</option>
+                        <option value="Sub-09">Sub-09</option>
+                        <option value="Sub-11">Sub-11</option>
+                        <option value="Sub-13">Sub-13</option>
+                        <option value="Sub-15">Sub-15</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Foto do Aluno(a) para carteirinha (Opcional)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="pub_foto_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Escolher Foto</button>
+                            <input type="file" id="pub_foto_file" accept="image/*" onchange="handleFileUpload(event, 'pub_foto_url')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
+                    <select id="pub_camisa">
+                        <option value="10">Tamanho 10</option>
+                        <option value="12">Tamanho 12</option>
+                        <option value="14">Tamanho 14</option>
+                        <option value="P">Tamanho P (Adulto)</option>
+                        <option value="M">Tamanho M (Adulto)</option>
+                        <option value="G">Tamanho G (Adulto)</option>
+                        <option value="GG">Tamanho GG (Adulto)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Escola onde estuda <span class="required">*</span></label>
+                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Turno Escolar <span class="required">*</span></label>
+                    <select id="pub_turno">
+                        <option value="Manhã">Manhã</option>
+                        <option value="Tarde">Tarde</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Responsável <span class="required">*</span></label>
+                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Grau de Parentesco <span class="required">*</span></label>
+                    <select id="pub_parentesco">
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
+                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Endereço Completo <span class="required">*</span></label>
+                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
+                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Anexe aqui o Atestado Médico (Opcional)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="pub_atestado_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Anexar Atestado</button>
+                            <input type="file" id="pub_atestado_file" accept="image/*,.pdf" onchange="handleFileUpload(event, 'pub_atestado_url')" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
+                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
+                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
+                    <select id="pub_venc">
+                        <option value="05">Dia 05</option>
+                        <option value="10">Dia 10</option>
+                        <option value="15">Dia 15</option>
+                    </select>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
+                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
+                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
+                </div>
+
+                <div class="form-group checkbox-group" style="margin-bottom: 15px; align-items: flex-start;">
+                    <label>Participa do grupo oficial do WhatsApp?</label>
+                    <div style="font-size: 14px; margin-top: 5px;">
+                        <input type="radio" name="wpp_group" value="yes"> Sim, já estou no grupo.<br>
+                        <input type="radio" name="wpp_group" value="no"> Não. (<a href="#" style="color: blue;">Clique aqui para entrar</a>)
+                    </div>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
+                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
+                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+                </div>
+                
+                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
+            </div>
         </div>
 
         <div id="configuracoes" class="tab-content">
@@ -577,11 +588,8 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-    <script>
-        // CONFIGURAÇÃO DO SEU FIREBASE
+    <script type="text/javascript">
+        // Usando a versão compat do Firebase, as variáveis globais do firebase ficam disponíveis
         const firebaseConfig = {
             apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
             authDomain: "ac-nova-geracao.firebaseapp.com",
@@ -592,7 +600,6 @@
             appId: "1:409905433868:web:a9349a533b591df7310d29"
         };
 
-        // INICIALIZAÇÃO SEGURA
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -600,23 +607,22 @@
         const dbRef = database.ref('sistema_ac_dados');
 
         let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
-        let sys_logo = "";
-        let chartTela = null; let chartModal = null; let chartImagem = null;
-        let isValuesHidden = false;
-
-        // CARREGA DADOS LOCAIS PRIMEIRO (Para não ficar em branco caso a net falhe)
+        
+        // RECUPERA DADOS LOCAIS PRIMEIRO (evita tela em branco)
         let localData = localStorage.getItem('acNovaGeracaoData');
         if(localData) {
             db = JSON.parse(localData);
-            renderizarTudo();
+            setTimeout(renderizarTudo, 100); // Dá um tempo pro DOM carregar
         }
 
-        // Configura a URL para o link de inscrição
+        let sys_logo = localStorage.getItem('sys_logo') || "";
+        let chartTela = null; let chartModal = null; let chartImagem = null;
+        let isValuesHidden = false;
+
         document.addEventListener("DOMContentLoaded", () => {
             let url = window.location.href.split('?')[0] + '?tab=inscricao';
             document.getElementById('link_inscricao').value = url;
 
-            // Se abrir pela URL de inscrição, esconde o menu e mostra só o form
             const urlParams = new URLSearchParams(window.location.search);
             if(urlParams.get('tab') === 'inscricao') {
                 document.getElementById('main-nav').style.display = 'none';
@@ -625,7 +631,6 @@
             }
         });
 
-        // PUXA DADOS DA NUVEM EM TEMPO REAL
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -636,7 +641,7 @@
                 db.despesas = data.despesas || [];
                 db.patrocinadores = data.patrocinadores || [];
                 db.presencas = data.presencas || [];
-                sys_logo = data.sys_logo || "";
+                sys_logo = data.sys_logo || sys_logo;
                 
                 document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
                 document.getElementById('nuvem-status').style.background = "#28a745";
@@ -664,8 +669,8 @@
                 document.getElementById('cfg_logo').value = sys_logo; 
             }
             
-            // Salva backup local
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
+            localStorage.setItem('sys_logo', sys_logo);
             renderizarTudo();
         });
 
@@ -680,8 +685,9 @@
                 presencas: db.presencas,
                 sys_logo: sys_logo
             }).catch(e => console.error("Erro ao salvar no Firebase:", e));
-            // Backup local
+            
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
+            localStorage.setItem('sys_logo', sys_logo);
         }
 
         // =========================================================
@@ -694,12 +700,10 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active'); 
             
-            // Highlight the active button if we are not hiding the menu
             if(document.getElementById('main-nav').style.display !== 'none') {
-                event.currentTarget.classList.add('active');
+                try { event.currentTarget.classList.add('active'); } catch(e) {}
             }
             
-            // Hide Dashboard on certain tabs
             document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'inscricao' || tabName === 'relatorios') ? 'none' : 'block';
             
             if(tabName === 'avaliacao') { atualizarSelectAtletas(); atualizarRadarTela(); }
@@ -730,7 +734,6 @@
             renderizarTudo(); 
         }
 
-        // Converte imagem upada em Base64 para salvar no firebase sem precisar de storage externo
         window.handleFileUpload = function(event, targetInputId) {
             const file = event.target.files[0];
             if (file) {
@@ -743,10 +746,14 @@
         }
 
         // =========================================================
-        // INSCRIÇÃO ONLINE (Substituindo Google Forms)
+        // INSCRIÇÃO ONLINE
         // =========================================================
         window.enviarInscricao = function() {
-            if(!document.getElementById('pub_auth_med').checked || !document.getElementById('pub_auth_esc').checked || !document.getElementById('pub_auth_final').checked) {
+            let authMed = document.getElementById('pub_auth_med').checked;
+            let authEsc = document.getElementById('pub_auth_esc').checked;
+            let authFinal = document.getElementById('pub_auth_final').checked;
+
+            if(!authMed || !authEsc || !authFinal) {
                 alert("Você precisa concordar com todos os termos e autorizações para concluir a inscrição.");
                 return;
             }
@@ -760,13 +767,12 @@
             let foto = document.getElementById('pub_foto_url').value;
 
             if(!nome || !nasc || !resp || !tel) {
-                alert("Por favor, preencha todos os campos obrigatórios (*).");
+                alert("Por favor, preencha os campos obrigatórios (*).");
                 return;
             }
 
             let newId = Date.now().toString();
 
-            // Adiciona no Elenco
             db.elenco.push({ 
                 id: newId, 
                 nome: nome, 
@@ -778,19 +784,17 @@
                 historico: [] 
             });
 
-            // Adiciona na Mensalidade (vinculado ao responsável)
             db.mensalidades.push({
                 id: newId,
                 nome: resp + " (Resp. " + nome.split(' ')[0] + ")",
                 tel: tel, 
                 venc: venc,
                 pago: false,
-                bolsista: false // Por padrão entra como pagante
+                bolsista: false 
             });
 
             salvarDB();
             
-            // Mensagem de WhatsApp para o treinador
             let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
             msg += `*Atleta:* ${nome}\n`;
             msg += `*Categoria:* ${cat}\n`;
@@ -803,7 +807,6 @@
             
             alert("Inscrição enviada com sucesso!");
             
-            // Limpa o form
             document.getElementById('pub_nome').value = '';
             document.getElementById('pub_nasc').value = '';
             document.getElementById('pub_resp_nome').value = '';
@@ -1496,7 +1499,6 @@
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
-            // Temporary show to render image
             let container = document.getElementById('relatorio-print-container'); 
             container.style.zIndex = "9999";
             
