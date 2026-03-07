@@ -86,7 +86,6 @@
         .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-atrasado { background-color: #dc3545; } .badge-bolsa { background-color: #17a2b8; }
         .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
         
-        .atleta-info { display: flex; align-items: center; gap: 10px; }
         .avatar-mini { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; overflow-y: auto;}
@@ -101,20 +100,24 @@
         .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
 
-        /* MENSAGEM DE CONEXÃO COM A NUVEM */
         #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
 
         .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
-
-        /* Ocultar Valores CSS */
         .blurred-text { filter: blur(5px); user-select: none; color: transparent; text-shadow: 0 0 8px #000; }
 
-        /* CORREÇÃO DO BOLETIM FANTASMA: Oculto perfeitamente */
+        /* CORREÇÃO DO BOLETIM FANTASMA: Agora não quebra layout e não aparece na tela */
         #relatorio-print-container { 
-            display: none; 
+            position: fixed; 
+            top: -9999px; 
+            left: -9999px; 
+            width: 800px; 
+            background: white; 
+            z-index: -100; 
+            opacity: 0;
+            pointer-events: none;
         }
-        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; width: 800px; }
+        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
         .pdf-title { text-align: center; flex: 1; }
         .pdf-title h1 { margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase; }
@@ -148,7 +151,7 @@
         <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
-        <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
+        <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i> Configs</button>
     </div>
 
     <div class="container">
@@ -189,13 +192,13 @@
                 <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
                 <div class="form-group checkbox-group" style="min-width: 100px;">
                     <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista">Bolsista (Isento)</label>
+                    <label for="m_bolsista" style="margin-bottom:0;">Bolsista</label>
                 </div>
                 <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Cobrança / Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
+                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
             </div>
         </div>
 
@@ -208,7 +211,7 @@
                     <label>Foto do Atleta (Opcional)</label>
                     <div style="display: flex; gap: 5px;">
                         <input type="hidden" id="e_foto_url">
-                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
                             <button class="btn-add" id="btn-e-foto" style="background-color: #6c757d; font-size: 12px; height: 39px; width: 100%;"><i class="fa-solid fa-camera"></i> Anexar Foto</button>
                             <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url', 'btn-e-foto')" />
                         </div>
@@ -216,20 +219,16 @@
                 </div>
                 <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
                 <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
-                <div class="form-group checkbox-group" style="min-width: 100px;">
-                    <input type="checkbox" id="e_bolsista">
-                    <label for="e_bolsista">Bolsista</label>
-                </div>
                 <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Perfil & Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
             </div>
         </div>
 
         <div id="chamada" class="tab-content">
-            <h2>Lista de Presença</h2>
+            <h2>Lista de Presença - Treino</h2>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group"><label>Data do Treino</label><input type="date" id="pres_data"></div>
                 <div class="form-group"><label>Filtrar Categoria</label><select id="pres_cat_filtro" onchange="renderizarChamada()"><option value="Todos">Todas as Categorias</option><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
@@ -240,7 +239,7 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Chamada de Hoje</button>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
@@ -282,7 +281,7 @@
                 <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
                 <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
                 <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
-                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Salvar</button>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
                 <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
@@ -332,7 +331,7 @@
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link para os Pais (Inscrição Online)</h3>
-                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição online.</p>
+                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição.</p>
                 <div style="display: flex; gap: 10px;">
                     <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="https://crossoccerperformancetraining-create.github.io/ac-nova-geracao/inscricao.html">
                     <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar Link</button>
@@ -454,13 +453,13 @@
     <script type="text/javascript">
         // COLE SUAS CREDENCIAIS DO FIREBASE AQUI
         const firebaseConfig = {
-            apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
-            authDomain: "ac-nova-geracao.firebaseapp.com",
-            databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com",
-            projectId: "ac-nova-geracao",
-            storageBucket: "ac-nova-geracao.firebasestorage.app",
-            messagingSenderId: "409905433868",
-            appId: "1:409905433868:web:a9349a533b591df7310d29"
+            apiKey: "AIzaSyDP3yVMqP_4C2CyVRzLW7jTYzCAAMJXIco",
+            authDomain: "prosaude-e9130.firebaseapp.com",
+            projectId: "prosaude-e9130",
+            storageBucket: "prosaude-e9130.firebasestorage.app",
+            messagingSenderId: "999318121562",
+            appId: "1:999318121562:web:1f192d4c0f14a64fb57c63",
+            databaseURL: "https://prosaude-e9130-default-rtdb.firebaseio.com" // IMPORTANTE: Precisa da URL do Database!
         };
 
         if (!firebase.apps.length) {
@@ -475,22 +474,21 @@
         let isValuesHidden = false;
 
         document.addEventListener("DOMContentLoaded", () => {
-             // Esconde barra de loading inicial se não achar dados
+             // Fallback caso a internet caia ou o firebase demore
              setTimeout(() => {
                  let statusEl = document.getElementById('nuvem-status');
                  if(statusEl.innerText.includes("Conectando")) {
-                     statusEl.innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Iniciado!";
-                     statusEl.style.background = "#28a745";
-                     setTimeout(() => statusEl.style.display = 'none', 3000);
+                     statusEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Iniciado Offline (Verifique o Firebase)";
+                     statusEl.style.background = "#f39c12";
+                     setTimeout(() => statusEl.style.display = 'none', 4000);
                  }
-             }, 3000);
+             }, 4000);
         });
 
-        // PUXA DADOS DA NUVEM EM TEMPO REAL E GARANTE SINCRONIA
+        // PUXA DADOS DA NUVEM EM TEMPO REAL
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Mescla os dados da nuvem
                 db.mensalidades = data.mensalidades || [];
                 db.elenco = data.elenco || [];
                 db.uniformes = data.uniformes || [];
@@ -499,9 +497,6 @@
                 db.patrocinadores = data.patrocinadores || [];
                 db.presencas = data.presencas || [];
                 sys_logo = data.sys_logo || sys_logo;
-            } else {
-                // Banco de dados vazio (novo) - não faz nada, deixa os arrays vazios
-                db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
             }
 
             let statusEl = document.getElementById('nuvem-status');
@@ -520,6 +515,10 @@
             
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
             renderizarTudo();
+        }, (error) => {
+            let statusEl = document.getElementById('nuvem-status');
+            statusEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Erro no Banco: " + error.message;
+            statusEl.style.background = "#dc3545";
         });
 
         function salvarDB() {
@@ -538,7 +537,6 @@
             renderizarTudo();
         }
 
-        // Função para garantir que os arrays e relações existam
         function sincronizarListas() {
             let modified = false;
             if(db.elenco) {
@@ -551,7 +549,7 @@
                     if(j.vermelhos === undefined) { j.vermelhos = 0; modified = true; }
                     
                     if(!db.mensalidades) db.mensalidades = [];
-                    // USANDO '==' EM VEZ DE '===' PARA EVITAR ERROS COM IDS ANTIGOS
+                    // USANDO '==' EM VEZ DE '===' PARA EVITAR ERROS COM IDS ANTIGOS NUMÉRICOS
                     let existeMensalidade = db.mensalidades.find(m => m.id == j.id);
                     if (!existeMensalidade) {
                         db.mensalidades.push({
@@ -707,7 +705,7 @@
         }
 
         // =========================================================
-        // MENSALIDADES
+        // MENSALIDADES E ELENCO
         // =========================================================
         window.saveMensalidade = function() {
             let id = document.getElementById('m_id').value;
@@ -770,9 +768,6 @@
             } 
         }
 
-        // =========================================================
-        // ELENCO
-        // =========================================================
         window.saveJogador = function() { 
             let id = document.getElementById('e_id').value;
             let n=document.getElementById('e_nome').value; 
@@ -860,7 +855,7 @@
         }
 
         // =========================================================
-        // CHAMADA E OUTROS
+        // CHAMADA
         // =========================================================
         window.renderizarChamada = function() {
             let f = document.getElementById('pres_cat_filtro').value;
@@ -898,6 +893,9 @@
             alert("Chamada salva com sucesso!");
         }
 
+        // =========================================================
+        // PATROCINADORES E JOGOS
+        // =========================================================
         window.savePatrocinio = function() {
             let id = document.getElementById('p_id').value;
             let n = document.getElementById('p_nome').value;
@@ -905,7 +903,6 @@
             let s = document.getElementById('p_status').value;
             if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
             if(!db.patrocinadores) db.patrocinadores = [];
-
             if(id) {
                 let p = db.patrocinadores.find(x => x.id == id);
                 if(p){ p.nome = n; p.valor = v; p.status = s; }
@@ -943,7 +940,6 @@
             let l=document.getElementById('j_local').value;
             if(!d || !a) return alert("Preencha data e adversário!");
             if(!db.jogos) db.jogos = [];
-
             if(id) {
                 let j = db.jogos.find(x => x.id == id);
                 if(j){ j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l; }
@@ -1036,79 +1032,6 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        window.addUniforme = function() { 
-            let id = document.getElementById('u_id').value;
-            let n=document.getElementById('u_nome').value; 
-            let t=document.getElementById('u_tam').value;
-            if(!n) return alert("Preencha o nome!");
-            if(!db.uniformes) db.uniformes = [];
-            if(id) {
-                let u = db.uniformes.find(x => x.id == id);
-                if(u) { u.nome = n; u.tam = t; }
-            } else {
-                db.uniformes.push({id:Date.now().toString(), nome:n, tam:t, pago:false}); 
-            }
-            resetFormU(); salvarDB();
-        }
-        window.editUniforme = function(id) {
-            let u = db.uniformes.find(x => x.id == id);
-            if(!u) return;
-            document.getElementById('u_id').value = u.id;
-            document.getElementById('u_nome').value = u.nome;
-            document.getElementById('u_tam').value = u.tam;
-            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
-            document.getElementById('btn-u-salvar').classList.add('btn-edit');
-            document.getElementById('btn-u-cancel').style.display = 'inline-block';
-            window.scrollTo(0,0);
-        }
-        window.resetFormU = function() {
-            document.getElementById('u_id').value = ''; document.getElementById('u_nome').value = '';
-            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-shirt'></i> Encomendar";
-            document.getElementById('btn-u-salvar').classList.remove('btn-edit');
-            document.getElementById('btn-u-cancel').style.display = 'none';
-        }
-        window.pagarUniforme = function(id) { let u = db.uniformes.find(x=>x.id == id); if(u){ u.pago=true; salvarDB(); } } 
-        window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id != id); salvarDB();} }
-
-        window.saveDespesa = function() { 
-            let id = document.getElementById('d_id').value;
-            let d=document.getElementById('d_desc').value; 
-            let v=parseFloat(document.getElementById('d_valor').value); 
-            let c=document.getElementById('d_cat').value;
-            if(!d || isNaN(v)) return alert("Preencha descrição e valor!");
-            
-            if(c === 'Receita Extra' || c === 'Multa Cartão') v = -Math.abs(v);
-
-            if(!db.despesas) db.despesas = [];
-
-            if(id) {
-                let desp = db.despesas.find(x => x.id == id);
-                if(desp) { desp.desc = d; desp.valor = v; desp.cat = c; }
-            } else {
-                db.despesas.push({id:Date.now().toString(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:c, valor:v}); 
-            }
-            resetFormD(); salvarDB();
-        }
-        window.editDespesa = function(id) {
-            let d = db.despesas.find(x => x.id == id);
-            if(!d) return;
-            document.getElementById('d_id').value = d.id;
-            document.getElementById('d_desc').value = d.desc;
-            document.getElementById('d_valor').value = Math.abs(d.valor);
-            document.getElementById('d_cat').value = d.cat;
-            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
-            document.getElementById('btn-d-salvar').classList.add('btn-edit');
-            document.getElementById('btn-d-cancel').style.display = 'inline-block';
-            window.scrollTo(0,0);
-        }
-        window.resetFormD = function() {
-            document.getElementById('d_id').value = ''; document.getElementById('d_desc').value = ''; document.getElementById('d_valor').value = '';
-            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-file-invoice-dollar'></i> Lançar";
-            document.getElementById('btn-d-salvar').classList.remove('btn-edit');
-            document.getElementById('btn-d-cancel').style.display = 'none';
-        }
-        window.delDespesa = function(id) { if(confirm("Excluir lançamento?")){db.despesas=db.despesas.filter(d=>d.id != id); salvarDB();} }
-        
         // =========================================================
         // RENDER GERAL E ATUALIZAÇÃO DE TABELAS
         // =========================================================
@@ -1118,54 +1041,33 @@
             
             if(db.mensalidades) {
                 db.mensalidades.forEach(m => { 
-                    if(!m.bolsista) {
-                        if(m.pago) entrou += 60; else previsao += 60; 
-                    }
+                    if(!m.bolsista) { if(m.pago) entrou += 60; else previsao += 60; }
                 });
             }
             if(db.patrocinadores) {
                 db.patrocinadores.forEach(p => { if(p.status === 'pago') entrou += p.valor; else previsao += p.valor; });
             }
-            if(db.jogos) {
-                db.jogos.forEach(j => { entrou += (j.arrecadado || 0); });
-            }
-            if(db.uniformes) {
-                db.uniformes.forEach(u => { if(u.pago) entrou += 120; else previsao += 120; });
-            }
+            if(db.jogos) { db.jogos.forEach(j => { entrou += (j.arrecadado || 0); }); }
+            if(db.uniformes) { db.uniformes.forEach(u => { if(u.pago) entrou += 120; else previsao += 120; }); }
             
             let saiu = 0;
             if(db.despesas) {
                 db.despesas.forEach(d => {
-                    if(d.valor < 0) {
-                        entrou += Math.abs(d.valor);
-                    } else {
-                        saiu += d.valor;
-                    }
+                    if(d.valor < 0) { entrou += Math.abs(d.valor); } else { saiu += d.valor; }
                 });
             }
 
-            let fmtEntrou = formatarMoeda(entrou);
-            let fmtPrevisao = formatarMoeda(previsao);
-            let fmtSaiu = formatarMoeda(saiu);
-            let fmtSaldo = formatarMoeda(entrou - saiu);
+            let fmtEntrou = formatarMoeda(entrou); let fmtPrevisao = formatarMoeda(previsao);
+            let fmtSaiu = formatarMoeda(saiu); let fmtSaldo = formatarMoeda(entrou - saiu);
 
             if(!isValuesHidden) {
-                document.getElementById('dash-receita').innerText = fmtEntrou;
-                document.getElementById('dash-previsao').innerText = fmtPrevisao;
-                document.getElementById('dash-despesa').innerText = fmtSaiu;
-                document.getElementById('dash-saldo').innerText = fmtSaldo;
+                document.getElementById('dash-receita').innerText = fmtEntrou; document.getElementById('dash-previsao').innerText = fmtPrevisao;
+                document.getElementById('dash-despesa').innerText = fmtSaiu; document.getElementById('dash-saldo').innerText = fmtSaldo;
             } else {
-                document.getElementById('dash-receita').innerText = 'R$ ***';
-                document.getElementById('dash-previsao').innerText = 'R$ ***';
-                document.getElementById('dash-despesa').innerText = 'R$ ***';
-                document.getElementById('dash-saldo').innerText = 'R$ ***';
+                document.getElementById('dash-receita').innerText = 'R$ ***'; document.getElementById('dash-previsao').innerText = 'R$ ***';
+                document.getElementById('dash-despesa').innerText = 'R$ ***'; document.getElementById('dash-saldo').innerText = 'R$ ***';
             }
             
-            document.getElementById('dash-receita').setAttribute('data-original', fmtEntrou);
-            document.getElementById('dash-previsao').setAttribute('data-original', fmtPrevisao);
-            document.getElementById('dash-despesa').setAttribute('data-original', fmtSaiu);
-            document.getElementById('dash-saldo').setAttribute('data-original', fmtSaldo);
-
             let dia = new Date().getDate();
             if(db.mensalidades) {
                 document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
@@ -1173,84 +1075,33 @@
                     let valText = m.bolsista ? 'Bolsista' : 'R$ 60,00';
                     let valClass = isValuesHidden && !m.bolsista ? 'blurred-text' : '';
 
-                    if(m.bolsista){
-                        st = `<span class="badge badge-bolsa">Bolsista</span>`;
-                        txt = `Olá! Passando para lembrar do treino da AC Nova Geração. 🦅⚽`;
-                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Contato`; btnCor = `#007bff`;
-                    } else if(m.pago) { 
-                        st = `<span class="badge badge-ok">Pago</span>`; 
-                        txt = `Olá! Agradecemos o pagamento da mensalidade de ${m.nome}. O AC Nova Geração agradece o apoio! 🦅⚽`;
-                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Recibo`; btnCor = `#28a745`;
-                    } else if(dia > parseInt(m.venc)) { 
-                        st = `<span class="badge badge-atrasado">Atrasado</span>`; 
-                        txt = `Olá, responsável. Consta pendência na mensalidade de ${m.nome} (vencida dia ${m.venc}). Chave PIX: acnovageracao@outlook.com 🦅`;
-                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Cobrar`; btnCor = `#dc3545`;
-                        baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
-                    } else { 
-                        st = `<span class="badge badge-pendente">A Vencer</span>`; 
-                        txt = `Olá! Lembrete: a mensalidade de ${m.nome} vence dia ${m.venc}. PIX: acnovageracao@outlook.com 🦅`;
-                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Lembrete`; btnCor = `#ffc107; color:#000`;
-                        baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
-                    }
+                    if(m.bolsista){ st = `<span class="badge badge-bolsa">Bolsista</span>`; txt = `Olá! Passando para lembrar do treino da AC Nova Geração. 🦅⚽`; btnTexto = `<i class="fa-brands fa-whatsapp"></i> Contato`; btnCor = `#007bff`;
+                    } else if(m.pago) { st = `<span class="badge badge-ok">Pago</span>`; txt = `Olá! Agradecemos o pagamento da mensalidade de ${m.nome}. O AC Nova Geração agradece o apoio! 🦅⚽`; btnTexto = `<i class="fa-brands fa-whatsapp"></i> Recibo`; btnCor = `#28a745`;
+                    } else if(dia > parseInt(m.venc)) { st = `<span class="badge badge-atrasado">Atrasado</span>`; txt = `Olá, responsável. Consta pendência na mensalidade de ${m.nome} (vencida dia ${m.venc}). Chave PIX: acnovageracao@outlook.com 🦅`; btnTexto = `<i class="fa-brands fa-whatsapp"></i> Cobrar`; btnCor = `#dc3545`; baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
+                    } else { st = `<span class="badge badge-pendente">A Vencer</span>`; txt = `Olá! Lembrete: a mensalidade de ${m.nome} vence dia ${m.venc}. PIX: acnovageracao@outlook.com 🦅`; btnTexto = `<i class="fa-brands fa-whatsapp"></i> Lembrete`; btnCor = `#ffc107; color:#000`; baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`; }
                     
-                    return `<tr>
-                        <td><strong>${m.nome}</strong><br><small>${m.tel}</small><br><small style="color:${m.bolsista?'#007bff':'green'};font-weight:bold;" class="${valClass}">${valText}</small></td>
-                        <td>Dia ${m.venc}</td><td>${st}</td>
-                        <td class="action-btns">
-                            <a href="https://wa.me/55${m.tel}?text=${encodeURIComponent(txt)}" target="_blank" class="btn-sm" style="background:${btnCor}; text-decoration:none;">${btnTexto}</a>
-                            ${baixaBtn}
-                            <button class="btn-sm btn-edit" onclick="editMensalidade('${m.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-sm btn-del" onclick="delMensalidade('${m.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td></tr>`;
+                    return `<tr><td><strong>${m.nome}</strong><br><small>${m.tel}</small><br><small style="color:${m.bolsista?'#007bff':'green'};font-weight:bold;" class="${valClass}">${valText}</small></td><td>Dia ${m.venc}</td><td>${st}</td><td class="action-btns"><a href="https://wa.me/55${m.tel}?text=${encodeURIComponent(txt)}" target="_blank" class="btn-sm" style="background:${btnCor}; text-decoration:none;">${btnTexto}</a>${baixaBtn}<button class="btn-sm btn-edit" onclick="editMensalidade('${m.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delMensalidade('${m.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
                 }).join('');
             }
             
             if(db.elenco) {
                 document.getElementById('tb-elenco').innerHTML = db.elenco.map(j => {
                     let imgHtml = j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>';
-                    return `<tr>
-                        <td>${imgHtml}</td>
-                        <td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span><br><small>Nasc: ${j.nasc||'-'}</small></td>
-                        <td class="action-btns"><button class="btn-sm btn-gol" onclick="addGol('${j.id}')">+⚽ ${j.gols || 0}</button><button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')">+🟨 ${j.amarelos || 0}</button><button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')">+🟥 ${j.vermelhos || 0}</button></td>
-                        <td class="action-btns">
-                        <button class="btn-sm btn-ficha" onclick="abrirFicha('${j.id}')"><i class="fa-solid fa-address-card"></i> Ficha</button> 
-                        <button class="btn-sm btn-perfil" onclick="abrirPerfil('${j.id}')"><i class="fa-solid fa-chart-line"></i> Evolução</button> 
-                        <button class="btn-sm btn-edit" onclick="editJogador('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
-                        <button class="btn-sm btn-del" onclick="delJogador('${j.id}')"><i class="fa-solid fa-trash"></i></button></td>
-                    </tr>`
+                    return `<tr><td>${imgHtml}</td><td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span><br><small>Nasc: ${j.nasc||'-'}</small></td><td class="action-btns"><button class="btn-sm btn-gol" onclick="addGol('${j.id}')">+⚽ ${j.gols || 0}</button><button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')">+🟨 ${j.amarelos || 0}</button><button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')">+🟥 ${j.vermelhos || 0}</button></td><td class="action-btns"><button class="btn-sm btn-ficha" onclick="abrirFicha('${j.id}')"><i class="fa-solid fa-address-card"></i> Ficha</button><button class="btn-sm btn-perfil" onclick="abrirPerfil('${j.id}')"><i class="fa-solid fa-chart-line"></i> Evolução</button><button class="btn-sm btn-edit" onclick="editJogador('${j.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delJogador('${j.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`
                 }).join('');
             }
             
             if(db.patrocinadores) {
                 document.getElementById('tb-patrocinadores').innerHTML = db.patrocinadores.map(p => {
                     let valClass = isValuesHidden ? 'blurred-text' : '';
-                    return `<tr>
-                        <td><strong>${p.nome}</strong></td>
-                        <td style="color:green; font-weight:bold;" class="${valClass}">${formatarMoeda(p.valor)}</td>
-                        <td>${p.status==='pago'?'<span class="badge badge-ok">Recebido</span>':'<span class="badge badge-pendente">Pendente</span>'}</td>
-                        <td class="action-btns">
-                            ${p.status==='pendente'? `<button class="btn-sm btn-pay" onclick="pagarPatrocinio('${p.id}')"><i class="fa-solid fa-check"></i> Baixa</button>` : ''}
-                            <button class="btn-sm btn-edit" onclick="editPatrocinio('${p.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-sm btn-del" onclick="delPatrocinio('${p.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                    return `<tr><td><strong>${p.nome}</strong></td><td style="color:green; font-weight:bold;" class="${valClass}">${formatarMoeda(p.valor)}</td><td>${p.status==='pago'?'<span class="badge badge-ok">Recebido</span>':'<span class="badge badge-pendente">Pendente</span>'}</td><td class="action-btns">${p.status==='pendente'? `<button class="btn-sm btn-pay" onclick="pagarPatrocinio('${p.id}')"><i class="fa-solid fa-check"></i> Baixa</button>` : ''}<button class="btn-sm btn-edit" onclick="editPatrocinio('${p.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delPatrocinio('${p.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
                 }).join('');
             }
 
             if(db.jogos) {
                 document.getElementById('tb-jogos').innerHTML = db.jogos.map(j => {
                     let valClass = isValuesHidden ? 'blurred-text' : '';
-                    return `<tr>
-                        <td><strong>${j.data}</strong></td>
-                        <td>${j.adv}<br><small>${j.tipo} - ${j.local}</small></td>
-                        <td><span style="font-size:16px; font-weight:bold; color:var(--azul-escuro);">👥 ${j.confirmados||0}</span></td>
-                        <td><span style="font-size:16px; font-weight:bold; color:green;" class="${valClass}">${formatarMoeda(j.arrecadado||0)}</span></td>
-                        <td class="action-btns">
-                            <button class="btn-sm btn-azul" onclick="gerenciarJogo('${j.id}')"><i class="fa-solid fa-users-gear"></i> Convocar</button> 
-                            <button class="btn-sm btn-edit" onclick="editJogo('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
-                            <button class="btn-sm btn-del" onclick="delJogo('${j.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>`;
+                    return `<tr><td><strong>${j.data}</strong></td><td>${j.adv}<br><small>${j.tipo} - ${j.local}</small></td><td><span style="font-size:16px; font-weight:bold; color:var(--azul-escuro);">👥 ${j.confirmados||0}</span></td><td><span style="font-size:16px; font-weight:bold; color:green;" class="${valClass}">${formatarMoeda(j.arrecadado||0)}</span></td><td class="action-btns"><button class="btn-sm btn-azul" onclick="gerenciarJogo('${j.id}')"><i class="fa-solid fa-users-gear"></i> Convocar</button><button class="btn-sm btn-edit" onclick="editJogo('${j.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delJogo('${j.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
                 }).join('');
             }
             
@@ -1260,38 +1111,17 @@
             
             if(db.despesas) {
                 document.getElementById('tb-despesas').innerHTML = db.despesas.map(d => {
-                    let valClass = isValuesHidden ? 'blurred-text' : '';
-                    let isReceita = d.valor < 0;
-                    let displayValor = formatarMoeda(Math.abs(d.valor));
-                    let cor = isReceita ? 'green' : 'red';
-                    let sinal = isReceita ? '+' : '-';
+                    let valClass = isValuesHidden ? 'blurred-text' : ''; let isReceita = d.valor < 0; let displayValor = formatarMoeda(Math.abs(d.valor)); let cor = isReceita ? 'green' : 'red'; let sinal = isReceita ? '+' : '-';
                     return `<tr><td>${d.data}</td><td><strong>${d.desc}</strong><br><small>${d.cat}</small></td><td style="color:${cor}; font-weight:bold;" class="${valClass}">${sinal} ${displayValor}</td><td class="action-btns"><button class="btn-sm btn-edit" onclick="editDespesa('${d.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delDespesa('${d.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
                 }).join('');
             }
-        }
-
-        window.gerarRelatorioDevedores = function() {
-            let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
-            if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
             
-            let msg = "*🚨 LISTA DE PENDÊNCIAS - AC NOVA GERAÇÃO 🚨*\n\n";
-            devedores.forEach(m => { msg += `👉 *${m.nome}* (Venc: Dia ${m.venc})\n`; });
-            msg += "\n*Chave PIX:* acnovageracao@outlook.com\n_Por favor, regularizem as mensalidades para ajudar a manter o nosso projeto! A Nova Geração é Nossa! 🦅_";
-            
-            navigator.clipboard.writeText(msg).then(() => { alert("Lista copiada! Cole no grupo do WhatsApp."); }).catch(err => {
-                document.getElementById('preview-relatorio').style.display = 'block';
-                document.getElementById('preview-relatorio').innerText = msg;
-            });
+            if(document.getElementById('av_atleta').options.length <= 1) { atualizarSelectAtletas(); }
         }
 
-        window.exportarExcel = function() { 
-            let c = "data:text/csv;charset=utf-8,\uFEFF=== MENSALIDADES ===\nNome;WhatsApp;Vencimento;Status;Bolsista\n"; 
-            db.mensalidades.forEach(m => { c += `${m.nome};${m.tel};Dia ${m.venc};${m.pago ? "Pago" : "Pendente"};${m.bolsista ? "Sim" : "Nao"}\n`; }); 
-            c += "\n=== ELENCO (JOGADORES) ===\nJogador;Categoria;Data Nasc;Gols;Amarelos;Vermelhos\n"; 
-            db.elenco.forEach(e => { c += `${e.nome};${e.cat};${e.nasc};${e.gols};${e.amarelos || 0};${e.vermelhos || 0}\n`; }); 
-            let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); 
-        }
-
+        // =========================================================
+        // AVALIAÇÃO E BOLETIM
+        // =========================================================
         window.atualizarSelectAtletas = function() { 
             let s = document.getElementById('av_atleta'); 
             s.innerHTML = '<option value="">-- Escolha --</option>' + db.elenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
@@ -1303,41 +1133,19 @@
             if(!id) return; 
             let a = db.elenco.find(j => j.id == id); 
             if(a && a.notas) { 
-                document.getElementById('av_fis').value = a.notas.fis||0; 
-                document.getElementById('av_chute').value = a.notas.chute||0; 
-                document.getElementById('av_passe').value = a.notas.passe||0; 
-                document.getElementById('av_coord').value = a.notas.coord||0; 
-                document.getElementById('av_cab').value = a.notas.cab||0; 
-                document.getElementById('av_disc').value = a.notas.disc||0; 
-                document.getElementById('av_obs').value = a.notas.obs||''; 
+                document.getElementById('av_fis').value = a.notas.fis||0; document.getElementById('av_chute').value = a.notas.chute||0; document.getElementById('av_passe').value = a.notas.passe||0; document.getElementById('av_coord').value = a.notas.coord||0; document.getElementById('av_cab').value = a.notas.cab||0; document.getElementById('av_disc').value = a.notas.disc||0; document.getElementById('av_obs').value = a.notas.obs||''; 
                 atualizarRadar(); 
             } 
         }
 
         window.gerarFeedbackIA = function() { 
-            let f = parseInt(document.getElementById('av_fis').value) || 0;
-            let c = parseInt(document.getElementById('av_chute').value) || 0;
-            let p = parseInt(document.getElementById('av_passe').value) || 0;
-            let t = parseInt(document.getElementById('av_coord').value) || 0;
-            let h = parseInt(document.getElementById('av_cab').value) || 0;
-            let d = parseInt(document.getElementById('av_disc').value) || 0;
-            
-            if(f===0 && c===0 && p===0 && t===0 && h===0 && d===0){
-                document.getElementById('av_obs').value = "Por favor, preencha as notas de 1 a 10 antes de gerar a análise.";
-                return;
-            }
-
+            let f = parseInt(document.getElementById('av_fis').value) || 0; let c = parseInt(document.getElementById('av_chute').value) || 0; let p = parseInt(document.getElementById('av_passe').value) || 0; let t = parseInt(document.getElementById('av_coord').value) || 0; let h = parseInt(document.getElementById('av_cab').value) || 0; let d = parseInt(document.getElementById('av_disc').value) || 0;
+            if(f===0 && c===0 && p===0 && t===0 && h===0 && d===0){ document.getElementById('av_obs').value = "Por favor, preencha as notas de 1 a 10 antes de gerar a análise."; return; }
             let notas = { "Físico": f, "Finalização": c, "Passe": p, "Tática": t, "Cabeceio": h, "Disciplina": d }; 
             let sorted = Object.keys(notas).sort((a,b) => notas[b] - notas[a]);
-            let best = sorted[0];
-            let worst = sorted[sorted.length-1];
-
-            let feedback = `O atleta demonstrou excelente desempenho em ${best}, mostrando grande potencial nessa área. `;
-            feedback += `Por outro lado, notamos que há espaço para evolução em ${worst}. Focaremos nossos próximos treinamentos para aprimorar esse fundamento. `;
-            
-            if(d >= 8) { feedback += `Vale destacar o ótimo comportamento e disciplina demonstrados em campo! `; } 
-            else if (d < 5) { feedback += `É importante que o atleta tenha mais atenção à disciplina e respeito às orientações da comissão técnica. `; }
-
+            let best = sorted[0]; let worst = sorted[sorted.length-1];
+            let feedback = `O atleta demonstrou excelente desempenho em ${best}, mostrando grande potencial nessa área. Por outro lado, notamos que há espaço para evolução em ${worst}. Focaremos nossos próximos treinamentos para aprimorar esse fundamento. `;
+            if(d >= 8) { feedback += `Vale destacar o ótimo comportamento e disciplina demonstrados em campo! `; } else if (d < 5) { feedback += `É importante que o atleta tenha mais atenção à disciplina e respeito às orientações da comissão técnica. `; }
             feedback += `\n\nContinue se dedicando! A Nova Geração é Nossa! 🦅`;
             document.getElementById('av_obs').value = feedback; 
         }
@@ -1347,20 +1155,10 @@
             let a = db.elenco.find(j => j.id == id);
             let ctx = document.getElementById('radarTela').getContext('2d');
             if(chartTela) chartTela.destroy();
-            
-            let datasets = [{
-                label: 'Atual',
-                data: [document.getElementById('av_fis').value, document.getElementById('av_chute').value, document.getElementById('av_passe').value, document.getElementById('av_coord').value, document.getElementById('av_cab').value, document.getElementById('av_disc').value],
-                backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244'
-            }];
-
+            let datasets = [{ label: 'Atual', data: [document.getElementById('av_fis').value, document.getElementById('av_chute').value, document.getElementById('av_passe').value, document.getElementById('av_coord').value, document.getElementById('av_cab').value, document.getElementById('av_disc').value], backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244' }];
             if(a && a.historico && a.historico.length > 0) {
                 let h0 = a.historico[0].notas;
-                datasets.push({
-                    label: 'Início',
-                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
-                    backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
-                });
+                datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] });
             }
             chartTela = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
         }
@@ -1389,38 +1187,22 @@
         window.abrirFicha = function(id) {
             let a = db.elenco.find(j => j.id == id);
             if(!a) return;
-            
             let html = `
                 <div style="text-align: left; font-size: 13px; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--azul-escuro);">
-                <p><strong>Data de Nasc:</strong> ${a.nasc || '-'}</p>
-                <p><strong>Camisa:</strong> ${a.camisa || '-'}</p>
-                <p><strong>Escola:</strong> ${a.escola || '-'} (${a.turno || '-'})</p>
+                <p><strong>Data de Nasc:</strong> ${a.nasc || '-'}</p><p><strong>Camisa:</strong> ${a.camisa || '-'}</p><p><strong>Escola:</strong> ${a.escola || '-'} (${a.turno || '-'})</p>
                 <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
-                <p><strong>Responsável:</strong> ${a.responsavel || '-'} (${a.parentesco || '-'})</p>
-                <p><strong>Telefone:</strong> ${a.telefone || '-'}</p>
-                <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
+                <p><strong>Responsável:</strong> ${a.responsavel || '-'} (${a.parentesco || '-'})</p><p><strong>Telefone:</strong> ${a.telefone || '-'}</p><p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
                 <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
-                <p><strong>Saúde/Alergia:</strong> ${a.saude || 'Não informado'}</p>
-                <p><strong>Atestado:</strong> ${a.atestado ? `<a href="${a.atestado}" target="_blank" style="color:blue;">Visualizar</a>` : 'Não enviado'}</p>
+                <p><strong>Saúde/Alergia:</strong> ${a.saude || 'Não informado'}</p><p><strong>Atestado:</strong> ${a.atestado ? `<a href="${a.atestado}" target="_blank" style="color:blue;">Visualizar</a>` : 'Não enviado'}</p>
                 </div>
             `;
-            
             document.getElementById('perf_nome').innerText = "Ficha Cadastral";
             document.getElementById('perf_cat').innerText = a.nome;
             document.querySelector('.perfil-stats').style.display = 'none';
             document.getElementById('box-evolucao').style.display = 'none';
             document.getElementById('ficha-details').style.display = 'block';
-            
-            if(a.foto && a.foto !== '') {
-                document.getElementById('perf_foto').src = a.foto;
-                document.getElementById('perf_foto').style.display = 'block';
-                document.getElementById('perf_letra').style.display = 'none';
-            } else {
-                document.getElementById('perf_foto').style.display = 'none';
-                document.getElementById('perf_letra').style.display = 'flex';
-                document.getElementById('perf_letra').innerText = "📋";
-            }
-            
+            if(a.foto && a.foto !== '') { document.getElementById('perf_foto').src = a.foto; document.getElementById('perf_foto').style.display = 'block'; document.getElementById('perf_letra').style.display = 'none'; } 
+            else { document.getElementById('perf_foto').style.display = 'none'; document.getElementById('perf_letra').style.display = 'flex'; document.getElementById('perf_letra').innerText = "📋"; }
             document.getElementById('ficha-details').innerHTML = html;
             document.getElementById('modalPerfil').style.display = 'flex'; 
         }
@@ -1428,44 +1210,20 @@
         window.abrirPerfil = function(id) {
             let a = db.elenco.find(j => j.id == id);
             if(!a) return;
-            
             document.querySelector('.perfil-stats').style.display = 'flex';
             document.getElementById('box-evolucao').style.display = 'block';
             document.getElementById('ficha-details').style.display = 'none';
-
-            if(a.foto && a.foto !== '') {
-                document.getElementById('perf_foto').src = a.foto;
-                document.getElementById('perf_foto').style.display = 'block';
-                document.getElementById('perf_letra').style.display = 'none';
-            } else {
-                document.getElementById('perf_foto').style.display = 'none';
-                document.getElementById('perf_letra').style.display = 'flex';
-                document.getElementById('perf_letra').innerText = a.nome.charAt(0).toUpperCase();
-            }
-            
-            document.getElementById('perf_nome').innerText = a.nome; 
-            document.getElementById('perf_cat').innerText = "Cat: " + a.cat; 
-            document.getElementById('perf_gols').innerText = a.gols || 0; 
-            document.getElementById('perf_amar').innerText = a.amarelos || 0; 
-            document.getElementById('perf_verm').innerText = a.vermelhos || 0;
+            if(a.foto && a.foto !== '') { document.getElementById('perf_foto').src = a.foto; document.getElementById('perf_foto').style.display = 'block'; document.getElementById('perf_letra').style.display = 'none'; } 
+            else { document.getElementById('perf_foto').style.display = 'none'; document.getElementById('perf_letra').style.display = 'flex'; document.getElementById('perf_letra').innerText = a.nome.charAt(0).toUpperCase(); }
+            document.getElementById('perf_nome').innerText = a.nome; document.getElementById('perf_cat').innerText = "Cat: " + a.cat; 
+            document.getElementById('perf_gols').innerText = a.gols || 0; document.getElementById('perf_amar').innerText = a.amarelos || 0; document.getElementById('perf_verm').innerText = a.vermelhos || 0;
             document.getElementById('caixa-historico').innerHTML = gerarTabelaEvolucaoHTML(a.historico);
             document.getElementById('modalPerfil').style.display = 'flex'; 
             
             let ctx = document.getElementById('radarModal').getContext('2d');
             if(chartModal) chartModal.destroy();
-            let datasets = [{
-                label: 'Atual',
-                data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0],
-                backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244'
-            }];
-            if(a.historico && a.historico.length > 1) {
-                 let h0 = a.historico[0].notas;
-                 datasets.push({
-                    label: 'Início',
-                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
-                    backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
-                });
-            }
+            let datasets = [{ label: 'Atual', data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0], backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244' }];
+            if(a.historico && a.historico.length > 1) { let h0 = a.historico[0].notas; datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] }); }
             chartModal = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
         }
 
@@ -1478,7 +1236,6 @@
             
             if(sys_logo) { document.getElementById('img_logo_relatorio').src = sys_logo; document.getElementById('img_logo_relatorio').style.display = 'block'; document.getElementById('img_letra_clube').style.display = 'none'; } 
             else { document.getElementById('img_logo_relatorio').style.display = 'none'; document.getElementById('img_letra_clube').style.display = 'flex'; }
-
             if(a.foto && a.foto !== '') { document.getElementById('img_foto_relatorio').src = a.foto; document.getElementById('img_foto_relatorio').style.display = 'block'; document.getElementById('img_letra_atleta').style.display = 'none'; } 
             else { document.getElementById('img_foto_relatorio').style.display = 'none'; document.getElementById('img_letra_atleta').style.display = 'flex'; document.getElementById('img_letra_atleta').innerText = a.nome.charAt(0).toUpperCase(); }
 
@@ -1488,10 +1245,7 @@
             let ctx = document.getElementById('radarImagem').getContext('2d');
             if(chartImagem) chartImagem.destroy();
             let datasets = [{ label: 'Atual', data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0], backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244' }];
-            if(a.historico && a.historico.length > 1) {
-                 let h0 = a.historico[0].notas;
-                 datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] });
-            }
+            if(a.historico && a.historico.length > 1) { let h0 = a.historico[0].notas; datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] }); }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
             let container = document.getElementById('relatorio-print-container'); 
@@ -1500,7 +1254,6 @@
                 html2canvas(document.getElementById('relatorio-print'), { scale: 2, useCORS: true }).then(canvas => {
                     let link = document.createElement('a'); link.download = `Card_Boletim_${a.nome.replace(/\s/g, '_')}.png`; link.href = canvas.toDataURL("image/png"); link.click();
                     btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial'; 
-                    
                     let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\n_(A imagem já foi salva na galeria do seu celular. Por favor, anexe a foto clicando no ícone do clipe 📎 ou câmera 📷 aqui na nossa conversa!)_\n\nA Nova Geração é Nossa!`;
                     let mens = db.mensalidades.find(x => x.id == id);
                     if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
