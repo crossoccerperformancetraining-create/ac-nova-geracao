@@ -33,7 +33,7 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .dashboard-header { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
         .btn-hide-values { background: #e2e3e5; border: none; padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; color: #333; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;}
         .btn-hide-values:hover { background: #d6d8db; }
 
@@ -41,10 +41,10 @@
         .card { padding: 20px; border-radius: 8px; text-align: center; color: white; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .card h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;}
         .card .valor { font-size: 26px; }
-        .bg-receita { background: linear-gradient(45deg, #28a745, #218838); }
-        .bg-previsao { background: linear-gradient(45deg, #f39c12, #e67e22); color: white; } 
-        .bg-despesa { background: linear-gradient(45deg, #dc3545, #c82333); }
-        .bg-saldo { background: linear-gradient(45deg, var(--azul-escuro), #004080); }
+        .bg-receita { background-color: #28a745; }
+        .bg-previsao { background-color: #f39c12; } 
+        .bg-despesa { background-color: #dc3545; }
+        .bg-saldo { background-color: var(--azul-escuro); }
 
         .painel-alertas { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
         .niver-box, .ranking-box { flex: 1; min-width: 300px; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -52,7 +52,6 @@
         .ranking-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 5px solid #ffc107; }
         .alerta-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .niver-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #333; }
-        .niver-hoje { background: #ff4b82; color: white; border: none; box-shadow: 0 2px 5px rgba(255,75,130,0.4); }
 
         .form-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--dourado); }
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 130px; }
@@ -99,11 +98,17 @@
         .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
 
-        /* MENSAGEM DE CONEXÃO COM A NUVEM */
         #nuvem-status { background: #28a745; color: white; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
 
-        /* CONFIGURAÇÃO DA IMAGEM OFICIAL DO BOLETIM (escondido corretamente) */
-        #relatorio-print-container { position: absolute; left: -9999px; top: -9999px; width: 800px; background: white; z-index: -1; }
+        /* Formulário Público */
+        .public-form-container { background: #fff; padding: 30px; border-radius: 12px; border-top: 5px solid var(--azul-escuro);}
+        .public-form-container h2 { text-align: center; color: var(--azul-escuro); margin-bottom: 5px; margin-top: 0;}
+        .public-form-container p { text-align: center; color: #666; margin-bottom: 25px; font-size: 14px; }
+        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
+        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
+
+        /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
+        #relatorio-print-container { display: none; position: absolute; top: -9999px; left: -9999px; width: 800px; background: white; z-index: -100; }
         #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
         .pdf-title { text-align: center; flex: 1; }
@@ -116,25 +121,18 @@
         .circulo-pdf { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; }
         .circulo-clube { background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado); }
         .circulo-atleta { background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro); font-size: 30px;}
-
-        /* Formulário de Inscrição Público */
-        .public-form-container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto; border-top: 5px solid var(--azul-escuro);}
-        .public-form-container h2 { text-align: center; color: var(--azul-escuro); margin-bottom: 5px; margin-top: 0;}
-        .public-form-container p { text-align: center; color: #666; margin-bottom: 25px; font-size: 14px; }
-        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
-        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
 
     <div class="header">
         <div class="logo-area">
-            <div class="circulo-pdf circulo-clube" style="width: 50px; height: 50px; font-size: 18px; background:white; color:var(--azul-escuro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;" id="topo_letra">AC</div>
+            <div class="circulo-pdf circulo-clube" style="width: 50px; height: 50px; font-size: 18px; display:flex; align-items:center; justify-content:center; font-weight:bold; background:white; color:var(--azul-escuro); border-radius:50%;" id="topo_letra">AC</div>
             <img id="escudo-topo" src="" class="escudo-img" style="display:none;">
             <div>
                 <h1>AC Nova Geração</h1>
-                <small style="color: #ccc;">Gestão em Nuvem</small>
+                <small style="color: #ccc;">Gestão em Nuvem (Firebase)</small>
             </div>
         </div>
     </div>
@@ -143,8 +141,8 @@
         <button class="tab-btn active" onclick="openTab('mensalidades')"><i class="fa-solid fa-file-invoice"></i> Mensalidades</button>
         <button class="tab-btn" onclick="openTab('elenco')"><i class="fa-solid fa-users"></i> Elenco</button>
         <button class="tab-btn" onclick="openTab('chamada')"><i class="fa-solid fa-calendar-check"></i> Chamada</button>
+        <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-image"></i> Card Boletim</button>
         <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
-        <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-chart-line"></i> Boletim</button>
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
         <button class="tab-btn" onclick="openTab('patrocinadores')"><i class="fa-solid fa-handshake"></i> Patrocínios</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
@@ -155,6 +153,20 @@
     <div class="container">
         
         <div id="main-dash">
+            <div class="dashboard-header">
+                <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
+                <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
+                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text" style="font-size: 14px; font-weight: normal; margin-left: 5px;">Ocultar Valores</span>
+                </button>
+            </div>
+
+            <div class="dashboard">
+                <div class="card bg-receita"><h3>Arrecadado</h3><div class="valor money-val" id="dash-receita">R$ 0,00</div></div>
+                <div class="card bg-previsao"><h3>A Receber (Mês)</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
+                <div class="card bg-despesa"><h3>Saídas</h3><div class="valor money-val" id="dash-despesa">R$ 0,00</div></div>
+                <div class="card bg-saldo"><h3>Saldo em Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
+            </div>
+
             <div class="painel-alertas">
                 <div id="box-aniversarios" class="niver-box">
                     <div class="alerta-title" style="color: #006064;"><i class="fa-solid fa-cake-candles" style="color: #ff4b82;"></i> Aniversariantes do Mês</div>
@@ -164,20 +176,6 @@
                     <div class="alerta-title" style="color: #856404;"><i class="fa-solid fa-trophy" style="color: #d39e00;"></i> Top 3 Artilheiros</div>
                     <div id="lista-artilheiros"></div>
                 </div>
-            </div>
-
-            <div class="dashboard-header">
-                <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
-                <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
-                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text">Ocultar Valores</span>
-                </button>
-            </div>
-
-            <div class="dashboard">
-                <div class="card bg-receita"><h3>Arrecadado</h3><div class="valor money-val" id="dash-receita">R$ 0,00</div></div>
-                <div class="card bg-previsao"><h3>A Receber (Mês)</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
-                <div class="card bg-despesa"><h3>Saídas</h3><div class="valor money-val" id="dash-despesa">R$ 0,00</div></div>
-                <div class="card bg-saldo"><h3>Saldo em Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
             </div>
         </div>
 
@@ -190,13 +188,13 @@
                 <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
                 <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
                     <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista">Bolsista</label>
+                    <label for="m_bolsista">Bolsista (Isento)</label>
                 </div>
                 <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Adicionar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
+                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Cobrança / Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
             </div>
         </div>
 
@@ -206,7 +204,7 @@
                 <input type="hidden" id="e_id">
                 <div class="form-group" style="flex: 2;"><label>Nome do Atleta</label><input type="text" id="e_nome"></div>
                 <div class="form-group" style="flex: 2;">
-                    <label>Foto do Atleta</label>
+                    <label>Foto do Atleta (URL ou Arquivo)</label>
                     <div style="display: flex; gap: 5px;">
                         <input type="url" id="e_foto_url" placeholder="Link da foto..." style="flex: 1;">
                         <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
@@ -221,12 +219,131 @@
                 <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Perfil & Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+            </div>
+        </div>
+
+        <div id="inscricao" class="tab-content">
+            <div class="public-form-container">
+                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>. Os dados serão enviados diretamente para o sistema do treinador.</p>
+                
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
+                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Data de Nascimento <span class="required">*</span></label>
+                    <input type="date" id="pub_nasc">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
+                    <select id="pub_cat">
+                        <option value="Sub-07">Sub-07</option>
+                        <option value="Sub-09">Sub-09</option>
+                        <option value="Sub-11">Sub-11</option>
+                        <option value="Sub-13">Sub-13</option>
+                        <option value="Sub-15">Sub-15</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Foto do Aluno(a) para carteirinha <span class="required">*</span></label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="pub_foto_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Escolher Foto</button>
+                            <input type="file" id="pub_foto_file" accept="image/*" onchange="handleFileUpload(event, 'pub_foto_url')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
+                    <select id="pub_camisa">
+                        <option value="10">Tamanho 10</option>
+                        <option value="12">Tamanho 12</option>
+                        <option value="14">Tamanho 14</option>
+                        <option value="P">Tamanho P (Adulto)</option>
+                        <option value="M">Tamanho M (Adulto)</option>
+                        <option value="G">Tamanho G (Adulto)</option>
+                        <option value="GG">Tamanho GG (Adulto)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Escola onde estuda <span class="required">*</span></label>
+                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Turno Escolar <span class="required">*</span></label>
+                    <select id="pub_turno">
+                        <option value="Manhã">Manhã</option>
+                        <option value="Tarde">Tarde</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Responsável <span class="required">*</span></label>
+                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Grau de Parentesco <span class="required">*</span></label>
+                    <select id="pub_parentesco">
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
+                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Endereço Completo <span class="required">*</span></label>
+                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
+                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Anexe aqui o Atestado Médico (Obrigatório) <span class="required">*</span></label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="pub_atestado_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Anexar Atestado</button>
+                            <input type="file" id="pub_atestado_file" accept="image/*,.pdf" onchange="handleFileUpload(event, 'pub_atestado_url')" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
+                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
+                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
+                    <select id="pub_venc">
+                        <option value="05">Dia 05</option>
+                        <option value="10">Dia 10</option>
+                        <option value="15">Dia 15</option>
+                    </select>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
+                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
+                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
+                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
+                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+                </div>
+                
+                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
             </div>
         </div>
 
         <div id="chamada" class="tab-content">
-            <h2>Lista de Presença - Treino</h2>
+            <h2>Chamada de Treino</h2>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group"><label>Data do Treino</label><input type="date" id="pres_data"></div>
                 <div class="form-group"><label>Filtrar Categoria</label><select id="pres_cat_filtro" onchange="renderizarChamada()"><option value="Todos">Todas as Categorias</option><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
@@ -237,21 +354,7 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença</button>
-        </div>
-
-        <div id="agenda" class="tab-content">
-            <h2>Calendário de Jogos e Convocações</h2>
-            <div class="form-row">
-                <input type="hidden" id="j_id">
-                <div class="form-group"><label>Data</label><input type="date" id="j_data"></div>
-                <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
-                <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
-                <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
-                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
-                <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
-            </div>
-            <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
@@ -263,7 +366,7 @@
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 <div style="flex: 1; min-width: 300px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
                         <div class="form-group"><label>🏃‍♂️ Físico</label><input type="number" id="av_fis" min="1" max="10" placeholder="1-10" onchange="atualizarRadarTela()"></div>
                         <div class="form-group"><label>🎯 Finalização</label><input type="number" id="av_chute" min="1" max="10" placeholder="1-10" onchange="atualizarRadarTela()"></div>
                         <div class="form-group"><label>👟 Passe</label><input type="number" id="av_passe" min="1" max="10" placeholder="1-10" onchange="atualizarRadarTela()"></div>
@@ -283,6 +386,20 @@
                     <canvas id="radarTela" width="300" height="300"></canvas>
                 </div>
             </div>
+        </div>
+
+        <div id="agenda" class="tab-content">
+            <h2>Calendário de Jogos e Convocações</h2>
+            <div class="form-row">
+                <input type="hidden" id="j_id">
+                <div class="form-group"><label>Data</label><input type="date" id="j_data"></div>
+                <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
+                <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
+                <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
+                <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
+            </div>
+            <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
         </div>
 
         <div id="uniformes" class="tab-content">
@@ -340,133 +457,6 @@
                 </div>
             </div>
             <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none;"></div>
-        </div>
-
-        <div id="inscricao" class="tab-content">
-            <div class="public-form-container">
-                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
-                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>. Os dados serão enviados diretamente para o sistema do treinador.</p>
-                
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
-                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Data de Nascimento <span class="required">*</span></label>
-                    <input type="date" id="pub_nasc">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
-                    <select id="pub_cat">
-                        <option value="Sub-07">Sub-07</option>
-                        <option value="Sub-09">Sub-09</option>
-                        <option value="Sub-11">Sub-11</option>
-                        <option value="Sub-13">Sub-13</option>
-                        <option value="Sub-15">Sub-15</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Foto do Aluno(a) para carteirinha <span class="required">*</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="pub_foto_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: auto; padding: 10px;">Escolher Foto</button>
-                            <input type="file" id="pub_foto_file" accept="image/*" onchange="handleFileUpload(event, 'pub_foto_url')" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
-                    <select id="pub_camisa">
-                        <option value="10">Tamanho 10</option>
-                        <option value="12">Tamanho 12</option>
-                        <option value="14">Tamanho 14</option>
-                        <option value="P">Tamanho P (Adulto)</option>
-                        <option value="M">Tamanho M (Adulto)</option>
-                        <option value="G">Tamanho G (Adulto)</option>
-                        <option value="GG">Tamanho GG (Adulto)</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Escola onde estuda <span class="required">*</span></label>
-                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Turno Escolar <span class="required">*</span></label>
-                    <select id="pub_turno">
-                        <option value="Manhã">Manhã</option>
-                        <option value="Tarde">Tarde</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Responsável <span class="required">*</span></label>
-                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Grau de Parentesco <span class="required">*</span></label>
-                    <select id="pub_parentesco">
-                        <option value="Pai">Pai</option>
-                        <option value="Mãe">Mãe</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Endereço Completo <span class="required">*</span></label>
-                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
-                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Anexe aqui o Atestado Médico (Obrigatório) <span class="required">*</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="pub_atestado_url" placeholder="Aguardando arquivo..." disabled style="flex: 1; background: #eee;">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: auto; padding: 10px;">Anexar Atestado</button>
-                            <input type="file" id="pub_atestado_file" accept="image/*,.pdf" onchange="handleFileUpload(event, 'pub_atestado_url')" />
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
-                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
-                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
-                    <select id="pub_venc">
-                        <option value="05">Dia 05</option>
-                        <option value="10">Dia 10</option>
-                        <option value="15">Dia 15</option>
-                    </select>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
-                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
-                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
-                </div>
-
-                <div class="form-group checkbox-group" style="margin-bottom: 15px; align-items: flex-start;">
-                    <label>Participa do grupo oficial do WhatsApp?</label>
-                    <div style="font-size: 14px; margin-top: 5px;">
-                        <input type="radio" name="wpp_group" value="yes"> Sim, já estou no grupo.<br>
-                        <input type="radio" name="wpp_group" value="no"> Não. (<a href="#" style="color: blue;">Clique aqui para entrar</a>)
-                    </div>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
-                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
-                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
-                </div>
-                
-                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
-            </div>
         </div>
 
         <div id="configuracoes" class="tab-content">
@@ -557,7 +547,7 @@
         </div>
     </div>
 
-    <div id="relatorio-print-container" style="position: absolute; left: -9999px; top: -9999px; width: 800px; background: white; z-index: -1;">
+    <div id="relatorio-print-container" style="display: none; position: absolute; top: -9999px; left: -9999px; width: 800px; background: white; z-index: -100;">
         <div id="relatorio-print" style="background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif;">
             <div class="pdf-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px;">
                 <div class="circulo-pdf circulo-clube" id="img_letra_clube" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado);">AC</div>
@@ -591,6 +581,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
+        // CONFIGURAÇÃO DO SEU FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
             authDomain: "ac-nova-geracao.firebaseapp.com",
@@ -601,7 +592,10 @@
             appId: "1:409905433868:web:a9349a533b591df7310d29"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        // INICIALIZAÇÃO SEGURA
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const database = firebase.database();
         const dbRef = database.ref('sistema_ac_dados');
 
@@ -610,10 +604,19 @@
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
 
+        // CARREGA DADOS LOCAIS PRIMEIRO (Para não ficar em branco caso a net falhe)
+        let localData = localStorage.getItem('acNovaGeracaoData');
+        if(localData) {
+            db = JSON.parse(localData);
+            renderizarTudo();
+        }
+
+        // Configura a URL para o link de inscrição
         document.addEventListener("DOMContentLoaded", () => {
             let url = window.location.href.split('?')[0] + '?tab=inscricao';
             document.getElementById('link_inscricao').value = url;
 
+            // Se abrir pela URL de inscrição, esconde o menu e mostra só o form
             const urlParams = new URLSearchParams(window.location.search);
             if(urlParams.get('tab') === 'inscricao') {
                 document.getElementById('main-nav').style.display = 'none';
@@ -622,6 +625,7 @@
             }
         });
 
+        // PUXA DADOS DA NUVEM EM TEMPO REAL
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -635,9 +639,11 @@
                 sys_logo = data.sys_logo || "";
                 
                 document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
+                document.getElementById('nuvem-status').style.background = "#28a745";
                 setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
             } 
 
+            // Garante chaves nas listas
             db.elenco.forEach(j => { 
                 if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; 
                 if(!j.historico) j.historico = []; 
@@ -657,6 +663,9 @@
                 document.getElementById('topo_letra').style.display = 'none';
                 document.getElementById('cfg_logo').value = sys_logo; 
             }
+            
+            // Salva backup local
+            localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
             renderizarTudo();
         });
 
@@ -670,9 +679,14 @@
                 patrocinadores: db.patrocinadores,
                 presencas: db.presencas,
                 sys_logo: sys_logo
-            });
+            }).catch(e => console.error("Erro ao salvar no Firebase:", e));
+            // Backup local
+            localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
         }
 
+        // =========================================================
+        // UTILIDADES E NAVEGAÇÃO
+        // =========================================================
         function formatarMoeda(v) { return `R$ ${parseFloat(v).toFixed(2).replace('.', ',')}`; }
         
         window.openTab = function(tabName) {
@@ -680,14 +694,23 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active'); 
             
+            // Highlight the active button if we are not hiding the menu
             if(document.getElementById('main-nav').style.display !== 'none') {
-                try { event.currentTarget.classList.add('active'); } catch(e) {}
+                event.currentTarget.classList.add('active');
             }
             
+            // Hide Dashboard on certain tabs
             document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'inscricao' || tabName === 'relatorios') ? 'none' : 'block';
             
             if(tabName === 'avaliacao') { atualizarSelectAtletas(); atualizarRadarTela(); }
             if(tabName === 'chamada') { document.getElementById('pres_data').valueAsDate = new Date(); renderizarChamada(); }
+        }
+
+        window.onclick = function(event) { 
+            let modal1 = document.getElementById('modalPerfil'); 
+            let modal2 = document.getElementById('modalJogo'); 
+            if (event.target == modal1) { modal1.style.display = "none"; } 
+            if (event.target == modal2) { modal2.style.display = "none"; } 
         }
 
         window.toggleVisibility = function() {
@@ -707,6 +730,7 @@
             renderizarTudo(); 
         }
 
+        // Converte imagem upada em Base64 para salvar no firebase sem precisar de storage externo
         window.handleFileUpload = function(event, targetInputId) {
             const file = event.target.files[0];
             if (file) {
@@ -718,12 +742,11 @@
             }
         }
 
+        // =========================================================
+        // INSCRIÇÃO ONLINE (Substituindo Google Forms)
+        // =========================================================
         window.enviarInscricao = function() {
-            let authMed = document.getElementById('pub_auth_med').checked;
-            let authEsc = document.getElementById('pub_auth_esc').checked;
-            let authFinal = document.getElementById('pub_auth_final').checked;
-
-            if(!authMed || !authEsc || !authFinal) {
+            if(!document.getElementById('pub_auth_med').checked || !document.getElementById('pub_auth_esc').checked || !document.getElementById('pub_auth_final').checked) {
                 alert("Você precisa concordar com todos os termos e autorizações para concluir a inscrição.");
                 return;
             }
@@ -743,6 +766,7 @@
 
             let newId = Date.now().toString();
 
+            // Adiciona no Elenco
             db.elenco.push({ 
                 id: newId, 
                 nome: nome, 
@@ -754,18 +778,32 @@
                 historico: [] 
             });
 
+            // Adiciona na Mensalidade (vinculado ao responsável)
             db.mensalidades.push({
                 id: newId,
                 nome: resp + " (Resp. " + nome.split(' ')[0] + ")",
                 tel: tel, 
                 venc: venc,
                 pago: false,
-                bolsista: false 
+                bolsista: false // Por padrão entra como pagante
             });
 
             salvarDB();
-            alert("Inscrição enviada com sucesso! O treinador entrará em contato em breve.");
             
+            // Mensagem de WhatsApp para o treinador
+            let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
+            msg += `*Atleta:* ${nome}\n`;
+            msg += `*Categoria:* ${cat}\n`;
+            msg += `*Responsável:* ${resp}\n`;
+            msg += `*Telefone:* ${document.getElementById('pub_tel').value}\n`;
+            msg += `*Vencimento Escolhido:* Dia ${venc}\n\n`;
+            msg += `_Ficha preenchida e enviada pelo sistema online._`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+            
+            alert("Inscrição enviada com sucesso!");
+            
+            // Limpa o form
             document.getElementById('pub_nome').value = '';
             document.getElementById('pub_nasc').value = '';
             document.getElementById('pub_resp_nome').value = '';
@@ -785,6 +823,9 @@
             alert("Link copiado! Envie no WhatsApp para os pais preencherem a ficha de inscrição.");
         }
 
+        // =========================================================
+        // MENSALIDADES
+        // =========================================================
         window.saveMensalidade = function() {
             let id = document.getElementById('m_id').value;
             let n = document.getElementById('m_nome').value; 
@@ -829,6 +870,9 @@
         } 
         window.delMensalidade = function(id) { if(confirm('Excluir?')){db.mensalidades=db.mensalidades.filter(m=>m.id!=id); salvarDB();} }
 
+        // =========================================================
+        // ELENCO
+        // =========================================================
         window.saveJogador = function() { 
             let id = document.getElementById('e_id').value;
             let n=document.getElementById('e_nome').value; 
@@ -868,6 +912,9 @@
         window.addVermelho = function(id) { db.elenco.find(j => j.id==id).vermelhos+=1; salvarDB(); } 
         window.delJogador = function(id) { if(confirm('Remover jogador do elenco?')) { db.elenco=db.elenco.filter(j=>j.id!=id); salvarDB(); } }
 
+        // =========================================================
+        // CHAMADA
+        // =========================================================
         window.renderizarChamada = function() {
             let f = document.getElementById('pres_cat_filtro').value;
             let lista = db.elenco;
@@ -903,6 +950,9 @@
             alert("Chamada salva com sucesso!");
         }
 
+        // =========================================================
+        // PATROCINADORES
+        // =========================================================
         window.savePatrocinio = function() {
             let id = document.getElementById('p_id').value;
             let n = document.getElementById('p_nome').value;
@@ -939,6 +989,9 @@
             document.getElementById('btn-p-cancel').style.display = 'none';
         }
 
+        // =========================================================
+        // JOGOS E GERENCIAR CONVOCAÇÃO
+        // =========================================================
         window.saveJogo = function() { 
             let id = document.getElementById('j_id').value;
             let d=document.getElementById('j_data').value; 
@@ -993,9 +1046,9 @@
                 
                 return `<tr>
                     <td>${atleta.nome} (${atleta.cat})</td>
-                    <td><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
-                    <td><input type="checkbox" class="chk-presente-jogo" data-id="${atleta.id}" ${isPres} style="width:20px; height:20px;"></td>
-                    <td><input type="checkbox" class="chk-pago-jogo" data-id="${atleta.id}" ${isPago} style="width:20px; height:20px;"></td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-presente-jogo" data-id="${atleta.id}" ${isPres} style="width:20px; height:20px;"></td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-pago-jogo" data-id="${atleta.id}" ${isPago} style="width:20px; height:20px;"></td>
                 </tr>`;
             }).join('');
             
@@ -1047,14 +1100,17 @@
             
             conv.forEach(atletaId => {
                 let a = db.elenco.find(e => e.id == atletaId);
-                if(a) msg += `- ${a.nome} (${a.cat})\n`;
+                if(a) msg += `- ${a.nome}\n`;
             });
             
-            msg += `\n*Por favor, confirmem presença!* 🦅`;
+            msg += `\n*Por favor, confirmem presença no grupo!* 🦅`;
             
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
+        // =========================================================
+        // UNIFORMES
+        // =========================================================
         window.addUniforme = function() { 
             let id = document.getElementById('u_id').value;
             let n=document.getElementById('u_nome').value; 
@@ -1087,6 +1143,9 @@
         window.pagarUniforme = function(id) { db.uniformes.find(u=>u.id==id).pago=true; salvarDB(); } 
         window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id!=id); salvarDB();} }
 
+        // =========================================================
+        // DESPESAS
+        // =========================================================
         window.saveDespesa = function() { 
             let id = document.getElementById('d_id').value;
             let d=document.getElementById('d_desc').value; 
@@ -1120,11 +1179,15 @@
             document.getElementById('btn-d-cancel').style.display = 'none';
         }
         window.delDespesa = function(id) { if(confirm("Excluir despesa?")){db.despesas=db.despesas.filter(d=>d.id!=id); salvarDB();} }
-
+        
+        // =========================================================
+        // RENDER GERAL (Dashboard e Tabelas)
+        // =========================================================
         function renderizarTudo() {
             atualizarAlertasIniciais();
             let entrou = 0; let previsao = 0;
             
+            // Calculo Receita x Previsão
             db.mensalidades.forEach(m => { 
                 if(!m.bolsista) {
                     if(m.pago) entrou += 60; else previsao += 60; 
@@ -1136,6 +1199,7 @@
             
             let saiu = db.despesas.reduce((acc, d) => acc + parseFloat(d.valor), 0);
 
+            // Atualiza Dashboard (Respeitando a flag de ocultar/mostrar)
             let fmtEntrou = formatarMoeda(entrou);
             let fmtPrevisao = formatarMoeda(previsao);
             let fmtSaiu = formatarMoeda(saiu);
@@ -1153,11 +1217,13 @@
                 document.getElementById('dash-saldo').innerText = 'R$ ***';
             }
             
+            // Grava os originais de qualquer forma para o toggle funcionar
             document.getElementById('dash-receita').setAttribute('data-original', fmtEntrou);
             document.getElementById('dash-previsao').setAttribute('data-original', fmtPrevisao);
             document.getElementById('dash-despesa').setAttribute('data-original', fmtSaiu);
             document.getElementById('dash-saldo').setAttribute('data-original', fmtSaldo);
 
+            // Tabela Mensalidades
             let dia = new Date().getDate();
             document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
                 let st, txt, btnTexto, btnCor, baixaBtn = '';
@@ -1196,6 +1262,7 @@
                     </td></tr>`;
             }).join('');
             
+            // Tabela Elenco
             document.getElementById('tb-elenco').innerHTML = db.elenco.map(j => {
                 let imgHtml = j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>';
                 return `<tr>
@@ -1209,6 +1276,7 @@
                 </tr>`
             }).join('');
             
+            // Tabela Patrocinadores
             document.getElementById('tb-patrocinadores').innerHTML = db.patrocinadores.map(p => {
                 let valorExibido = isValuesHidden ? 'R$ ***' : formatarMoeda(p.valor);
                 return `<tr>
@@ -1223,6 +1291,7 @@
                 </tr>`;
             }).join('');
 
+            // Tabela Jogos
             document.getElementById('tb-jogos').innerHTML = db.jogos.map(j => {
                 let valorArrecadadoExibido = isValuesHidden ? 'R$ ***' : formatarMoeda(j.arrecadado||0);
                 return `<tr>
@@ -1238,14 +1307,19 @@
                 </tr>`;
             }).join('');
             
+            // Tabela Uniformes
             document.getElementById('tb-uniformes').innerHTML = db.uniformes.map(u => `<tr><td>${u.nome}</td><td>${u.tam}</td><td>${u.pago?'<span class="badge badge-ok">Pago</span>':'<span class="badge badge-pendente">Pendente</span>'}</td><td class="action-btns">${!u.pago?`<button class="btn-sm btn-pay" onclick="pagarUniforme('${u.id}')">Baixa</button>`:''}<button class="btn-sm btn-edit" onclick="editUniforme('${u.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delUniforme('${u.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
             
+            // Tabela Despesas
             document.getElementById('tb-despesas').innerHTML = db.despesas.map(d => {
                 let valorDespesaExibido = isValuesHidden ? 'R$ ***' : formatarMoeda(d.valor);
                 return `<tr><td>${d.data}</td><td><strong>${d.desc}</strong><br><small>${d.cat}</small></td><td style="color:red; font-weight:bold;">${valorDespesaExibido}</td><td class="action-btns"><button class="btn-sm btn-edit" onclick="editDespesa('${d.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delDespesa('${d.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             }).join('');
         }
 
+        // =========================================================
+        // RELATÓRIOS (WhatsApp e Excel)
+        // =========================================================
         window.gerarRelatorioDevedores = function() {
             let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
             if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
@@ -1272,6 +1346,9 @@
             let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); 
         }
 
+        // =========================================================
+        // AVALIAÇÃO E BOLETIM (Radar de Evolução)
+        // =========================================================
         window.atualizarSelectAtletas = function() { 
             let s = document.getElementById('av_atleta'); 
             s.innerHTML = '<option value="">-- Escolha --</option>' + db.elenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
@@ -1419,11 +1496,13 @@
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
-            let container = document.getElementById('relatorio-print-container'); container.style.display = 'block';
-
+            // Temporary show to render image
+            let container = document.getElementById('relatorio-print-container'); 
+            container.style.zIndex = "9999";
+            
             setTimeout(() => {
                 html2canvas(document.getElementById('relatorio-print'), { scale: 2, useCORS: true }).then(canvas => {
-                    container.style.display = 'none';
+                    container.style.zIndex = "-100";
                     let link = document.createElement('a'); link.download = `Card_Boletim_${a.nome.replace(/\s/g, '_')}.png`; link.href = canvas.toDataURL("image/png"); link.click();
                     btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; 
                     
@@ -1432,11 +1511,12 @@
                     if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
                     else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
                 }).catch(err => {
-                    container.style.display = 'none'; btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("Erro de bloqueio de imagem (CORS). Tente usar o atleta sem foto.");
+                    container.style.zIndex = "-100"; btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("Erro de bloqueio de imagem. Tente usar o atleta sem foto.");
                 });
             }, 500); 
         }
 
+        // CONFIGURACOES GERAIS
         window.salvarLogo = function() { 
             let n = document.getElementById('cfg_logo').value; 
             if(n) { document.getElementById('escudo-topo').src = n; document.getElementById('escudo-topo').style.display = 'block'; document.getElementById('topo_letra').style.display = 'none'; } 
