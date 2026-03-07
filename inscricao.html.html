@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Inscrição - AC Nova Geração</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
+        :root {
+            --azul-escuro: #002244;
+            --dourado: #cfb53b;
+            --fundo: #f4f4f9;
+            --texto: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            border-top: 5px solid var(--azul-escuro);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--azul-escuro);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="tel"],
+        select,
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 2px rgba(207, 181, 59, 0.2);
+        }
+
+        .required {
+            color: red;
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            font-weight: normal;
+            cursor: pointer;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .radio-group {
+            margin-bottom: 15px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            margin-left: 5px;
+        }
+
+        .btn-submit {
+            background-color: var(--azul-escuro);
+            color: var(--dourado);
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #00152b;
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .btn-upload {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0,0,0,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: var(--azul-escuro);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 10px; font-weight: bold; color: var(--azul-escuro);">Enviando Inscrição...</p>
+    </div>
+
+    <div class="form-container">
+        <h2><i class="fa-regular fa-futbol"></i> AC Nova Geração</h2>
+        <p class="subtitle">Ficha de Inscrição Oficial</p>
+        
+        <form id="registrationForm">
+            <div class="form-group">
+                <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
+                <input type="text" id="alunoNome" required placeholder="Ex: João Silva">
+            </div>
+
+            <div class="form-group">
+                <label>Data de Nascimento <span class="required">*</span></label>
+                <input type="date" id="alunoNasc" required>
+            </div>
+
+            <div class="form-group">
+                <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
+                <select id="alunoCat" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="Sub-07">Sub-07</option>
+                    <option value="Sub-09">Sub-09</option>
+                    <option value="Sub-11">Sub-11</option>
+                    <option value="Sub-13">Sub-13</option>
+                    <option value="Sub-15">Sub-15</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
+                <select id="alunoCamisa" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="10">Tamanho 10</option>
+                    <option value="12">Tamanho 12</option>
+                    <option value="14">Tamanho 14</option>
+                    <option value="P">Tamanho P (Adulto)</option>
+                    <option value="M">Tamanho M (Adulto)</option>
+                    <option value="G">Tamanho G (Adulto)</option>
+                    <option value="GG">Tamanho GG (Adulto)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Foto do Aluno(a) (Opcional - Rosto para carteirinha)</label>
+                <div class="upload-btn-wrapper">
+                    <button type="button" class="btn-upload" id="btnFotoAluno"><i class="fa-solid fa-camera"></i> Escolher Foto</button>
+                    <input type="file" id="fileFotoAluno" accept="image/*" onchange="handleFileUpload(event, 'fotoUrl', 'btnFotoAluno')">
+                </div>
+                <input type="hidden" id="fotoUrl">
+            </div>
+
+            <div class="form-group">
+                <label>Escola onde estuda <span class="required">*</span></label>
+                <input type="text" id="escolaNome" required placeholder="Nome da escola">
+            </div>
+
+            <div class="form-group">
+                <label>Turno Escolar <span class="required">*</span></label>
+                <select id="escolaTurno" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Nome Completo do Responsável <span class="required">*</span></label>
+                <input type="text" id="respNome" required placeholder="Ex: Maria Silva">
+            </div>
+
+            <div class="form-group">
+                <label>Grau de Parentesco <span class="required">*</span></label>
+                <select id="respParentesco" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="Pai">Pai</option>
+                    <option value="Mãe">Mãe</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
+                <input type="tel" id="respTel" required placeholder="Ex: 82999999999">
+            </div>
+
+            <div class="form-group">
+                <label>Endereço Completo <span class="required">*</span></label>
+                <textarea id="endereco" rows="2" required placeholder="Rua, Número, Bairro, Cidade"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>O aluno possui alguma alergia ou faz uso contínuo de algum medicamento? <span class="required">*</span></label>
+                <textarea id="saudeInfo" rows="2" required placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Atestado Médico (Opcional por enquanto)</label>
+                <div class="upload-btn-wrapper">
+                    <button type="button" class="btn-upload" id="btnAtestado"><i class="fa-solid fa-paperclip"></i> Anexar Atestado (Imagem/PDF)</button>
+                    <input type="file" id="fileAtestado" accept="image/*,.pdf" onchange="handleFileUpload(event, 'atestadoUrl', 'btnAtestado')">
+                </div>
+                <input type="hidden" id="atestadoUrl">
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="termMedico" required>
+                <label for="termMedico"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
+            </div>
+
+            <div class="form-group">
+                <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
+                <select id="vencimento" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="05">Dia 05</option>
+                    <option value="10">Dia 10</option>
+                    <option value="15">Dia 15</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="termEscola" required>
+                <label for="termEscola"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que o futebol e a escola devem caminhar juntos. Assumo o compromisso de monitorar as notas do meu filho(a). Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
+            </div>
+
+            <div class="form-group radio-group">
+                <label style="margin-bottom: 10px; display:block;">Participa do grupo oficial do WhatsApp do projeto? <span class="required">*</span></label>
+                <input type="radio" id="wppSim" name="wppGroup" value="Sim" required>
+                <label for="wppSim">Sim, já estou no grupo.</label><br>
+                <input type="radio" id="wppNao" name="wppGroup" value="Não">
+                <label for="wppNao">Não. (<a href="https://chat.whatsapp.com/FzUJNdjVrGCFQK3QZDztCU?mode=gi_t" target="_blank" style="color: blue; text-decoration: underline;">Clique aqui para entrar</a>)</label>
+            </div>
+
+            <div class="checkbox-group" style="background-color: #ffe8b3; border-left: 4px solid #ff9800;">
+                <input type="checkbox" id="termFinal" required>
+                <label for="termFinal"><strong>ASSINATURA DIGITAL:</strong> Eu, responsável legal pelo aluno inscrito, li o termo acima, concordo com as regras e autorizo a participação nos treinos do AC Nova Geração. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+            </div>
+
+            <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> Enviar Inscrição</button>
+        </form>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO DO SEU FIREBASE - COLOQUE SUAS CREDENCIAIS AQUI
+        const firebaseConfig = {
+            apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
+            authDomain: "ac-nova-geracao.firebaseapp.com",
+            databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com",
+            projectId: "ac-nova-geracao",
+            storageBucket: "ac-nova-geracao.firebasestorage.app",
+            messagingSenderId: "409905433868",
+            appId: "1:409905433868:web:a9349a533b591df7310d29"
+        };
+
+        // Inicializa Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+        const dbRef = database.ref('sistema_ac_dados');
+
+        // Lógica de compressão de imagem para não estourar o limite do Firebase
+        function handleFileUpload(event, targetHiddenId, btnId) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const btn = document.getElementById(btnId);
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
+
+            // Se for PDF, converte para base64 direto (sem compressão de imagem)
+            if(file.type === "application/pdf") {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetHiddenId).value = e.target.result;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> PDF Anexado!';
+                    btn.style.backgroundColor = "#28a745";
+                };
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            // Se for imagem, comprime
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    const MAX_WIDTH = 300; // Reduz a resolução para economizar espaço
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    // Converte para JPEG com 60% de qualidade
+                    const dataUrl = canvas.toDataURL("image/jpeg", 0.6); 
+                    document.getElementById(targetHiddenId).value = dataUrl;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Foto Carregada!';
+                    btn.style.backgroundColor = "#28a745";
+                };
+            };
+        }
+
+        // Lidar com o envio do formulário
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede o recarregamento da página padrão
+
+            // Mostrar tela de carregamento
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            // Coletar dados do form
+            const alunoNome = document.getElementById('alunoNome').value;
+            const alunoNascInput = document.getElementById('alunoNasc').value; // YYYY-MM-DD
+            const alunoCat = document.getElementById('alunoCat').value;
+            const fotoUrl = document.getElementById('fotoUrl').value;
+            const respNome = document.getElementById('respNome').value;
+            const respTelRaw = document.getElementById('respTel').value;
+            const vencimento = document.getElementById('vencimento').value;
+
+            // Formatar data para DD/MM/YYYY
+            const dateParts = alunoNascInput.split('-');
+            const alunoNascFormatted = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+
+            // Limpar telefone (apenas números)
+            const respTelClean = respTelRaw.replace(/\D/g, '');
+
+            // Buscar dados atuais do Firebase para dar um "push" sem apagar o que já existe
+            dbRef.once('value').then((snapshot) => {
+                let currentData = snapshot.val() || {};
+                let elenco = currentData.elenco || [];
+                let mensalidades = currentData.mensalidades || [];
+
+                const newId = Date.now().toString();
+
+                // Montar objeto do Aluno (Elenco)
+                const novoAluno = {
+                    id: newId,
+                    nome: alunoNome,
+                    foto: fotoUrl,
+                    cat: alunoCat,
+                    nasc: alunoNascFormatted,
+                    gols: 0,
+                    amarelos: 0,
+                    vermelhos: 0,
+                    notas: { fis: 0, chute: 0, passe: 0, coord: 0, cab: 0, disc: 0, obs: '' },
+                    historico: []
+                };
+
+                // Montar objeto da Mensalidade
+                const novaMensalidade = {
+                    id: newId,
+                    nome: `${respNome} (${alunoNome.split(' ')[0]})`, // Ex: Maria (João)
+                    tel: respTelClean,
+                    venc: vencimento,
+                    pago: false,
+                    bolsista: false
+                };
+
+                elenco.push(novoAluno);
+                mensalidades.push(novaMensalidade);
+
+                // Atualizar o Firebase
+                return dbRef.update({
+                    elenco: elenco,
+                    mensalidades: mensalidades
+                });
+
+            }).then(() => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                
+                // Mensagem para o WhatsApp do Clube/Treinador (Opcional)
+                const wppMsg = `⚽ *Nova Inscrição Recebida!* ⚽%0A%0A*Atleta:* ${alunoNome}%0A*Categoria:* ${alunoCat}%0A*Responsável:* ${respNome}%0A*Telefone:* ${respTelClean}`;
+                
+                alert("Inscrição realizada com sucesso! O cadastro já está no sistema.");
+                
+                // Abre o WhatsApp do treinador avisando (substitua o número abaixo pelo seu se quiser, ex: 558299999999)
+                // window.open(`https://wa.me/SEUNUMEROAQUI?text=${wppMsg}`, '_blank');
+                
+                // Limpa o form
+                document.getElementById('registrationForm').reset();
+                document.getElementById('btnFotoAluno').innerHTML = '<i class="fa-solid fa-camera"></i> Escolher Foto';
+                document.getElementById('btnFotoAluno').style.backgroundColor = '#6c757d';
+                document.getElementById('btnAtestado').innerHTML = '<i class="fa-solid fa-paperclip"></i> Anexar Atestado (Imagem/PDF)';
+                document.getElementById('btnAtestado').style.backgroundColor = '#6c757d';
+
+            }).catch((error) => {
+                console.error(error);
+                document.getElementById('loadingOverlay').style.display = 'none';
+                alert("Ocorreu um erro ao enviar a inscrição. Verifique sua conexão com a internet.");
+            });
+        });
+    </script>
+</body>
+</html>
