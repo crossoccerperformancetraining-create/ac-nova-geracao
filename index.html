@@ -27,7 +27,6 @@
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
-        .tab-btn.settings { background-color: #444; color: white; }
 
         .container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; overflow-x: auto; }
         .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
@@ -101,7 +100,7 @@
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
 
         /* MENSAGEM DE CONEXÃO COM A NUVEM */
-        #nuvem-status { background: #28a745; color: white; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
+        #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
 
         /* Formulário Público */
         .public-form-container { background: #fff; padding: 30px; border-radius: 12px; border-top: 5px solid var(--azul-escuro);}
@@ -110,7 +109,7 @@
         .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
 
-        /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
+        /* CORREÇÃO DO BOLETIM FANTASMA */
         #relatorio-print-container { display: none; position: absolute; top: -9999px; left: -9999px; width: 800px; background: white; z-index: -100; }
         #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
@@ -135,7 +134,7 @@
             <img id="escudo-topo" src="" class="escudo-img" style="display:none;">
             <div>
                 <h1>AC Nova Geração</h1>
-                <small style="color: #ccc;">Gestão em Nuvem (Firebase)</small>
+                <small style="color: #ccc;">Gestão em Nuvem</small>
             </div>
         </div>
     </div>
@@ -170,7 +169,7 @@
             <div class="dashboard-header">
                 <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
                 <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
-                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text" style="font-size: 14px; font-weight: normal; margin-left: 5px;">Ocultar Valores</span>
+                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text">Ocultar Valores</span>
                 </button>
             </div>
 
@@ -238,7 +237,7 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença</button>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
@@ -259,7 +258,7 @@
                         <div class="form-group"><label>🤝 Disciplina</label><input type="number" id="av_disc" min="1" max="10" placeholder="1-10" onchange="atualizarRadarTela()"></div>
                     </div>
                     <button class="btn-add" style="background: #000; color: #fff; width: 100%; margin-bottom: 15px;" onclick="gerarFeedbackIA()"><i class="fa-solid fa-robot"></i> Gerar Análise Automática (IA)</button>
-                    <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3"></textarea></div>
+                    <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3" placeholder="Análise do atleta..."></textarea></div>
                     
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                         <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar na Nuvem</button>
@@ -413,7 +412,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
+                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Endereço Completo <span class="required">*</span></label>
@@ -482,7 +481,7 @@
             </div>
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
-                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link de Inscrição Online</h3>
+                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link para os Pais (Inscrição Online)</h3>
                 <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição. Os dados cairão direto no sistema!</p>
                 <div style="display: flex; gap: 10px;">
                     <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
@@ -588,8 +587,11 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        // Usando a versão compat do Firebase, as variáveis globais do firebase ficam disponíveis
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // CONFIGURAÇÃO DO SEU FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
             authDomain: "ac-nova-geracao.firebaseapp.com",
@@ -631,24 +633,19 @@
             }
         });
 
+        // PUXA DADOS DA NUVEM EM TEMPO REAL
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                db.mensalidades = data.mensalidades || [];
-                db.elenco = data.elenco || [];
-                db.uniformes = data.uniformes || [];
-                db.jogos = data.jogos || [];
-                db.despesas = data.despesas || [];
-                db.patrocinadores = data.patrocinadores || [];
-                db.presencas = data.presencas || [];
-                sys_logo = data.sys_logo || sys_logo;
+                // Mescla os dados da nuvem com a estrutura básica para evitar erros se a nuvem estiver vazia
+                db = { ...db, ...data };
                 
                 document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
                 document.getElementById('nuvem-status').style.background = "#28a745";
                 setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
             } 
 
-            // Garante chaves nas listas
+            // Garante chaves nas listas (para alunos antigos que não tinham essas propriedades)
             db.elenco.forEach(j => { 
                 if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; 
                 if(!j.historico) j.historico = []; 
@@ -669,8 +666,8 @@
                 document.getElementById('cfg_logo').value = sys_logo; 
             }
             
+            // Salva backup local
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
-            localStorage.setItem('sys_logo', sys_logo);
             renderizarTudo();
         });
 
@@ -686,8 +683,8 @@
                 sys_logo: sys_logo
             }).catch(e => console.error("Erro ao salvar no Firebase:", e));
             
+            // Backup local
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
-            localStorage.setItem('sys_logo', sys_logo);
         }
 
         // =========================================================
@@ -746,7 +743,7 @@
         }
 
         // =========================================================
-        // INSCRIÇÃO ONLINE
+        // INSCRIÇÃO ONLINE 
         // =========================================================
         window.enviarInscricao = function() {
             let authMed = document.getElementById('pub_auth_med').checked;
@@ -767,7 +764,7 @@
             let foto = document.getElementById('pub_foto_url').value;
 
             if(!nome || !nasc || !resp || !tel) {
-                alert("Por favor, preencha os campos obrigatórios (*).");
+                alert("Por favor, preencha todos os campos obrigatórios (*).");
                 return;
             }
 
@@ -805,7 +802,7 @@
             
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
             
-            alert("Inscrição enviada com sucesso!");
+            alert("Inscrição enviada com sucesso! O treinador entrará em contato em breve.");
             
             document.getElementById('pub_nome').value = '';
             document.getElementById('pub_nasc').value = '';
@@ -1321,35 +1318,6 @@
         }
 
         // =========================================================
-        // RELATÓRIOS (WhatsApp e Excel)
-        // =========================================================
-        window.gerarRelatorioDevedores = function() {
-            let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
-            if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
-            
-            let msg = "*🚨 LISTA DE PENDÊNCIAS - AC NOVA GERAÇÃO 🚨*\n\n";
-            devedores.forEach(m => { 
-                msg += `👉 *${m.nome}* (Venc: Dia ${m.venc})\n`; 
-            });
-            msg += "\n*Chave PIX:* acnovageracao@outlook.com\n_Por favor, regularizem as mensalidades para ajudar a manter o nosso projeto! A Nova Geração é Nossa! 🦅_";
-            
-            navigator.clipboard.writeText(msg).then(() => {
-                alert("Lista copiada! Cole no grupo do WhatsApp.");
-            }).catch(err => {
-                document.getElementById('preview-relatorio').style.display = 'block';
-                document.getElementById('preview-relatorio').innerText = msg;
-            });
-        }
-
-        window.exportarExcel = function() { 
-            let c = "data:text/csv;charset=utf-8,\uFEFF=== MENSALIDADES ===\nNome;WhatsApp;Vencimento;Status;Bolsista\n"; 
-            db.mensalidades.forEach(m => { c += `${m.nome};${m.tel};Dia ${m.venc};${m.pago ? "Pago" : "Pendente"};${m.bolsista ? "Sim" : "Nao"}\n`; }); 
-            c += "\n=== ELENCO (JOGADORES) ===\nJogador;Categoria;Data Nasc;Gols;Amarelos;Vermelhos\n"; 
-            db.elenco.forEach(e => { c += `${e.nome};${e.cat};${e.nasc};${e.gols};${e.amarelos || 0};${e.vermelhos || 0}\n`; }); 
-            let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); 
-        }
-
-        // =========================================================
         // AVALIAÇÃO E BOLETIM (Radar de Evolução)
         // =========================================================
         window.atualizarSelectAtletas = function() { 
@@ -1499,6 +1467,7 @@
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
+            // Temporary show to render image
             let container = document.getElementById('relatorio-print-container'); 
             container.style.zIndex = "9999";
             
@@ -1518,7 +1487,6 @@
             }, 500); 
         }
 
-        // CONFIGURACOES GERAIS
         window.salvarLogo = function() { 
             let n = document.getElementById('cfg_logo').value; 
             if(n) { document.getElementById('escudo-topo').src = n; document.getElementById('escudo-topo').style.display = 'block'; document.getElementById('topo_letra').style.display = 'none'; } 
