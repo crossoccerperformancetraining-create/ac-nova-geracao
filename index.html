@@ -19,29 +19,29 @@
         
         .header { background-color: var(--azul-escuro); color: var(--dourado); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .logo-area { display: flex; align-items: center; gap: 15px; }
-        .escudo-img { height: 60px; width: 60px; object-fit: contain; border-radius: 50%; }
-        .header h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .escudo-img { height: 50px; width: 50px; object-fit: contain; border-radius: 50%; }
+        .header h1 { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
         
         .nav-bar { background-color: #fff; display: flex; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 15px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 14px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
         .tab-btn.settings { background-color: #444; color: white; }
 
-        .container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; overflow-x: auto; }
-        .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
+        .container { max-width: 1200px; margin: auto; padding: 0 15px 40px 15px; overflow-x: auto; }
+        .tab-content { display: none; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
-        .btn-hide-values { background: #e2e3e5; border: none; padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; color: #333; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;}
+        .btn-hide-values { background: #e2e3e5; border: none; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; color: #333; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;}
         .btn-hide-values:hover { background: #d6d8db; }
 
         .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .card { padding: 20px; border-radius: 8px; text-align: center; color: white; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .card h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;}
-        .card .valor { font-size: 26px; }
+        .card h3 { margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .card .valor { font-size: 24px; }
         .bg-receita { background-color: #28a745; }
         .bg-previsao { background-color: #f39c12; color: white; } 
         .bg-despesa { background-color: #dc3545; }
@@ -51,44 +51,43 @@
         .niver-box, .ranking-box { flex: 1; min-width: 300px; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .niver-box { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-left: 5px solid #00bcd4; display: none; }
         .ranking-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 5px solid #ffc107; }
-        .alerta-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .niver-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #333; }
+        .alerta-title { font-size: 16px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .niver-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; font-size: 13px; font-weight: bold; color: #333; }
         .niver-hoje { background: #ff4b82; color: white; border: none; box-shadow: 0 2px 5px rgba(255,75,130,0.4); }
 
         .form-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--dourado); }
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
-        label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
+        label { font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555; }
         input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;}
         
         .checkbox-group { display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 5px; }
-        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
-        .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 14px; line-height: 1.4;}
+        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
+        .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 13px; font-weight: normal; color: #333;}
         .required { color: red; font-weight: bold;}
 
-        button.btn-add { background-color: var(--azul-escuro); color: var(--dourado); padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
+        button.btn-add { background-color: var(--azul-escuro); color: var(--dourado); padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
         button.btn-add:hover { background-color: #00152b; }
-        button.btn-cancel { background-color: #666; color: white; padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; }
+        button.btn-cancel { background-color: #666; color: white; padding: 10px 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; }
 
         .table-responsive { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; min-width: 600px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; min-width: 600px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
         th { background-color: #f1f1f1; color: var(--azul-escuro); font-weight: bold; }
         tr:hover { background-color: #f9f9f9; }
 
         .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
-        .btn-sm { padding: 6px 8px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
+        .btn-sm { padding: 5px 8px; border: none; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
         .btn-zap { background-color: #25D366; } .btn-pay { background-color: #28a745; } .btn-del { background-color: #dc3545; }
         .btn-gol { background-color: #000; } .btn-amarelo { background-color: #ffc107; color: #000; } .btn-vermelho { background-color: #dc3545; }
         .btn-perfil { background-color: #007bff; } .btn-azul { background-color: #17a2b8; } .btn-edit { background-color: #f39c12; color: #000;}
         .btn-ficha { background-color: #6c757d; }
         
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; color: white; text-transform: uppercase;}
         .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-atrasado { background-color: #dc3545; } .badge-bolsa { background-color: #17a2b8; }
-        .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
         
         .atleta-info { display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); background: #eee; }
-        .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); }
+        .avatar-mini { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; overflow-y: auto;}
         .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; margin: auto;}
@@ -98,36 +97,24 @@
         .radar-container { width: 100%; max-width: 320px; margin: auto; margin-bottom: 20px; }
         
         .historico-box { background: #f9f9f9; border-radius: 8px; padding: 15px; text-align: left; margin-bottom: 20px; border: 1px solid #eee; }
-        .historico-table { width: 100%; font-size: 12px; text-align: center; border-collapse: collapse; }
+        .historico-table { width: 100%; font-size: 11px; text-align: center; border-collapse: collapse; }
         .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
         .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
 
         /* MENSAGEM DE CONEXÃO COM A NUVEM */
         #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
 
-        /* Formulário Público */
-        .public-form-container { background: #fff; padding: 30px; border-radius: 12px; border-top: 5px solid var(--azul-escuro); max-width: 700px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
-        .public-form-container h2 { text-align: center; color: var(--azul-escuro); margin-bottom: 5px; margin-top: 0;}
-        .public-form-container p { text-align: center; color: #666; margin-bottom: 25px; font-size: 14px; }
-        .form-section-title { font-size: 16px; color: var(--azul-escuro); border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; text-transform: uppercase; font-weight: bold;}
         .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
 
         /* Ocultar Valores CSS */
         .blurred-text { filter: blur(5px); user-select: none; color: transparent; text-shadow: 0 0 8px #000; }
 
-        /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
+        /* CORREÇÃO DO BOLETIM FANTASMA: Oculto perfeitamente */
         #relatorio-print-container { 
-            position: absolute; 
-            top: -9999px; 
-            left: -9999px; 
-            width: 800px; 
-            background: white; 
-            z-index: -100; 
-            opacity: 0;
-            pointer-events: none;
+            display: none; 
         }
-        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
+        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; width: 800px; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
         .pdf-title { text-align: center; flex: 1; }
         .pdf-title h1 { margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase; }
@@ -136,17 +123,15 @@
         .pdf-radar { flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; }
         .pdf-info { flex: 1; font-size: 18px; line-height: 1.8; background: #f4f4f9; padding: 20px; border-radius: 10px; }
         .pdf-feedback { background: #e6f7ff; padding: 20px; border-left: 6px solid var(--azul-escuro); font-style: italic; font-size: 18px; margin-top: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0; }
-        .circulo-pdf { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; }
-        .circulo-clube { background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado); }
-        .circulo-atleta { background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro); font-size: 30px;}
+        .circulo-pdf { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado);}
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando à Nuvem AC...</div>
 
     <div class="header">
         <div class="logo-area">
-            <div class="circulo-pdf circulo-clube" style="width: 50px; height: 50px; font-size: 18px; display:flex; align-items:center; justify-content:center; font-weight:bold; background:white; color:var(--azul-escuro); border-radius:50%;" id="topo_letra">AC</div>
+            <div class="circulo-pdf" id="topo_letra" style="width: 50px; height: 50px; font-size: 18px; background:white; color:var(--azul-escuro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; border: 2px solid var(--dourado);">AC</div>
             <img id="escudo-topo" src="" class="escudo-img" style="display:none;">
             <div>
                 <h1>AC Nova Geração</h1>
@@ -162,9 +147,7 @@
         <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-image"></i> Card Boletim</button>
         <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
-        <button class="tab-btn" onclick="openTab('patrocinadores')"><i class="fa-solid fa-handshake"></i> Patrocínios</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
-        <button class="tab-btn highlight" onclick="openTab('inscricao')"><i class="fa-solid fa-user-plus"></i> Inscrição Online</button>
         <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
     </div>
 
@@ -185,7 +168,7 @@
             <div class="dashboard-header">
                 <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
                 <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
-                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text" style="font-size: 14px; font-weight: normal; margin-left: 5px;">Ocultar Valores</span>
+                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text" style="font-size: 13px; font-weight: normal; margin-left: 5px;">Ocultar Valores</span>
                 </button>
             </div>
 
@@ -204,15 +187,15 @@
                 <div class="form-group" style="flex: 2;"><label>Atleta/Responsável</label><input type="text" id="m_nome"></div>
                 <div class="form-group"><label>WhatsApp</label><input type="text" id="m_tel" placeholder="Ex: 82999999999"></div>
                 <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
-                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
+                <div class="form-group checkbox-group" style="min-width: 100px;">
                     <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista" style="margin-bottom:0;">Bolsista (Isento)</label>
+                    <label for="m_bolsista">Bolsista (Isento)</label>
                 </div>
                 <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
+                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Cobrança / Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
             </div>
         </div>
 
@@ -222,18 +205,18 @@
                 <input type="hidden" id="e_id">
                 <div class="form-group" style="flex: 2;"><label>Nome do Atleta</label><input type="text" id="e_nome"></div>
                 <div class="form-group" style="flex: 2;">
-                    <label>Foto do Atleta (URL ou Arquivo)</label>
+                    <label>Foto do Atleta (Opcional)</label>
                     <div style="display: flex; gap: 5px;">
-                        <input type="url" id="e_foto_url" placeholder="Link da foto..." style="flex: 1;">
-                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Arquivo</button>
-                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url', null)" />
+                        <input type="hidden" id="e_foto_url">
+                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
+                            <button class="btn-add" id="btn-e-foto" style="background-color: #6c757d; font-size: 12px; height: 39px; width: 100%;"><i class="fa-solid fa-camera"></i> Anexar Foto</button>
+                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url', 'btn-e-foto')" />
                         </div>
                     </div>
                 </div>
                 <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
                 <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
-                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
+                <div class="form-group checkbox-group" style="min-width: 100px;">
                     <input type="checkbox" id="e_bolsista">
                     <label for="e_bolsista">Bolsista</label>
                 </div>
@@ -246,7 +229,7 @@
         </div>
 
         <div id="chamada" class="tab-content">
-            <h2>Lista de Presença - Treino</h2>
+            <h2>Lista de Presença</h2>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group"><label>Data do Treino</label><input type="date" id="pres_data"></div>
                 <div class="form-group"><label>Filtrar Categoria</label><select id="pres_cat_filtro" onchange="renderizarChamada()"><option value="Todos">Todas as Categorias</option><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
@@ -257,7 +240,7 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Chamada de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
@@ -270,12 +253,12 @@
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 <div style="flex: 1; min-width: 300px;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                        <div class="form-group"><label>🏃‍♂️ Físico (1-10)</label><input type="number" id="av_fis" min="1" max="10" onchange="atualizarRadarTela()"></div>
-                        <div class="form-group"><label>🎯 Finalização (1-10)</label><input type="number" id="av_chute" min="1" max="10" onchange="atualizarRadarTela()"></div>
-                        <div class="form-group"><label>👟 Passe (1-10)</label><input type="number" id="av_passe" min="1" max="10" onchange="atualizarRadarTela()"></div>
-                        <div class="form-group"><label>🧠 Tática (1-10)</label><input type="number" id="av_coord" min="1" max="10" onchange="atualizarRadarTela()"></div>
-                        <div class="form-group"><label>🦅 Cabeceio (1-10)</label><input type="number" id="av_cab" min="1" max="10" onchange="atualizarRadarTela()"></div>
-                        <div class="form-group"><label>🤝 Disciplina (1-10)</label><input type="number" id="av_disc" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>🏃‍♂️ Físico (1-10)</label><input type="number" id="av_fis" min="1" max="10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🎯 Finalização (1-10)</label><input type="number" id="av_chute" min="1" max="10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>👟 Passe (1-10)</label><input type="number" id="av_passe" min="1" max="10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🧠 Tática (1-10)</label><input type="number" id="av_coord" min="1" max="10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🦅 Cabeceio (1-10)</label><input type="number" id="av_cab" min="1" max="10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🤝 Disciplina (1-10)</label><input type="number" id="av_disc" min="1" max="10" onchange="atualizarRadar()"></div>
                     </div>
                     <button class="btn-add" style="background: #000; color: #fff; width: 100%; margin-bottom: 15px;" onclick="gerarFeedbackIA()"><i class="fa-solid fa-robot"></i> Gerar Análise Automática (IA)</button>
                     <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3" placeholder="Análise tática e evolução..."></textarea></div>
@@ -317,31 +300,16 @@
             <div class="table-responsive"><table><thead><tr><th>Nome</th><th>Tamanho</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-uniformes"></tbody></table></div>
         </div>
 
-        <div id="patrocinadores" class="tab-content">
-            <h2>Gestão de Patrocínios</h2>
-            <div class="form-row">
-                <input type="hidden" id="p_id">
-                <div class="form-group" style="flex: 2;"><label>Empresa / Patrocinador</label><input type="text" id="p_nome"></div>
-                <div class="form-group"><label>Valor Mensal (R$)</label><input type="number" id="p_valor" step="0.01"></div>
-                <div class="form-group"><label>Status</label><select id="p_status"><option value="pendente">A Receber</option><option value="pago">Já Recebido</option></select></div>
-                <button class="btn-add" id="btn-p-salvar" onclick="savePatrocinio()"><i class="fa-solid fa-handshake"></i> Salvar</button>
-                <button class="btn-cancel" id="btn-p-cancel" style="display:none;" onclick="resetFormP()">Cancelar</button>
-            </div>
-            <div class="table-responsive">
-                <table><thead><tr><th>Empresa</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-patrocinadores"></tbody></table>
-            </div>
-        </div>
-
         <div id="despesas" class="tab-content">
-            <h2>Caixa: Lançar Despesas e Receitas (Multas)</h2>
+            <h2>Caixa: Lançar Despesas e Receitas Extras</h2>
             <div class="form-row">
                 <input type="hidden" id="d_id">
                 <div class="form-group" style="flex: 2;"><label>Descrição</label><input type="text" id="d_desc" placeholder="Ex: Arbitragem, Água, Multa Cartão..."></div>
                 <div class="form-group"><label>Categoria</label>
                     <select id="d_cat">
-                        <option value="Despesa">Despesa (Saída de Dinheiro)</option>
-                        <option value="Multa Cartão">Multa Cartão (Entrada de Dinheiro)</option>
-                        <option value="Receita Extra">Receita Extra (Entrada de Dinheiro)</option>
+                        <option value="Despesa">Despesa (Saída)</option>
+                        <option value="Receita Extra">Receita Extra (Entrada)</option>
+                        <option value="Multa Cartão">Multa Cartão (Entrada)</option>
                     </select>
                 </div>
                 <div class="form-group"><label>Valor (R$)</label><input type="number" id="d_valor" step="0.01"></div>
@@ -349,148 +317,6 @@
                 <button class="btn-cancel" id="btn-d-cancel" style="display:none;" onclick="resetFormD()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="tb-despesas"></tbody></table></div>
-        </div>
-
-        <div id="relatorios" class="tab-content">
-            <h2>Relatórios Estratégicos</h2>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
-                    <h3 style="margin-top:0; color:#721c24;"><i class="fa-brands fa-whatsapp"></i> Cobrança Rápida</h3>
-                    <p style="color: #721c24; font-size:13px;">Gera uma lista pronta com os alunos inadimplentes para colar no WhatsApp.</p>
-                    <button class="btn-add" style="background:#dc3545; color:white; width: 100%;" onclick="gerarRelatorioDevedores()"><i class="fa-regular fa-copy"></i> Copiar Lista de Devedores</button>
-                </div>
-                <div style="flex: 1; min-width: 300px; background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff;">
-                    <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-table"></i> Baixar Dados (Excel)</h3>
-                    <p style="color: #002244; font-size:13px;">Faça o download de todo o banco de dados em formato CSV para planilhas.</p>
-                    <button class="btn-add" style="background-color: #217346; color: white; width: 100%;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha (.csv)</button>
-                </div>
-            </div>
-            <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none; font-size:13px;"></div>
-        </div>
-
-        <div id="inscricao" class="tab-content">
-            <div class="public-form-container">
-                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
-                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>.</p>
-                
-                <h3 class="form-section-title">Dados do Atleta</h3>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
-                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Data de Nascimento <span class="required">*</span></label>
-                    <input type="date" id="pub_nasc">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
-                    <select id="pub_cat">
-                        <option value="Sub-07">Sub-07</option>
-                        <option value="Sub-09">Sub-09</option>
-                        <option value="Sub-11">Sub-11</option>
-                        <option value="Sub-13">Sub-13</option>
-                        <option value="Sub-15">Sub-15</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Foto do Aluno(a) para carteirinha <span style="font-weight: normal; color: #888;">(Opcional)</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="hidden" id="pub_foto_url">
-                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
-                            <button class="btn-add" id="btn-pub-foto" style="background-color: #6c757d; font-size: 13px; width: 100%;"><i class="fa-solid fa-camera"></i> Toque para anexar foto</button>
-                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_foto_url', 'btn-pub-foto')" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
-                    <select id="pub_camisa">
-                        <option value="" disabled selected>Selecione...</option>
-                        <option value="10">Tamanho 10</option>
-                        <option value="12">Tamanho 12</option>
-                        <option value="14">Tamanho 14</option>
-                        <option value="P">Tamanho P (Adulto)</option>
-                        <option value="M">Tamanho M (Adulto)</option>
-                        <option value="G">Tamanho G (Adulto)</option>
-                        <option value="GG">Tamanho GG (Adulto)</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Escola onde estuda <span class="required">*</span></label>
-                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Turno Escolar <span class="required">*</span></label>
-                    <select id="pub_turno">
-                        <option value="" disabled selected>Selecione...</option>
-                        <option value="Manhã">Manhã</option>
-                        <option value="Tarde">Tarde</option>
-                    </select>
-                </div>
-                
-                <h3 class="form-section-title">Dados do Responsável & Saúde</h3>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nome Completo do Responsável <span class="required">*</span></label>
-                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Grau de Parentesco <span class="required">*</span></label>
-                    <select id="pub_parentesco">
-                        <option value="" disabled selected>Selecione...</option>
-                        <option value="Pai">Pai</option>
-                        <option value="Mãe">Mãe</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Endereço Completo <span class="required">*</span></label>
-                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
-                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Anexe aqui o Atestado Médico <span style="font-weight: normal; color: #888;">(Opcional agora)</span></label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="hidden" id="pub_atestado_url">
-                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
-                            <button class="btn-add" id="btn-pub-atestado" style="background-color: #6c757d; font-size: 13px; width: 100%;"><i class="fa-solid fa-paperclip"></i> Anexar Foto do Atestado</button>
-                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_atestado_url', 'btn-pub-atestado')" />
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
-                    <input type="checkbox" id="pub_auth_med">
-                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 15px; margin-top:15px;">
-                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
-                    <select id="pub_venc">
-                        <option value="05">Dia 05</option>
-                        <option value="10">Dia 10</option>
-                        <option value="15">Dia 15</option>
-                    </select>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
-                    <input type="checkbox" id="pub_auth_esc">
-                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos. <span class="required">*</span></label>
-                </div>
-                
-                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
-                    <input type="checkbox" id="pub_auth_final">
-                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
-                </div>
-                
-                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
-            </div>
         </div>
 
         <div id="configuracoes" class="tab-content">
@@ -506,17 +332,23 @@
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link para os Pais (Inscrição Online)</h3>
-                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição.</p>
+                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição online.</p>
                 <div style="display: flex; gap: 10px;">
-                    <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                    <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar</button>
+                    <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="https://crossoccerperformancetraining-create.github.io/ac-nova-geracao/inscricao.html">
+                    <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar Link</button>
                 </div>
             </div>
 
             <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
                 <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
-                <p>Retorna todas as mensalidades e patrocínios para "Pendente" para iniciar um novo mês de cobrança (ignora Bolsistas).</p>
-                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês</button>
+                <p>Retorna todas as mensalidades para "Pendente" para iniciar um novo mês de cobrança.</p>
+                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês (Zerar Pagamentos)</button>
+            </div>
+            
+            <div style="background: #eef2f5; padding: 20px; border-radius: 8px; border-left: 5px solid #002244; margin-top: 20px;">
+                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-table"></i> Baixar Relatório (Excel)</h3>
+                <p>Faça o download de todo o banco de dados (mensalidades e elenco) em formato CSV.</p>
+                <button class="btn-add" style="background-color: #217346; color: white;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha (.csv)</button>
             </div>
         </div>
     </div> 
@@ -587,32 +419,34 @@
         </div>
     </div>
 
-    <div id="relatorio-print-container" style="display: none; position: absolute; top: -9999px; left: -9999px; width: 800px; background: white; z-index: -100;">
-        <div id="relatorio-print" style="background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif;">
-            <div class="pdf-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px;">
-                <div class="circulo-pdf circulo-clube" id="img_letra_clube" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado);">AC</div>
-                <img id="img_logo_relatorio" src="" style="width: 70px; height: 70px; object-fit: contain; display:none;">
-                <div class="pdf-title" style="text-align: center; flex: 1;">
-                    <h1 style="margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase;">AC NOVA GERAÇÃO</h1>
-                    <h3 style="margin: 5px 0 0 0; color: #555;">Boletim Oficial de Desempenho</h3>
+    <div id="relatorio-print-wrapper" style="position: absolute; top: -9999px; left: -9999px; height: 0; overflow: hidden; opacity: 0; pointer-events: none;">
+        <div id="relatorio-print-container" style="width: 800px; background: white;">
+            <div id="relatorio-print" style="background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif;">
+                <div class="pdf-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px;">
+                    <div class="circulo-pdf circulo-clube" id="img_letra_clube" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado);">AC</div>
+                    <img id="img_logo_relatorio" src="" style="width: 70px; height: 70px; object-fit: contain; display:none;">
+                    <div class="pdf-title" style="text-align: center; flex: 1;">
+                        <h1 style="margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase;">AC NOVA GERAÇÃO</h1>
+                        <h3 style="margin: 5px 0 0 0; color: #555;">Boletim Oficial de Desempenho</h3>
+                    </div>
+                    <div class="circulo-pdf circulo-atleta" id="img_letra_atleta" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px; background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro);">👤</div>
+                    <img id="img_foto_relatorio" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #002244; display:none;">
                 </div>
-                <div class="circulo-pdf circulo-atleta" id="img_letra_atleta" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px; background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro);">👤</div>
-                <img id="img_foto_relatorio" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #002244; display:none;">
-            </div>
-            <div class="pdf-body" style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center;">
-                <div class="pdf-info" style="flex: 1; font-size: 18px; line-height: 1.8; background: #f4f4f9; padding: 20px; border-radius: 10px;">
-                    <p><strong>👤 Atleta:</strong> <span id="img_nome"></span></p>
-                    <p><strong>🏷️ Categoria:</strong> <span id="img_cat"></span></p>
-                    <p><strong>📅 Referência:</strong> <span id="img_mes"></span></p>
-                    <hr>
-                    <p><strong>⚽ Jogo:</strong> Gols: <span id="img_gols" style="color:#000;font-weight:bold;"></span> | Cartões: <span id="img_amar" style="color:#ffc107;font-weight:bold;"></span> 🟨 / <span id="img_verm" style="color:#dc3545;font-weight:bold;"></span> 🟥</p>
+                <div class="pdf-body" style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center;">
+                    <div class="pdf-info" style="flex: 1; font-size: 18px; line-height: 1.8; background: #f4f4f9; padding: 20px; border-radius: 10px;">
+                        <p><strong>👤 Atleta:</strong> <span id="img_nome"></span></p>
+                        <p><strong>🏷️ Categoria:</strong> <span id="img_cat"></span></p>
+                        <p><strong>📅 Referência:</strong> <span id="img_mes"></span></p>
+                        <hr>
+                        <p><strong>⚽ Jogo:</strong> Gols: <span id="img_gols" style="color:#000;font-weight:bold;"></span> | Cartões: <span id="img_amar" style="color:#ffc107;font-weight:bold;"></span> 🟨 / <span id="img_verm" style="color:#dc3545;font-weight:bold;"></span> 🟥</p>
+                    </div>
+                    <div class="pdf-radar" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center;"><canvas id="radarImagem" width="350" height="350"></canvas></div>
                 </div>
-                <div class="pdf-radar" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center;"><canvas id="radarImagem" width="350" height="350"></canvas></div>
-            </div>
-            <div id="img_historico_box" style="margin-top: 15px;"></div>
-            <div class="pdf-feedback" style="background: #e6f7ff; padding: 20px; border-left: 6px solid var(--azul-escuro); font-style: italic; font-size: 18px; margin-top: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0;"><strong>📝 Parecer Técnico Oficial:</strong><br><span id="img_obs"></span></div>
-            <div style="text-align: center; margin-top: 30px; font-size: 16px; color: #888; font-weight: bold; padding-top: 20px; border-top: 2px solid #eee;">
-                Desenvolvido por Adriano "Cabeça" - A Nova Geração é Nossa!
+                <div id="img_historico_box" style="margin-top: 15px;"></div>
+                <div class="pdf-feedback" style="background: #e6f7ff; padding: 20px; border-left: 6px solid var(--azul-escuro); font-style: italic; font-size: 18px; margin-top: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0;"><strong>📝 Parecer Técnico Oficial:</strong><br><span id="img_obs"></span></div>
+                <div style="text-align: center; margin-top: 30px; font-size: 16px; color: #888; font-weight: bold; padding-top: 20px; border-top: 2px solid #eee;">
+                    Desenvolvido por Adriano "Cabeça" - A Nova Geração é Nossa!
+                </div>
             </div>
         </div>
     </div>
@@ -636,35 +470,27 @@
         const dbRef = database.ref('sistema_ac_dados');
 
         let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
-        
         let sys_logo = localStorage.getItem('sys_logo') || "";
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Gerar Link de inscrição com base na URL atual
-            let url = window.location.href.split('?')[0] + '?tab=inscricao';
-            document.getElementById('link_inscricao').value = url;
-
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.get('tab') === 'inscricao') {
-                document.getElementById('main-nav').style.display = 'none';
-                document.getElementById('main-dash').style.display = 'none';
-                openTab('inscricao');
-            } else {
-                 let localData = localStorage.getItem('acNovaGeracaoData');
-                if(localData) {
-                    db = JSON.parse(localData);
-                    sincronizarListas();
-                    renderizarTudo();
-                }
-            }
+             // Esconde barra de loading inicial se não achar dados
+             setTimeout(() => {
+                 let statusEl = document.getElementById('nuvem-status');
+                 if(statusEl.innerText.includes("Conectando")) {
+                     statusEl.innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Iniciado!";
+                     statusEl.style.background = "#28a745";
+                     setTimeout(() => statusEl.style.display = 'none', 3000);
+                 }
+             }, 3000);
         });
 
-        // PUXA DADOS DA NUVEM EM TEMPO REAL
+        // PUXA DADOS DA NUVEM EM TEMPO REAL E GARANTE SINCRONIA
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
+                // Mescla os dados da nuvem
                 db.mensalidades = data.mensalidades || [];
                 db.elenco = data.elenco || [];
                 db.uniformes = data.uniformes || [];
@@ -672,13 +498,18 @@
                 db.despesas = data.despesas || [];
                 db.patrocinadores = data.patrocinadores || [];
                 db.presencas = data.presencas || [];
-                
-                sincronizarListas(); 
-                
-                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
-                document.getElementById('nuvem-status').style.background = "#28a745";
-                setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
-            } 
+                sys_logo = data.sys_logo || sys_logo;
+            } else {
+                // Banco de dados vazio (novo) - não faz nada, deixa os arrays vazios
+                db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
+            }
+
+            let statusEl = document.getElementById('nuvem-status');
+            statusEl.innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
+            statusEl.style.background = "#28a745";
+            setTimeout(() => statusEl.style.display = 'none', 3000);
+
+            sincronizarListas(); 
 
             if(sys_logo) { 
                 document.getElementById('escudo-topo').src = sys_logo; 
@@ -688,11 +519,7 @@
             }
             
             localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.get('tab') !== 'inscricao') {
-                renderizarTudo();
-            }
+            renderizarTudo();
         });
 
         function salvarDB() {
@@ -711,7 +538,7 @@
             renderizarTudo();
         }
 
-        // Função corrigida para lidar com "==" (loose equality) e evitar quebra com dados antigos
+        // Função para garantir que os arrays e relações existam
         function sincronizarListas() {
             let modified = false;
             if(db.elenco) {
@@ -724,14 +551,14 @@
                     if(j.vermelhos === undefined) { j.vermelhos = 0; modified = true; }
                     
                     if(!db.mensalidades) db.mensalidades = [];
-                    // Usando "==" para garantir que IDs antigos em formato numérico batam com strings
+                    // USANDO '==' EM VEZ DE '===' PARA EVITAR ERROS COM IDS ANTIGOS
                     let existeMensalidade = db.mensalidades.find(m => m.id == j.id);
                     if (!existeMensalidade) {
                         db.mensalidades.push({
                             id: j.id,
                             nome: j.nome,
                             tel: j.telefone || "", 
-                            venc: "05",
+                            venc: j.venc || "05",
                             pago: false,
                             bolsista: false
                         });
@@ -765,7 +592,7 @@
                 try { event.currentTarget.classList.add('active'); } catch(e) {}
             }
             
-            document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'inscricao' || tabName === 'relatorios') ? 'none' : 'block';
+            document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'relatorios') ? 'none' : 'block';
             
             if(tabName === 'avaliacao') { atualizarSelectAtletas(); atualizarRadarTela(); }
             if(tabName === 'chamada') { document.getElementById('pres_data').valueAsDate = new Date(); renderizarChamada(); }
@@ -838,98 +665,45 @@
             };
         }
 
-        // =========================================================
-        // INSCRIÇÃO ONLINE
-        // =========================================================
-        window.enviarInscricao = function() {
-            let authMed = document.getElementById('pub_auth_med').checked;
-            let authEsc = document.getElementById('pub_auth_esc').checked;
-            let authFinal = document.getElementById('pub_auth_final').checked;
+        function atualizarAlertasIniciais() {
+            let hoje = new Date(); let mesAtual = String(hoje.getMonth() + 1).padStart(2, '0'); let diaAtual = String(hoje.getDate()).padStart(2, '0');
+            let nivers = db.elenco ? db.elenco.filter(j => { if(!j.nasc || j.nasc === '-') return false; return j.nasc.split('/')[1] === mesAtual; }) : [];
+            nivers.sort((a, b) => parseInt(a.nasc.split('/')[0]) - parseInt(b.nasc.split('/')[0]));
+            let listaNiver = document.getElementById('lista-niver'); listaNiver.innerHTML = '';
+            if(nivers.length > 0) {
+                document.getElementById('box-aniversarios').style.display = 'block';
+                nivers.forEach(a => {
+                    let isHoje = (a.nasc.split('/')[0] === diaAtual);
+                    let m = db.mensalidades ? db.mensalidades.find(x => x.id == a.id) : null;
+                    let link = m && m.tel ? `https://wa.me/55${m.tel}` : `https://wa.me/`;
+                    let msg = encodeURIComponent(`Parabéns, ${a.nome}! 🎂 A equipe do AC Nova Geração te deseja um feliz aniversário! 🦅⚽`);
+                    let btnWpp = a.foto ? `<img src="${a.foto}" class="avatar-mini" style="margin-right:10px;">` : '';
+                    listaNiver.innerHTML += `<div class="niver-item ${isHoje?'niver-hoje':''}">
+                        <div style="display:flex; align-items:center;">${btnWpp} ${a.nome} (${a.cat}) - ${isHoje?'🎉 É HOJE!':`Dia ${a.nasc.split('/')[0]}`}</div>
+                        <a href="${link}?text=${msg}" target="_blank" class="btn-sm" style="background:${isHoje?'#fff':'#25D366'}; color:${isHoje?'#ff4b82':'#fff'}; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> Parabéns</a>
+                        </div>`;
+                });
+            } else { document.getElementById('box-aniversarios').style.display = 'none'; }
 
-            if(!authMed || !authEsc || !authFinal) {
-                alert("Você precisa concordar com todos os termos (caixinhas no final) para concluir a inscrição.");
-                return;
-            }
-
-            let nome = document.getElementById('pub_nome').value;
-            let nasc = document.getElementById('pub_nasc').value;
-            let cat = document.getElementById('pub_cat').value;
-            let camisa = document.getElementById('pub_camisa').value;
-            let escola = document.getElementById('pub_escola').value;
-            let turno = document.getElementById('pub_turno').value;
-            let resp = document.getElementById('pub_resp_nome').value;
-            let parentesco = document.getElementById('pub_parentesco').value;
-            let tel = document.getElementById('pub_tel').value.replace(/\D/g, '');
-            let endereco = document.getElementById('pub_endereco').value;
-            let saude = document.getElementById('pub_saude').value;
-            let venc = document.getElementById('pub_venc').value;
-            let foto = document.getElementById('pub_foto_url').value;
-            let atestado = document.getElementById('pub_atestado_url').value;
-            
-            let wpp_radios = document.getElementsByName('wppGroup');
-            let wpp_group = "Não respondido";
-            for(let i=0; i<wpp_radios.length; i++){
-                if(wpp_radios[i].checked){ wpp_group = wpp_radios[i].value; break; }
-            }
-
-            if(!nome || !nasc || !resp || !tel || !camisa || !escola || !turno || !parentesco || !endereco || !saude) {
-                alert("Por favor, preencha todos os campos obrigatórios (*).");
-                return;
-            }
-
-            let newId = Date.now().toString();
-
-            if(!db.elenco) db.elenco = [];
-            db.elenco.push({ 
-                id: newId, 
-                nome: nome, 
-                foto: foto, 
-                cat: cat, 
-                nasc: nasc.split('-').reverse().join('/'), 
-                camisa: camisa,
-                escola: escola,
-                turno: turno,
-                responsavel: resp,
-                parentesco: parentesco,
-                telefone: tel,
-                endereco: endereco,
-                saude: saude,
-                atestado: atestado,
-                wpp_group: wpp_group,
-                gols: 0, amarelos: 0, vermelhos: 0, 
-                notas: {fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, 
-                historico: [] 
-            });
-
-            if(!db.mensalidades) db.mensalidades = [];
-            db.mensalidades.push({
-                id: newId,
-                nome: resp + " (" + nome.split(' ')[0] + ")",
-                tel: tel, 
-                venc: venc,
-                pago: false,
-                bolsista: false 
-            });
-
-            salvarDB();
-            
-            let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
-            msg += `*Atleta:* ${nome} (${cat})\n`;
-            msg += `*Responsável:* ${resp} (${parentesco})\n`;
-            msg += `*Vencimento Escolhido:* Dia ${venc}\n\n`;
-            msg += `_Sua ficha foi enviada com sucesso para o treinador!_`;
-            
-            window.open(`https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`, '_blank');
-            
-            alert("Inscrição enviada com sucesso!");
-            location.reload(); 
+            let arts = db.elenco ? [...db.elenco].filter(a => a.gols > 0).sort((a, b) => b.gols - a.gols).slice(0, 3) : [];
+            let listaArt = document.getElementById('lista-artilheiros'); listaArt.innerHTML = '';
+            if(arts.length > 0) {
+                let meds = ['🥇', '🥈', '🥉'];
+                arts.forEach((a, i) => { 
+                    let m = db.mensalidades ? db.mensalidades.find(x => x.id == a.id) : null;
+                    let link = m && m.tel ? `https://wa.me/55${m.tel}` : `https://wa.me/`;
+                    let txt = encodeURIComponent(`🏆 Parabéns! O atleta ${a.nome} está no TOP 3 Artilheiros do AC Nova Geração com ${a.gols} gols! Orgulho do projeto! 🦅⚽`);
+                    let btnWpp = a.foto ? `<img src="${a.foto}" class="avatar-mini" style="margin-right:10px;">` : '';
+                    listaArt.innerHTML += `<div class="niver-item"><div style="display:flex; align-items:center;">${meds[i]} ${btnWpp} <strong>${a.nome}</strong> <small style="color:#d39e00; margin-left:5px;">⚽ ${a.gols} Gols</small></div><a href="${link}?text=${txt}" target="_blank" class="btn-sm btn-zap" style="text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> Avisar</a></div>`; 
+                });
+            } else { listaArt.innerHTML = `<div style="font-size:14px; color:#666;">Nenhum gol registrado.</div>`; }
         }
 
         window.copiarLinkInscricao = function() {
             let linkInput = document.getElementById('link_inscricao');
             linkInput.select();
             document.execCommand('copy');
-            alert("Link copiado! Envie no WhatsApp para os pais preencherem a ficha de inscrição.");
+            alert("Link copiado! Envie no WhatsApp para os pais preencherem a ficha de inscrição online.");
         }
 
         // =========================================================
@@ -1086,7 +860,7 @@
         }
 
         // =========================================================
-        // CHAMADA
+        // CHAMADA E OUTROS
         // =========================================================
         window.renderizarChamada = function() {
             let f = document.getElementById('pres_cat_filtro').value;
@@ -1124,17 +898,12 @@
             alert("Chamada salva com sucesso!");
         }
 
-        // =========================================================
-        // PATROCINADORES
-        // =========================================================
         window.savePatrocinio = function() {
             let id = document.getElementById('p_id').value;
             let n = document.getElementById('p_nome').value;
             let v = parseFloat(document.getElementById('p_valor').value);
             let s = document.getElementById('p_status').value;
-            
             if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
-            
             if(!db.patrocinadores) db.patrocinadores = [];
 
             if(id) {
@@ -1166,9 +935,6 @@
             document.getElementById('btn-p-cancel').style.display = 'none';
         }
 
-        // =========================================================
-        // JOGOS E GERENCIAR CONVOCAÇÃO
-        // =========================================================
         window.saveJogo = function() { 
             let id = document.getElementById('j_id').value;
             let d=document.getElementById('j_data').value; 
@@ -1176,7 +942,6 @@
             let t=document.getElementById('j_tipo').value;
             let l=document.getElementById('j_local').value;
             if(!d || !a) return alert("Preencha data e adversário!");
-            
             if(!db.jogos) db.jogos = [];
 
             if(id) {
@@ -1214,7 +979,6 @@
             document.getElementById('modal_jogo_id').value = j.id;
             document.getElementById('modal_jogo_adv').value = j.adv;
             document.getElementById('modal_jogo_data').value = j.data;
-            
             if(!j.convocados) j.convocados = [];
             if(!j.presencas_jogo) j.presencas_jogo = [];
             if(!j.taxas_pagas) j.taxas_pagas = [];
@@ -1225,7 +989,6 @@
                     let isConv = j.convocados.includes(atleta.id) ? 'checked' : '';
                     let isPres = j.presencas_jogo.includes(atleta.id) ? 'checked' : '';
                     let isPago = j.taxas_pagas.includes(atleta.id) ? 'checked' : '';
-                    
                     return `<tr>
                         <td>${atleta.nome} (${atleta.cat})</td>
                         <td style="text-align:center;"><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
@@ -1234,7 +997,6 @@
                     </tr>`;
                 }).join('');
             }
-            
             document.getElementById('modalJogo').style.display = 'flex';
         }
 
@@ -1248,16 +1010,10 @@
             document.querySelectorAll('.chk-presente-jogo:checked').forEach(c => pres.push(c.dataset.id));
             document.querySelectorAll('.chk-pago-jogo:checked').forEach(c => pagos.push(c.dataset.id));
             
-            j.convocados = conv;
-            j.presencas_jogo = pres;
-            j.taxas_pagas = pagos;
-            j.confirmados = pres.length; 
+            j.convocados = conv; j.presencas_jogo = pres; j.taxas_pagas = pagos; j.confirmados = pres.length; 
             
             let val = prompt("Qual o valor da taxa paga por cada atleta hoje? (Deixe em branco para não alterar ou digite 0)");
-            if(val && !isNaN(parseFloat(val))) {
-                j.arrecadado = pagos.length * parseFloat(val);
-            }
-
+            if(val && !isNaN(parseFloat(val))) { j.arrecadado = pagos.length * parseFloat(val); }
             salvarDB();
             document.getElementById('modalJogo').style.display = 'none';
             alert("Convocação e Taxas salvas com sucesso!");
@@ -1267,45 +1023,25 @@
             let id = document.getElementById('modal_jogo_id').value;
             let j = db.jogos.find(x => x.id == id);
             if(!j) return;
-            
             let conv = [];
             document.querySelectorAll('.chk-convocado:checked').forEach(c => {
                 let atleta = db.elenco.find(e => e.id == c.dataset.id);
                 if(atleta) conv.push(atleta.nome);
             });
+            if(conv.length === 0) { return alert("Nenhum atleta marcado como convocado!"); }
             
-            if(conv.length === 0) {
-                alert("Nenhum atleta marcado como convocado!");
-                return;
-            }
-            
-            let msg = `⚽ *CONVOCAÇÃO AC NOVA GERAÇÃO* ⚽\n\n`;
-            msg += `📅 *Data:* ${j.data}\n`;
-            msg += `🆚 *Adversário:* ${j.adv}\n`;
-            msg += `🏟️ *Local:* ${j.local}\n`;
-            msg += `🏆 *Tipo:* ${j.tipo}\n\n`;
-            msg += `*ATLETAS CONVOCADOS:*\n`;
-            
-            conv.forEach(nome => {
-                msg += `- ${nome}\n`;
-            });
-            
+            let msg = `⚽ *CONVOCAÇÃO AC NOVA GERAÇÃO* ⚽\n\n📅 *Data:* ${j.data}\n🆚 *Adversário:* ${j.adv}\n🏟️ *Local:* ${j.local}\n🏆 *Tipo:* ${j.tipo}\n\n*ATLETAS CONVOCADOS:*\n`;
+            conv.forEach(nome => { msg += `- ${nome}\n`; });
             msg += `\n*Por favor, confirmem presença no grupo!* 🦅`;
-            
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // =========================================================
-        // UNIFORMES
-        // =========================================================
         window.addUniforme = function() { 
             let id = document.getElementById('u_id').value;
             let n=document.getElementById('u_nome').value; 
             let t=document.getElementById('u_tam').value;
             if(!n) return alert("Preencha o nome!");
-
             if(!db.uniformes) db.uniformes = [];
-
             if(id) {
                 let u = db.uniformes.find(x => x.id == id);
                 if(u) { u.nome = n; u.tam = t; }
@@ -1334,9 +1070,6 @@
         window.pagarUniforme = function(id) { let u = db.uniformes.find(x=>x.id == id); if(u){ u.pago=true; salvarDB(); } } 
         window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id != id); salvarDB();} }
 
-        // =========================================================
-        // DESPESAS
-        // =========================================================
         window.saveDespesa = function() { 
             let id = document.getElementById('d_id').value;
             let d=document.getElementById('d_desc').value; 
@@ -1377,7 +1110,7 @@
         window.delDespesa = function(id) { if(confirm("Excluir lançamento?")){db.despesas=db.despesas.filter(d=>d.id != id); salvarDB();} }
         
         // =========================================================
-        // RENDER GERAL (Dashboard e Tabelas)
+        // RENDER GERAL E ATUALIZAÇÃO DE TABELAS
         // =========================================================
         function renderizarTudo() {
             atualizarAlertasIniciais();
@@ -1537,22 +1270,15 @@
             }
         }
 
-        // =========================================================
-        // RELATÓRIOS E AVALIAÇÃO
-        // =========================================================
         window.gerarRelatorioDevedores = function() {
             let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
             if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
             
             let msg = "*🚨 LISTA DE PENDÊNCIAS - AC NOVA GERAÇÃO 🚨*\n\n";
-            devedores.forEach(m => { 
-                msg += `👉 *${m.nome}* (Venc: Dia ${m.venc})\n`; 
-            });
+            devedores.forEach(m => { msg += `👉 *${m.nome}* (Venc: Dia ${m.venc})\n`; });
             msg += "\n*Chave PIX:* acnovageracao@outlook.com\n_Por favor, regularizem as mensalidades para ajudar a manter o nosso projeto! A Nova Geração é Nossa! 🦅_";
             
-            navigator.clipboard.writeText(msg).then(() => {
-                alert("Lista copiada! Cole no grupo do WhatsApp.");
-            }).catch(err => {
+            navigator.clipboard.writeText(msg).then(() => { alert("Lista copiada! Cole no grupo do WhatsApp."); }).catch(err => {
                 document.getElementById('preview-relatorio').style.display = 'block';
                 document.getElementById('preview-relatorio').innerText = msg;
             });
@@ -1609,11 +1335,8 @@
             let feedback = `O atleta demonstrou excelente desempenho em ${best}, mostrando grande potencial nessa área. `;
             feedback += `Por outro lado, notamos que há espaço para evolução em ${worst}. Focaremos nossos próximos treinamentos para aprimorar esse fundamento. `;
             
-            if(d >= 8) {
-                feedback += `Vale destacar o ótimo comportamento e disciplina demonstrados em campo! `;
-            } else if (d < 5) {
-                feedback += `É importante que o atleta tenha mais atenção à disciplina e respeito às orientações da comissão técnica. `;
-            }
+            if(d >= 8) { feedback += `Vale destacar o ótimo comportamento e disciplina demonstrados em campo! `; } 
+            else if (d < 5) { feedback += `É importante que o atleta tenha mais atenção à disciplina e respeito às orientações da comissão técnica. `; }
 
             feedback += `\n\nContinue se dedicando! A Nova Geração é Nossa! 🦅`;
             document.getElementById('av_obs').value = feedback; 
@@ -1639,7 +1362,6 @@
                     backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
                 });
             }
-
             chartTela = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
         }
 
@@ -1653,8 +1375,7 @@
             a.notas = n; 
             if(!a.historico) a.historico = []; 
             let i = a.historico.findIndex(h => h.mes === m); 
-            if(i >= 0) { a.historico[i] = { mes: m, notas: n }; } 
-            else { a.historico.push({ mes: m, notas: n }); } 
+            if(i >= 0) { a.historico[i] = { mes: m, notas: n }; } else { a.historico.push({ mes: m, notas: n }); } 
             salvarDB(); alert("Salvo na Nuvem!"); atualizarRadar(); 
         }
 
