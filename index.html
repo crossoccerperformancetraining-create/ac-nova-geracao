@@ -27,6 +27,7 @@
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
+        .tab-btn.settings { background-color: #444; color: white; }
 
         .container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; overflow-x: auto; }
         .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
@@ -42,7 +43,7 @@
         .card h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;}
         .card .valor { font-size: 26px; }
         .bg-receita { background-color: #28a745; }
-        .bg-previsao { background-color: #f39c12; } 
+        .bg-previsao { background-color: #f39c12; color: white; } 
         .bg-despesa { background-color: #dc3545; }
         .bg-saldo { background-color: var(--azul-escuro); }
 
@@ -58,7 +59,8 @@
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
         input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;}
-        .checkbox-group { flex-direction: row; align-items: center; gap: 8px; display:flex;}
+        
+        .checkbox-group { display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 5px; }
         .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
         .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 14px; line-height: 1.4;}
         .required { color: red; font-weight: bold;}
@@ -88,8 +90,8 @@
         .avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); background: #eee; }
         .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); }
 
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; }
-        .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; overflow-y: auto;}
+        .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; margin: auto;}
         .close-modal { position: absolute; right: 15px; top: 10px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
         .perfil-foto { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--azul-escuro); object-fit: cover; margin: auto; display: block; background: #eee; }
         .perfil-stats { display: flex; justify-content: space-around; background: #f4f4f9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
@@ -140,7 +142,7 @@
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
 
     <div class="header">
         <div class="logo-area">
@@ -158,7 +160,7 @@
         <button class="tab-btn" onclick="openTab('elenco')"><i class="fa-solid fa-users"></i> Elenco</button>
         <button class="tab-btn" onclick="openTab('chamada')"><i class="fa-solid fa-calendar-check"></i> Chamada</button>
         <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-image"></i> Card Boletim</button>
-        <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Convocar</button>
+        <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
         <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
         <button class="tab-btn" onclick="openTab('patrocinadores')"><i class="fa-solid fa-handshake"></i> Patrocínios</button>
         <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
@@ -206,7 +208,7 @@
                     <input type="checkbox" id="m_bolsista">
                     <label for="m_bolsista" style="margin-bottom:0;">Bolsista (Isento)</label>
                 </div>
-                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
@@ -231,6 +233,10 @@
                 </div>
                 <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
                 <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
+                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
+                    <input type="checkbox" id="e_bolsista">
+                    <label for="e_bolsista">Bolsista</label>
+                </div>
                 <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
@@ -251,12 +257,12 @@
                     <tbody id="tb-presenca"></tbody>
                 </table>
             </div>
-            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença</button>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
             <h2>Boletim em Formato de Imagem (Card Oficial)</h2>
-            <p>Avalie o atleta e baixe a imagem para enviar direto no WhatsApp dos pais!</p>
+            <p style="font-size: 13px; color: #555;">Gere o card de evolução do atleta e mande direto no WhatsApp dos pais!</p>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group" style="flex: 2;"><label>Selecione o Atleta</label><select id="av_atleta" onchange="carregarNotas()"><option value="">-- Escolha --</option></select></div>
                 <div class="form-group"><label>Mês Avaliação</label><input type="month" id="av_mes"></div>
@@ -264,15 +270,15 @@
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 <div style="flex: 1; min-width: 300px;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                        <div class="form-group"><label>🏃‍♂️ Físico (1-10)</label><input type="number" id="av_fis" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
-                        <div class="form-group"><label>🎯 Finalização (1-10)</label><input type="number" id="av_chute" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
-                        <div class="form-group"><label>👟 Passe (1-10)</label><input type="number" id="av_passe" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
-                        <div class="form-group"><label>🧠 Tática (1-10)</label><input type="number" id="av_coord" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
-                        <div class="form-group"><label>🦅 Cabeceio (1-10)</label><input type="number" id="av_cab" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
-                        <div class="form-group"><label>🤝 Disciplina (1-10)</label><input type="number" id="av_disc" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🏃‍♂️ Físico (1-10)</label><input type="number" id="av_fis" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>🎯 Finalização (1-10)</label><input type="number" id="av_chute" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>👟 Passe (1-10)</label><input type="number" id="av_passe" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>🧠 Tática (1-10)</label><input type="number" id="av_coord" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>🦅 Cabeceio (1-10)</label><input type="number" id="av_cab" min="1" max="10" onchange="atualizarRadarTela()"></div>
+                        <div class="form-group"><label>🤝 Disciplina (1-10)</label><input type="number" id="av_disc" min="1" max="10" onchange="atualizarRadarTela()"></div>
                     </div>
                     <button class="btn-add" style="background: #000; color: #fff; width: 100%; margin-bottom: 15px;" onclick="gerarFeedbackIA()"><i class="fa-solid fa-robot"></i> Gerar Análise Automática (IA)</button>
-                    <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3" placeholder="Análise do atleta..."></textarea></div>
+                    <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3" placeholder="Análise tática e evolução..."></textarea></div>
                     
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                         <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar na Nuvem</button>
@@ -293,7 +299,7 @@
                 <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
                 <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
                 <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
-                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
@@ -327,11 +333,11 @@
         </div>
 
         <div id="despesas" class="tab-content">
-            <h2>Registro de Despesas e Multas</h2>
+            <h2>Caixa: Lançar Despesas e Receitas (Multas)</h2>
             <div class="form-row">
                 <input type="hidden" id="d_id">
-                <div class="form-group" style="flex: 2;"><label>Descrição</label><input type="text" id="d_desc" placeholder="Ex: Arbitragem, Água..."></div>
-                <div class="form-group"><label>Tipo/Categoria</label>
+                <div class="form-group" style="flex: 2;"><label>Descrição</label><input type="text" id="d_desc" placeholder="Ex: Arbitragem, Água, Multa Cartão..."></div>
+                <div class="form-group"><label>Categoria</label>
                     <select id="d_cat">
                         <option value="Despesa">Despesa (Saída de Dinheiro)</option>
                         <option value="Multa Cartão">Multa Cartão (Entrada de Dinheiro)</option>
@@ -350,16 +356,16 @@
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 300px; background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
                     <h3 style="margin-top:0; color:#721c24;"><i class="fa-brands fa-whatsapp"></i> Cobrança Rápida</h3>
-                    <p style="color: #721c24;">Gera uma lista pronta com os alunos inadimplentes para você colar no grupo ou privado.</p>
-                    <button class="btn-add" style="background:#dc3545; color:white; width: 100%;" onclick="gerarRelatorioDevedores()"><i class="fa-regular fa-copy"></i> Copiar Lista de Inadimplentes</button>
+                    <p style="color: #721c24; font-size:13px;">Gera uma lista pronta com os alunos inadimplentes para colar no WhatsApp.</p>
+                    <button class="btn-add" style="background:#dc3545; color:white; width: 100%;" onclick="gerarRelatorioDevedores()"><i class="fa-regular fa-copy"></i> Copiar Lista de Devedores</button>
                 </div>
                 <div style="flex: 1; min-width: 300px; background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff;">
                     <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-table"></i> Baixar Dados (Excel)</h3>
-                    <p style="color: #002244;">Faça o download de todo o banco de dados (mensalidades, elenco e finanças) em formato CSV.</p>
+                    <p style="color: #002244; font-size:13px;">Faça o download de todo o banco de dados em formato CSV para planilhas.</p>
                     <button class="btn-add" style="background-color: #217346; color: white; width: 100%;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha (.csv)</button>
                 </div>
             </div>
-            <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none;"></div>
+            <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none; font-size:13px;"></div>
         </div>
 
         <div id="inscricao" class="tab-content">
@@ -391,7 +397,7 @@
                     <div style="display: flex; gap: 10px;">
                         <input type="hidden" id="pub_foto_url">
                         <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
-                            <button class="btn-add" id="btn-pub-foto" style="background-color: #6c757d; font-size: 14px; width: 100%;"><i class="fa-solid fa-camera"></i> Toque para anexar foto</button>
+                            <button class="btn-add" id="btn-pub-foto" style="background-color: #6c757d; font-size: 13px; width: 100%;"><i class="fa-solid fa-camera"></i> Toque para anexar foto</button>
                             <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_foto_url', 'btn-pub-foto')" />
                         </div>
                     </div>
@@ -438,7 +444,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
+                    <input type="tel" id="pub_tel" placeholder="Ex: (82) 99999-9999">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label>Endereço Completo <span class="required">*</span></label>
@@ -453,7 +459,7 @@
                     <div style="display: flex; gap: 10px;">
                         <input type="hidden" id="pub_atestado_url">
                         <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
-                            <button class="btn-add" id="btn-pub-atestado" style="background-color: #6c757d; font-size: 14px; width: 100%;"><i class="fa-solid fa-paperclip"></i> Anexar Foto do Atestado</button>
+                            <button class="btn-add" id="btn-pub-atestado" style="background-color: #6c757d; font-size: 13px; width: 100%;"><i class="fa-solid fa-paperclip"></i> Anexar Foto do Atestado</button>
                             <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_atestado_url', 'btn-pub-atestado')" />
                         </div>
                     </div>
@@ -480,7 +486,7 @@
                 
                 <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
                     <input type="checkbox" id="pub_auth_final">
-                    <label for="pub_auth_final">Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
                 </div>
                 
                 <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
@@ -500,7 +506,7 @@
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link para os Pais (Inscrição Online)</h3>
-                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição. Os dados cairão direto no sistema!</p>
+                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição.</p>
                 <div style="display: flex; gap: 10px;">
                     <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                     <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar</button>
@@ -509,7 +515,7 @@
 
             <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
                 <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
-                <p>Retorna todas as mensalidades para "Pendente" para iniciar um novo mês de cobrança (ignora Bolsistas).</p>
+                <p>Retorna todas as mensalidades e patrocínios para "Pendente" para iniciar um novo mês de cobrança (ignora Bolsistas).</p>
                 <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês</button>
             </div>
         </div>
@@ -612,7 +618,7 @@
     </div>
 
     <script type="text/javascript">
-        // COLE SUAS CREDENCIAIS DO FIREBASE AQUI!
+        // COLE SUAS CREDENCIAIS DO FIREBASE AQUI
         const firebaseConfig = {
             apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
             authDomain: "ac-nova-geracao.firebaseapp.com",
@@ -636,6 +642,7 @@
         let isValuesHidden = false;
 
         document.addEventListener("DOMContentLoaded", () => {
+            // Gerar Link de inscrição com base na URL atual
             let url = window.location.href.split('?')[0] + '?tab=inscricao';
             document.getElementById('link_inscricao').value = url;
 
@@ -654,11 +661,10 @@
             }
         });
 
-        // PUXA DADOS DA NUVEM EM TEMPO REAL E GARANTE SINCRONIA
+        // PUXA DADOS DA NUVEM EM TEMPO REAL
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Preserva os dados existentes na nuvem
                 db.mensalidades = data.mensalidades || [];
                 db.elenco = data.elenco || [];
                 db.uniformes = data.uniformes || [];
@@ -705,7 +711,7 @@
             renderizarTudo();
         }
 
-        // Função para garantir que os arrays e relações existam sem apagar os antigos
+        // Função corrigida para lidar com "==" (loose equality) e evitar quebra com dados antigos
         function sincronizarListas() {
             let modified = false;
             if(db.elenco) {
@@ -717,9 +723,9 @@
                     if(j.amarelos === undefined) { j.amarelos = 0; modified = true; }
                     if(j.vermelhos === undefined) { j.vermelhos = 0; modified = true; }
                     
-                    // Garante que o jogador está na lista de mensalidades
                     if(!db.mensalidades) db.mensalidades = [];
-                    let existeMensalidade = db.mensalidades.find(m => m.id === j.id);
+                    // Usando "==" para garantir que IDs antigos em formato numérico batam com strings
+                    let existeMensalidade = db.mensalidades.find(m => m.id == j.id);
                     if (!existeMensalidade) {
                         db.mensalidades.push({
                             id: j.id,
@@ -789,7 +795,6 @@
             renderizarTudo(); 
         }
 
-        // Converte imagem upada em Base64 comprimida
         window.handleImageCompression = function(event, targetInputId, buttonId) {
             const file = event.target.files[0];
             if (!file) return;
@@ -860,6 +865,12 @@
             let venc = document.getElementById('pub_venc').value;
             let foto = document.getElementById('pub_foto_url').value;
             let atestado = document.getElementById('pub_atestado_url').value;
+            
+            let wpp_radios = document.getElementsByName('wppGroup');
+            let wpp_group = "Não respondido";
+            for(let i=0; i<wpp_radios.length; i++){
+                if(wpp_radios[i].checked){ wpp_group = wpp_radios[i].value; break; }
+            }
 
             if(!nome || !nasc || !resp || !tel || !camisa || !escola || !turno || !parentesco || !endereco || !saude) {
                 alert("Por favor, preencha todos os campos obrigatórios (*).");
@@ -884,6 +895,7 @@
                 endereco: endereco,
                 saude: saude,
                 atestado: atestado,
+                wpp_group: wpp_group,
                 gols: 0, amarelos: 0, vermelhos: 0, 
                 notas: {fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, 
                 historico: [] 
@@ -901,7 +913,15 @@
 
             salvarDB();
             
-            alert("Inscrição enviada com sucesso! O treinador entrará em contato em breve.");
+            let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
+            msg += `*Atleta:* ${nome} (${cat})\n`;
+            msg += `*Responsável:* ${resp} (${parentesco})\n`;
+            msg += `*Vencimento Escolhido:* Dia ${venc}\n\n`;
+            msg += `_Sua ficha foi enviada com sucesso para o treinador!_`;
+            
+            window.open(`https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`, '_blank');
+            
+            alert("Inscrição enviada com sucesso!");
             location.reload(); 
         }
 
@@ -927,10 +947,12 @@
             if(!db.mensalidades) db.mensalidades = [];
 
             if(id) {
-                let m = db.mensalidades.find(x => x.id === id);
-                m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
-                let e = db.elenco.find(x => x.id === id);
-                if(e && !m.nome.includes("Resp.")) e.nome = n; 
+                let m = db.mensalidades.find(x => x.id == id);
+                if(m) {
+                    m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
+                    let e = db.elenco.find(x => x.id == id);
+                    if(e && !m.nome.includes("Resp.")) e.nome = n; 
+                }
             } else {
                 let newId = Date.now().toString();
                 db.mensalidades.push({id:newId, nome:n, tel:t, venc:v, pago:false, bolsista: bolsista});
@@ -940,7 +962,8 @@
             resetFormM(); salvarDB();
         }
         window.editMensalidade = function(id) {
-            let m = db.mensalidades.find(x => x.id === id);
+            let m = db.mensalidades.find(x => x.id == id);
+            if(!m) return;
             document.getElementById('m_id').value = m.id;
             document.getElementById('m_nome').value = m.nome;
             document.getElementById('m_tel').value = m.tel;
@@ -958,7 +981,8 @@
             document.getElementById('btn-m-cancel').style.display = 'none';
         }
         window.pagarMensalidade = function(id) { 
-            let m = db.mensalidades.find(x => x.id === id);
+            let m = db.mensalidades.find(x => x.id == id);
+            if(!m) return;
             m.pago=true; 
             salvarDB(); 
             let msg = `Olá! 🦅\n\nConfirmamos o recebimento da mensalidade de *${m.nome}*. \n\nO *AC Nova Geração* agradece o apoio e confiança! ⚽🏆`;
@@ -966,8 +990,8 @@
         } 
         window.delMensalidade = function(id) { 
             if(confirm('Excluir? Este aluno será apagado do elenco e das mensalidades.')){
-                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
-                db.elenco=db.elenco.filter(m=>m.id!==id); 
+                db.mensalidades=db.mensalidades.filter(m=>m.id != id); 
+                db.elenco=db.elenco.filter(m=>m.id != id); 
                 salvarDB();
             } 
         }
@@ -981,45 +1005,58 @@
             let f=document.getElementById('e_foto_url').value; 
             let c=document.getElementById('e_cat').value; 
             let dn=document.getElementById('e_nasc').value; 
+            let bolsa = document.getElementById('e_bolsista') ? document.getElementById('e_bolsista').checked : false;
             if(!n) return alert("Preencha o nome!"); 
             
             if(!db.elenco) db.elenco = [];
 
             if(id) {
-                let j = db.elenco.find(x => x.id === id);
-                j.nome = n; j.foto = f; j.cat = c; j.nasc = dn?dn.split('-').reverse().join('/'):'-';
-                let m = db.mensalidades.find(x => x.id === id);
-                if(m && !m.nome.includes("Resp.")) m.nome = n;
+                let j = db.elenco.find(x => x.id == id);
+                if(j) {
+                    j.nome = n; j.foto = f; j.cat = c; j.nasc = dn?dn.split('-').reverse().join('/'):'-';
+                    let m = db.mensalidades.find(x => x.id == id);
+                    if(m) {
+                        if(!m.nome.includes("Resp.")) m.nome = n;
+                        m.bolsista = bolsa;
+                    }
+                }
             } else {
                 let newId = Date.now().toString();
                 db.elenco.push({ id: newId, nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); 
                 if(!db.mensalidades) db.mensalidades = [];
-                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: false});
+                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: bolsa});
             }
             resetFormE(); salvarDB(); 
         }
         window.editJogador = function(id) {
-            let j = db.elenco.find(x => x.id === id);
+            let j = db.elenco.find(x => x.id == id);
+            let m = db.mensalidades.find(x => x.id == id);
+            if(!j) return;
             document.getElementById('e_id').value = j.id;
             document.getElementById('e_nome').value = j.nome;
             document.getElementById('e_foto_url').value = j.foto || "";
             document.getElementById('e_cat').value = j.cat;
             document.getElementById('e_nasc').value = j.nasc !== '-' && j.nasc ? j.nasc.split('/').reverse().join('-') : '';
+            if(document.getElementById('e_bolsista')) {
+               document.getElementById('e_bolsista').checked = m ? m.bolsista : false;
+            }
             document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
             document.getElementById('btn-e-salvar').classList.add('btn-edit');
             document.getElementById('btn-e-cancel').style.display = 'inline-block';
             window.scrollTo(0,0);
         }
         window.resetFormE = function() {
-            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = '';
+            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = ''; 
+            if(document.getElementById('e_bolsista')) document.getElementById('e_bolsista').checked = false;
             document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-user-plus'></i> Salvar";
             document.getElementById('btn-e-salvar').classList.remove('btn-edit');
             document.getElementById('btn-e-cancel').style.display = 'none';
         }
-        window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
+        window.addGol = function(id) { let j = db.elenco.find(x => x.id == id); if(j){j.gols+=1; salvarDB();} } 
         
         window.addAmarelo = function(id) { 
-            let j = db.elenco.find(x => x.id===id);
+            let j = db.elenco.find(x => x.id == id);
+            if(!j) return;
             j.amarelos+=1; 
             if(confirm(`Cobrar multa de R$ 5,00 do ${j.nome} pelo Cartão Amarelo?`)){
                 if(!db.despesas) db.despesas = [];
@@ -1029,7 +1066,8 @@
             salvarDB(); 
         } 
         window.addVermelho = function(id) { 
-            let j = db.elenco.find(x => x.id===id);
+            let j = db.elenco.find(x => x.id == id);
+            if(!j) return;
             j.vermelhos+=1; 
             if(confirm(`Cobrar multa de R$ 10,00 do ${j.nome} pelo Cartão Vermelho?`)){
                 if(!db.despesas) db.despesas = [];
@@ -1041,8 +1079,8 @@
 
         window.delJogador = function(id) { 
             if(confirm('Remover jogador do elenco e das mensalidades?')) { 
-                db.elenco=db.elenco.filter(j=>j.id!==id); 
-                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
+                db.elenco=db.elenco.filter(j=>j.id != id); 
+                db.mensalidades=db.mensalidades.filter(m=>m.id != id); 
                 salvarDB(); 
             } 
         }
@@ -1100,15 +1138,16 @@
             if(!db.patrocinadores) db.patrocinadores = [];
 
             if(id) {
-                let p = db.patrocinadores.find(x => x.id === id);
-                p.nome = n; p.valor = v; p.status = s;
+                let p = db.patrocinadores.find(x => x.id == id);
+                if(p){ p.nome = n; p.valor = v; p.status = s; }
             } else {
                 db.patrocinadores.push({ id: Date.now().toString(), nome: n, valor: v, status: s });
             }
             resetFormP(); salvarDB();
         }
         window.editPatrocinio = function(id) {
-            let p = db.patrocinadores.find(x => x.id === id);
+            let p = db.patrocinadores.find(x => x.id == id);
+            if(!p) return;
             document.getElementById('p_id').value = p.id;
             document.getElementById('p_nome').value = p.nome;
             document.getElementById('p_valor').value = p.valor;
@@ -1118,8 +1157,8 @@
             document.getElementById('btn-p-cancel').style.display = 'inline-block';
             window.scrollTo(0,0);
         }
-        window.pagarPatrocinio = function(id) { db.patrocinadores.find(p => p.id === id).status = 'pago'; salvarDB(); }
-        window.delPatrocinio = function(id) { if(confirm('Remover Patrocinador?')) { db.patrocinadores = db.patrocinadores.filter(p => p.id !== id); salvarDB(); } }
+        window.pagarPatrocinio = function(id) { let p = db.patrocinadores.find(x => x.id == id); if(p){p.status = 'pago'; salvarDB();} }
+        window.delPatrocinio = function(id) { if(confirm('Remover Patrocinador?')) { db.patrocinadores = db.patrocinadores.filter(p => p.id != id); salvarDB(); } }
         window.resetFormP = function() {
             document.getElementById('p_id').value = ''; document.getElementById('p_nome').value = ''; document.getElementById('p_valor').value = '';
             document.getElementById('btn-p-salvar').innerHTML = "<i class='fa-solid fa-handshake'></i> Lançar";
@@ -1141,15 +1180,16 @@
             if(!db.jogos) db.jogos = [];
 
             if(id) {
-                let j = db.jogos.find(x => x.id === id);
-                j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l;
+                let j = db.jogos.find(x => x.id == id);
+                if(j){ j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l; }
             } else {
                 db.jogos.push({id:Date.now().toString(), data:d.split('-').reverse().join('/'), adv:a, tipo:t, local:l, confirmados: 0, arrecadado: 0, convocados: [], presencas_jogo: [], taxas_pagas: []}); 
             }
             resetFormJ(); salvarDB();
         }
         window.editJogo = function(id) {
-            let j = db.jogos.find(x => x.id === id);
+            let j = db.jogos.find(x => x.id == id);
+            if(!j) return;
             document.getElementById('j_id').value = j.id;
             document.getElementById('j_adv').value = j.adv;
             document.getElementById('j_tipo').value = j.tipo;
@@ -1166,10 +1206,11 @@
             document.getElementById('btn-j-salvar').classList.remove('btn-edit');
             document.getElementById('btn-j-cancel').style.display = 'none';
         }
-        window.delJogo = function(id) { if(confirm("Excluir jogo?")) {db.jogos=db.jogos.filter(j=>j.id!==id); salvarDB();} }
+        window.delJogo = function(id) { if(confirm("Excluir jogo?")) {db.jogos=db.jogos.filter(j=>j.id != id); salvarDB();} }
 
         window.gerenciarJogo = function(id) {
-            let j = db.jogos.find(x => x.id === id);
+            let j = db.jogos.find(x => x.id == id);
+            if(!j) return;
             document.getElementById('modal_jogo_id').value = j.id;
             document.getElementById('modal_jogo_adv').value = j.adv;
             document.getElementById('modal_jogo_data').value = j.data;
@@ -1199,7 +1240,8 @@
 
         window.salvarConvocacao = function() {
             let id = document.getElementById('modal_jogo_id').value;
-            let j = db.jogos.find(x => x.id === id);
+            let j = db.jogos.find(x => x.id == id);
+            if(!j) return;
             
             let conv = [], pres = [], pagos = [];
             document.querySelectorAll('.chk-convocado:checked').forEach(c => conv.push(c.dataset.id));
@@ -1223,11 +1265,12 @@
 
         window.enviarConvocacaoWpp = function() {
             let id = document.getElementById('modal_jogo_id').value;
-            let j = db.jogos.find(x => x.id === id);
+            let j = db.jogos.find(x => x.id == id);
+            if(!j) return;
             
             let conv = [];
             document.querySelectorAll('.chk-convocado:checked').forEach(c => {
-                let atleta = db.elenco.find(e => e.id === c.dataset.id);
+                let atleta = db.elenco.find(e => e.id == c.dataset.id);
                 if(atleta) conv.push(atleta.nome);
             });
             
@@ -1264,15 +1307,16 @@
             if(!db.uniformes) db.uniformes = [];
 
             if(id) {
-                let u = db.uniformes.find(x => x.id === id);
-                u.nome = n; u.tam = t;
+                let u = db.uniformes.find(x => x.id == id);
+                if(u) { u.nome = n; u.tam = t; }
             } else {
                 db.uniformes.push({id:Date.now().toString(), nome:n, tam:t, pago:false}); 
             }
             resetFormU(); salvarDB();
         }
         window.editUniforme = function(id) {
-            let u = db.uniformes.find(x => x.id === id);
+            let u = db.uniformes.find(x => x.id == id);
+            if(!u) return;
             document.getElementById('u_id').value = u.id;
             document.getElementById('u_nome').value = u.nome;
             document.getElementById('u_tam').value = u.tam;
@@ -1287,8 +1331,8 @@
             document.getElementById('btn-u-salvar').classList.remove('btn-edit');
             document.getElementById('btn-u-cancel').style.display = 'none';
         }
-        window.pagarUniforme = function(id) { db.uniformes.find(u=>u.id===id).pago=true; salvarDB(); } 
-        window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id!==id); salvarDB();} }
+        window.pagarUniforme = function(id) { let u = db.uniformes.find(x=>x.id == id); if(u){ u.pago=true; salvarDB(); } } 
+        window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id != id); salvarDB();} }
 
         // =========================================================
         // DESPESAS
@@ -1305,15 +1349,16 @@
             if(!db.despesas) db.despesas = [];
 
             if(id) {
-                let desp = db.despesas.find(x => x.id === id);
-                desp.desc = d; desp.valor = v; desp.cat = c;
+                let desp = db.despesas.find(x => x.id == id);
+                if(desp) { desp.desc = d; desp.valor = v; desp.cat = c; }
             } else {
                 db.despesas.push({id:Date.now().toString(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:c, valor:v}); 
             }
             resetFormD(); salvarDB();
         }
         window.editDespesa = function(id) {
-            let d = db.despesas.find(x => x.id === id);
+            let d = db.despesas.find(x => x.id == id);
+            if(!d) return;
             document.getElementById('d_id').value = d.id;
             document.getElementById('d_desc').value = d.desc;
             document.getElementById('d_valor').value = Math.abs(d.valor);
@@ -1329,7 +1374,7 @@
             document.getElementById('btn-d-salvar').classList.remove('btn-edit');
             document.getElementById('btn-d-cancel').style.display = 'none';
         }
-        window.delDespesa = function(id) { if(confirm("Excluir lançamento?")){db.despesas=db.despesas.filter(d=>d.id!==id); salvarDB();} }
+        window.delDespesa = function(id) { if(confirm("Excluir lançamento?")){db.despesas=db.despesas.filter(d=>d.id != id); salvarDB();} }
         
         // =========================================================
         // RENDER GERAL (Dashboard e Tabelas)
@@ -1530,7 +1575,7 @@
         window.carregarNotas = function() { 
             let id = document.getElementById('av_atleta').value; 
             if(!id) return; 
-            let a = db.elenco.find(j => j.id === id); 
+            let a = db.elenco.find(j => j.id == id); 
             if(a && a.notas) { 
                 document.getElementById('av_fis').value = a.notas.fis||0; 
                 document.getElementById('av_chute').value = a.notas.chute||0; 
@@ -1576,7 +1621,7 @@
 
         window.atualizarRadar = function() {
             let id = document.getElementById('av_atleta').value;
-            let a = db.elenco.find(j => j.id === id);
+            let a = db.elenco.find(j => j.id == id);
             let ctx = document.getElementById('radarTela').getContext('2d');
             if(chartTela) chartTela.destroy();
             
@@ -1601,7 +1646,8 @@
         window.salvarAvaliacao = function() { 
             let id = document.getElementById('av_atleta').value; 
             if(!id) return alert("Selecione um atleta!"); 
-            let a = db.elenco.find(j => j.id === id); 
+            let a = db.elenco.find(j => j.id == id); 
+            if(!a) return;
             let m = document.getElementById('av_mes').value; 
             let n = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value, obs: document.getElementById('av_obs').value }; 
             a.notas = n; 
@@ -1620,7 +1666,7 @@
         }
 
         window.abrirFicha = function(id) {
-            let a = db.elenco.find(j => j.id === id);
+            let a = db.elenco.find(j => j.id == id);
             if(!a) return;
             
             let html = `
@@ -1659,7 +1705,8 @@
         }
 
         window.abrirPerfil = function(id) {
-            let a = db.elenco.find(j => j.id === id);
+            let a = db.elenco.find(j => j.id == id);
+            if(!a) return;
             
             document.querySelector('.perfil-stats').style.display = 'flex';
             document.getElementById('box-evolucao').style.display = 'block';
@@ -1705,7 +1752,8 @@
             let id = document.getElementById('av_atleta').value; if(!id) return alert("Selecione um atleta!");
             let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Foto...';
             
-            let a = db.elenco.find(j => j.id === id); let mIn = document.getElementById('av_mes').value;
+            let a = db.elenco.find(j => j.id == id); let mIn = document.getElementById('av_mes').value;
+            if(!a) return;
             
             if(sys_logo) { document.getElementById('img_logo_relatorio').src = sys_logo; document.getElementById('img_logo_relatorio').style.display = 'block'; document.getElementById('img_letra_clube').style.display = 'none'; } 
             else { document.getElementById('img_logo_relatorio').style.display = 'none'; document.getElementById('img_letra_clube').style.display = 'flex'; }
@@ -1725,7 +1773,6 @@
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
-            // Move container outside the view temporarily to render the image properly
             let container = document.getElementById('relatorio-print-container'); 
             
             setTimeout(() => {
@@ -1734,7 +1781,7 @@
                     btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial'; 
                     
                     let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\n_(A imagem já foi salva na galeria do seu celular. Por favor, anexe a foto clicando no ícone do clipe 📎 ou câmera 📷 aqui na nossa conversa!)_\n\nA Nova Geração é Nossa!`;
-                    let mens = db.mensalidades.find(x => x.id === id);
+                    let mens = db.mensalidades.find(x => x.id == id);
                     if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
                     else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
                 }).catch(err => {
