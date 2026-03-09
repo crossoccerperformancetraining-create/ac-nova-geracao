@@ -23,7 +23,7 @@
         .header h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         
         .nav-bar { background-color: #fff; display: flex; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 15px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 14px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
@@ -42,87 +42,102 @@
         .card h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;}
         .card .valor { font-size: 26px; }
         .bg-receita { background-color: #28a745; }
-        .bg-previsao { background-color: #f39c12; } 
+        .bg-previsao { background-color: #f39c12; color: white; } 
         .bg-despesa { background-color: #dc3545; }
         .bg-saldo { background-color: var(--azul-escuro); }
-
-        .painel-alertas { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
-        .niver-box, .ranking-box { flex: 1; min-width: 300px; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .niver-box { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-left: 5px solid #00bcd4; display: none; }
-        .ranking-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 5px solid #ffc107; }
-        .alerta-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
         .form-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--dourado); }
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
-        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; }
+        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; box-sizing: border-box;}
         
         .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
-        .btn-sm { padding: 6px 8px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
+        .btn-sm { padding: 6px 10px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
         .btn-zap { background-color: #25D366; } .btn-pay { background-color: #28a745; } .btn-del { background-color: #dc3545; }
+        .btn-gol { background-color: #000; } .btn-amarelo { background-color: #ffc107; color: #000; } .btn-vermelho { background-color: #dc3545; }
         .btn-perfil { background-color: #007bff; } .btn-edit { background-color: #f39c12; color: #000;}
         
         .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
         .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-bolsa { background-color: #17a2b8; }
         
-        .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
+        .avatar-mini { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); }
 
-        #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
+        /* Estilo do Rodapé - Esconder Boletim */
+        #relatorio-print-container { display: none; position: absolute; left: -9999px; }
+        #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 8px; font-size: 14px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
         .blurred-text { filter: blur(5px); color: transparent; text-shadow: 0 0 8px #000; }
-        #relatorio-print-container { display: none; }
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando à Nuvem AC...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
 
     <div class="header">
         <div class="logo-area">
-            <div id="topo_letra" style="width: 50px; height: 50px; font-size: 18px; background:white; color:var(--azul-escuro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; border: 2px solid var(--dourado);">AC</div>
-            <div>
-                <h1>AC Nova Geração</h1>
-                <small style="color: #ccc;">Gestão em Nuvem (Firebase)</small>
-            </div>
+            <div style="width: 50px; height: 50px; font-size: 18px; background:white; color:var(--azul-escuro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; border: 2px solid var(--dourado);">AC</div>
+            <h1>AC Nova Geração</h1>
         </div>
         <button onclick="toggleVisibility()" style="background:white; border:none; border-radius:20px; padding:5px 15px; cursor:pointer; font-weight:bold;">
             <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text">Ocultar R$</span>
         </button>
     </div>
 
-    <div class="nav-bar">
+    <div class="nav-bar" id="main-nav">
         <button class="tab-btn active" onclick="openTab('mensalidades')">Mensalidades</button>
         <button class="tab-btn" onclick="openTab('elenco')">Elenco</button>
         <button class="tab-btn highlight" onclick="openTab('avaliacao')">Boletim / Card</button>
-        <button class="tab-btn" onclick="openTab('configuracoes')">Configurações</button>
+        <button class="tab-btn" onclick="openTab('agenda')">Jogos</button>
+        <button class="tab-btn" onclick="openTab('despesas')">Caixa</button>
+        <button class="tab-btn" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
     </div>
 
     <div class="container">
-        <div id="main-dash" class="dashboard">
-            <div class="card bg-receita"><h3>Arrecadado</h3><div class="valor money-val" id="dash-receita">R$ 0,00</div></div>
-            <div class="card bg-previsao"><h3>A Receber (Mês)</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
-            <div class="card bg-saldo"><h3>Saldo em Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
+        <div id="main-dash">
+            <div class="dashboard">
+                <div class="card bg-receita"><h3>Arrecadado</h3><div class="valor money-val" id="dash-receita">R$ 0,00</div></div>
+                <div class="card bg-previsao"><h3>A Receber</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
+                <div class="card bg-saldo"><h3>Saldo Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
+            </div>
         </div>
 
         <div id="mensalidades" class="tab-content active">
-            <h2>Controle de Mensalidades</h2>
+            <h2>Mensalidades</h2>
+            <div class="form-row">
+                <input type="hidden" id="m_id">
+                <div class="form-group"><label>Aluno/Responsável</label><input type="text" id="m_nome"></div>
+                <div class="form-group"><label>WhatsApp</label><input type="text" id="m_tel"></div>
+                <div class="form-group"><label>Vencimento</label><select id="m_venc"><option>05</option><option>10</option><option>15</option></select></div>
+                <button class="btn-add" onclick="saveMensalidade()">Salvar</button>
+            </div>
             <div class="table-responsive">
                 <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
             </div>
         </div>
 
         <div id="elenco" class="tab-content">
-            <h2>Gestão do Elenco</h2>
+            <h2>Elenco Atual</h2>
             <div class="table-responsive">
-                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Gols</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
             </div>
+        </div>
+
+        <div id="avaliacao" class="tab-content">
+            <h2>Boletim do Atleta</h2>
+            <div class="form-row">
+                <div class="form-group"><label>Atleta</label><select id="av_atleta" onchange="carregarNotas()"></select></div>
+                <button class="btn-add" onclick="gerarFeedbackIA()">Gerar Análise IA</button>
+            </div>
+            <canvas id="radarTela" width="300" height="300"></canvas>
+            <textarea id="av_obs" rows="4" style="width:100%; margin-top:10px;"></textarea>
+            <button class="btn-add" style="width:100%; margin-top:10px;" onclick="salvarAvaliacao()">Salvar Boletim</button>
         </div>
 
         <div id="configuracoes" class="tab-content">
             <h2>Configurações</h2>
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff;">
-                <h3 style="margin-top:0;">Link de Inscrição Oficial</h3>
-                <p>Mande este link no WhatsApp para os pais preencherem a ficha:</p>
-                <input type="text" id="link_oficial" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;" value="https://crossoccerperformancetraining-create.github.io/ac-nova-geracao/inscricao.html">
-                <button class="tab-btn active" onclick="navigator.clipboard.writeText(document.getElementById('link_oficial').value); alert('Link Copiado!');">Copiar Link Oficial</button>
+                <h3>Link de Inscrição para Pais</h3>
+                <p>Compartilhe este link no WhatsApp:</p>
+                <input type="text" id="link_oficial" readonly style="width: 100%; padding: 10px; margin: 10px 0;" value="">
+                <button class="btn-add" onclick="copyLink()">Copiar Link</button>
             </div>
         </div>
     </div>
@@ -146,21 +161,16 @@
         let db = { mensalidades: [], elenco: [] };
         let isValuesHidden = false;
 
-        // PUXAR DADOS E ATUALIZAR TELA
+        // PUXAR DADOS DA NUVEM
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                db.mensalidades = data.mensalidades || [];
-                db.elenco = data.elenco || [];
-                
-                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Online e Sincronizado!";
+                db = data;
+                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-check'></i> Sistema Sincronizado!";
                 document.getElementById('nuvem-status').style.background = "#28a745";
                 document.getElementById('nuvem-status').style.color = "#fff";
                 setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
-                
                 renderizarTudo();
-            } else {
-                document.getElementById('nuvem-status').innerText = "Nenhum dado encontrado na nuvem.";
             }
         });
 
@@ -170,48 +180,60 @@
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
+            if(tabName === 'avaliacao') atualizarSelectAtletas();
         }
 
         function toggleVisibility() {
             isValuesHidden = !isValuesHidden;
             document.getElementById('eye-icon').className = isValuesHidden ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
-            document.getElementById('eye-text').innerText = isValuesHidden ? 'Mostrar R$' : 'Ocultar R$';
             renderizarTudo();
         }
 
-        function renderizarTudo() {
-            let arrecadado = 0;
-            let previsao = 0;
+        function copyLink() {
+            let url = window.location.href.split('?')[0] + 'inscricao.html';
+            document.getElementById('link_oficial').value = url;
+            navigator.clipboard.writeText(url);
+            alert("Link Copiado!");
+        }
 
-            // Renderizar Mensalidades
+        function renderizarTudo() {
+            let total = 0;
+            let prev = 0;
+
+            // Render Mensalidades
             document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
-                if(!m.bolsista) {
-                    if(m.pago) arrecadado += 60; else previsao += 60;
-                }
-                let valClass = isValuesHidden ? 'blurred-text' : '';
+                if(m.pago) total += 60; else prev += 60;
+                let mask = isValuesHidden ? 'blurred-text' : '';
                 return `<tr>
-                    <td><strong>${m.nome}</strong></td>
-                    <td>Dia ${m.venc}</td>
-                    <td>${m.bolsista ? '<span class="badge badge-bolsa">Bolsista</span>' : (m.pago ? '<span class="badge badge-ok">Pago</span>' : '<span class="badge badge-pendente">Pendente</span>')}</td>
-                    <td class="${valClass}">${isValuesHidden ? 'R$ ***' : 'R$ 60,00'}</td>
+                    <td>${m.nome}</td>
+                    <td>${m.venc}</td>
+                    <td>${m.pago ? 'Pago' : 'Pendente'}</td>
+                    <td><button class="btn-sm btn-edit" onclick="editM('${m.id}')">✏️</button></td>
                 </tr>`;
             }).join('');
 
-            // Renderizar Elenco
+            // Render Elenco
             document.getElementById('tb-elenco').innerHTML = db.elenco.map(j => `
                 <tr>
                     <td><img src="${j.foto || ''}" class="avatar-mini" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'"></td>
-                    <td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span></td>
-                    <td>⚽ ${j.gols || 0} | 🟨 ${j.amarelos || 0}</td>
-                    <td><button class="btn-sm btn-perfil">Ver Ficha</button></td>
+                    <td>${j.nome}</td>
+                    <td>⚽ ${j.gols || 0}</td>
+                    <td><button class="btn-sm btn-edit" onclick="editE('${j.id}')">✏️</button></td>
                 </tr>
             `).join('');
 
-            // Atualizar Dashboard
-            const mask = (v) => isValuesHidden ? 'R$ ***' : formatarMoeda(v);
-            document.getElementById('dash-receita').innerText = mask(arrecadado);
-            document.getElementById('dash-previsao').innerText = mask(previsao);
-            document.getElementById('dash-saldo').innerText = mask(arrecadado);
+            // Dashboard
+            const maskVal = (v) => isValuesHidden ? 'R$ ***' : formatarMoeda(v);
+            document.getElementById('dash-receita').innerText = maskVal(total);
+            document.getElementById('dash-previsao').innerText = maskVal(prev);
+            document.getElementById('dash-saldo').innerText = maskVal(total);
+        }
+
+        function saveMensalidade() {
+            let n = document.getElementById('m_nome').value;
+            if(!n) return;
+            db.mensalidades.push({id: Date.now(), nome: n, tel: document.getElementById('m_tel').value, venc: document.getElementById('m_venc').value, pago: false});
+            dbRef.set(db);
         }
     </script>
 </body>
