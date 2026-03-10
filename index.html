@@ -23,7 +23,7 @@
         .header h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
         
         .nav-bar { background-color: #fff; display: flex; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 14px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .tab-btn { background-color: #eee; border: none; padding: 10px 15px; font-size: 15px; font-weight: bold; color: var(--azul-escuro); cursor: pointer; border-radius: 5px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .tab-btn:hover { background-color: #ddd; }
         .tab-btn.active { background-color: var(--dourado); color: var(--azul-escuro); }
         .tab-btn.highlight { background-color: #e6f7ff; border: 1px solid #007bff; }
@@ -42,71 +42,158 @@
         .card h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;}
         .card .valor { font-size: 26px; }
         .bg-receita { background-color: #28a745; }
-        .bg-previsao { background-color: #f39c12; color: white; } 
+        .bg-previsao { background-color: #f39c12; } 
         .bg-despesa { background-color: #dc3545; }
         .bg-saldo { background-color: var(--azul-escuro); }
+
+        .painel-alertas { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        .niver-box, .ranking-box { flex: 1; min-width: 300px; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .niver-box { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-left: 5px solid #00bcd4; display: none; }
+        .ranking-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left: 5px solid #ffc107; }
+        .alerta-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .niver-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #333; }
+        .niver-hoje { background: #ff4b82; color: white; border: none; box-shadow: 0 2px 5px rgba(255,75,130,0.4); }
 
         .form-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--dourado); }
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
-        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 100%; box-sizing: border-box;}
+        input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;}
         
+        .checkbox-group { display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 5px; }
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 14px; line-height: 1.4;}
+        .required { color: red; font-weight: bold;}
+
+        button.btn-add { background-color: var(--azul-escuro); color: var(--dourado); padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
+        button.btn-add:hover { background-color: #00152b; }
+        button.btn-cancel { background-color: #666; color: white; padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; }
+
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; min-width: 600px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
+        th { background-color: #f1f1f1; color: var(--azul-escuro); font-weight: bold; }
+        tr:hover { background-color: #f9f9f9; }
+
         .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
-        .btn-sm { padding: 6px 10px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
+        .btn-sm { padding: 6px 8px; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;}
         .btn-zap { background-color: #25D366; } .btn-pay { background-color: #28a745; } .btn-del { background-color: #dc3545; }
         .btn-gol { background-color: #000; } .btn-amarelo { background-color: #ffc107; color: #000; } .btn-vermelho { background-color: #dc3545; }
-        .btn-perfil { background-color: #007bff; } .btn-edit { background-color: #f39c12; color: #000;}
+        .btn-perfil { background-color: #007bff; } .btn-azul { background-color: #17a2b8; } .btn-edit { background-color: #f39c12; color: #000;}
         
         .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
-        .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-bolsa { background-color: #17a2b8; }
+        .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-atrasado { background-color: #dc3545; } .badge-bolsa { background-color: #17a2b8; }
+        .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
         
-        .avatar-mini { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dourado); }
+        .avatar-mini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
 
-        /* Estilo do Rodapé - Esconder Boletim */
-        #relatorio-print-container { display: none; position: absolute; left: -9999px; }
-        #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 8px; font-size: 14px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
-        .blurred-text { filter: blur(5px); color: transparent; text-shadow: 0 0 8px #000; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; }
+        .modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 100%; max-width: 600px; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; right: 15px; top: 10px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
+        .perfil-foto { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--azul-escuro); object-fit: cover; margin: auto; display: block; background: #eee; }
+        .perfil-stats { display: flex; justify-content: space-around; background: #f4f4f9; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
+        .radar-container { width: 100%; max-width: 320px; margin: auto; margin-bottom: 20px; }
+        
+        .historico-box { background: #f9f9f9; border-radius: 8px; padding: 15px; text-align: left; margin-bottom: 20px; border: 1px solid #eee; }
+        .historico-table { width: 100%; font-size: 12px; text-align: center; border-collapse: collapse; }
+        .historico-table th { background: var(--azul-escuro); color: white; padding: 5px; border-radius: 4px; }
+        .historico-table td { padding: 5px; border-bottom: 1px solid #ddd; font-weight: bold; }
+
+        /* MENSAGEM DE CONEXÃO COM A NUVEM */
+        #nuvem-status { background: #ffc107; color: #000; text-align: center; padding: 5px; font-size: 12px; font-weight: bold; position: sticky; top: 0; z-index: 1001;}
+
+        /* Formulário Público */
+        .public-form-container { background: #fff; padding: 30px; border-radius: 12px; border-top: 5px solid var(--azul-escuro); max-width: 700px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+        .public-form-container h2 { text-align: center; color: var(--azul-escuro); margin-bottom: 5px; margin-top: 0;}
+        .public-form-container p { text-align: center; color: #666; margin-bottom: 25px; font-size: 14px; }
+        .form-section-title { font-size: 16px; color: var(--azul-escuro); border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; text-transform: uppercase; font-weight: bold;}
+        .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
+        .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
+
+        /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
+        #relatorio-print-container { position: absolute; left: -9999px; top: -9999px; width: 800px; background: white; z-index: -100; opacity: 0; pointer-events: none;}
+        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
+        .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
+        .pdf-title { text-align: center; flex: 1; }
+        .pdf-title h1 { margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase; }
+        .pdf-title h3 { margin: 5px 0 0 0; color: #555; }
+        .pdf-body { display: flex; gap: 20px; margin-bottom: 20px; align-items: center; }
+        .pdf-radar { flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; }
+        .pdf-info { flex: 1; font-size: 18px; line-height: 1.8; background: #f4f4f9; padding: 20px; border-radius: 10px; }
+        .pdf-feedback { background: #e6f7ff; padding: 20px; border-left: 6px solid var(--azul-escuro); font-style: italic; font-size: 18px; margin-top: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0; }
+        .circulo-pdf { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; }
+        .circulo-clube { background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado); }
+        .circulo-atleta { background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro); font-size: 30px;}
     </style>
 </head>
 <body>
-    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados...</div>
+    <div id="nuvem-status"><i class="fa-solid fa-spinner fa-spin"></i> Conectando ao Banco de Dados da Nuvem...</div>
 
     <div class="header">
         <div class="logo-area">
-            <div style="width: 50px; height: 50px; font-size: 18px; background:white; color:var(--azul-escuro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; border: 2px solid var(--dourado);">AC</div>
-            <h1>AC Nova Geração</h1>
+            <div class="circulo-pdf circulo-clube" style="width: 50px; height: 50px; font-size: 18px; display:flex; align-items:center; justify-content:center; font-weight:bold; background:white; color:var(--azul-escuro); border-radius:50%;" id="topo_letra">AC</div>
+            <img id="escudo-topo" src="" class="escudo-img" style="display:none;">
+            <div>
+                <h1>AC Nova Geração</h1>
+                <small style="color: #ccc;">Gestão em Nuvem</small>
+            </div>
         </div>
-        <button onclick="toggleVisibility()" style="background:white; border:none; border-radius:20px; padding:5px 15px; cursor:pointer; font-weight:bold;">
-            <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text">Ocultar R$</span>
-        </button>
     </div>
 
     <div class="nav-bar" id="main-nav">
-        <button class="tab-btn active" onclick="openTab('mensalidades')">Mensalidades</button>
-        <button class="tab-btn" onclick="openTab('elenco')">Elenco</button>
-        <button class="tab-btn highlight" onclick="openTab('avaliacao')">Boletim / Card</button>
-        <button class="tab-btn" onclick="openTab('agenda')">Jogos</button>
-        <button class="tab-btn" onclick="openTab('despesas')">Caixa</button>
-        <button class="tab-btn" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
+        <button class="tab-btn active" onclick="openTab('mensalidades')"><i class="fa-solid fa-file-invoice"></i> Mensalidades</button>
+        <button class="tab-btn" onclick="openTab('elenco')"><i class="fa-solid fa-users"></i> Elenco</button>
+        <button class="tab-btn" onclick="openTab('chamada')"><i class="fa-solid fa-calendar-check"></i> Chamada</button>
+        <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-image"></i> Card Boletim</button>
+        <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos & Taxas</button>
+        <button class="tab-btn" onclick="openTab('uniformes')"><i class="fa-solid fa-shirt"></i> Uniformes</button>
+        <button class="tab-btn" onclick="openTab('patrocinadores')"><i class="fa-solid fa-handshake"></i> Patrocínios</button>
+        <button class="tab-btn" onclick="openTab('despesas')"><i class="fa-solid fa-wallet"></i> Caixa</button>
+        <button class="tab-btn highlight" onclick="openTab('inscricao')"><i class="fa-solid fa-user-plus"></i> Inscrição Online</button>
+        <button class="tab-btn settings" onclick="openTab('configuracoes')"><i class="fa-solid fa-gear"></i></button>
     </div>
 
     <div class="container">
+        
         <div id="main-dash">
+            <div class="painel-alertas">
+                <div id="box-aniversarios" class="niver-box">
+                    <div class="alerta-title" style="color: #006064;"><i class="fa-solid fa-cake-candles" style="color: #ff4b82;"></i> Aniversariantes do Mês</div>
+                    <div id="lista-niver"></div>
+                </div>
+                <div class="ranking-box">
+                    <div class="alerta-title" style="color: #856404;"><i class="fa-solid fa-trophy" style="color: #d39e00;"></i> Top 3 Artilheiros</div>
+                    <div id="lista-artilheiros"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-header">
+                <h3 style="margin: 0; color: var(--azul-escuro);"><i class="fa-solid fa-chart-pie"></i> Resumo Financeiro</h3>
+                <button class="btn-hide-values" onclick="toggleVisibility()" id="btn-toggle-eye">
+                    <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="eye-text" style="font-size: 14px; font-weight: normal; margin-left: 5px;">Ocultar Valores</span>
+                </button>
+            </div>
+
             <div class="dashboard">
                 <div class="card bg-receita"><h3>Arrecadado</h3><div class="valor money-val" id="dash-receita">R$ 0,00</div></div>
-                <div class="card bg-previsao"><h3>A Receber</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
-                <div class="card bg-saldo"><h3>Saldo Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
+                <div class="card bg-previsao"><h3>A Receber (Mês)</h3><div class="valor money-val" id="dash-previsao">R$ 0,00</div></div>
+                <div class="card bg-despesa"><h3>Saídas</h3><div class="valor money-val" id="dash-despesa">R$ 0,00</div></div>
+                <div class="card bg-saldo"><h3>Saldo em Caixa</h3><div class="valor money-val" id="dash-saldo">R$ 0,00</div></div>
             </div>
         </div>
 
         <div id="mensalidades" class="tab-content active">
-            <h2>Mensalidades</h2>
+            <h2>Controle de Mensalidades</h2>
             <div class="form-row">
                 <input type="hidden" id="m_id">
-                <div class="form-group"><label>Aluno/Responsável</label><input type="text" id="m_nome"></div>
-                <div class="form-group"><label>WhatsApp</label><input type="text" id="m_tel"></div>
-                <div class="form-group"><label>Vencimento</label><select id="m_venc"><option>05</option><option>10</option><option>15</option></select></div>
-                <button class="btn-add" onclick="saveMensalidade()">Salvar</button>
+                <div class="form-group" style="flex: 2;"><label>Atleta/Responsável</label><input type="text" id="m_nome"></div>
+                <div class="form-group"><label>WhatsApp</label><input type="text" id="m_tel" placeholder="Ex: 82999999999"></div>
+                <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
+                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
+                    <input type="checkbox" id="m_bolsista">
+                    <label for="m_bolsista">Bolsista (Isento)</label>
+                </div>
+                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Adicionar</button>
+                <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
             </div>
             <div class="table-responsive">
                 <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
@@ -114,127 +201,1387 @@
         </div>
 
         <div id="elenco" class="tab-content">
-            <h2>Elenco Atual</h2>
-            <div class="table-responsive">
-                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Gols</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+            <h2>Gestão do Elenco</h2>
+            <div class="form-row">
+                <input type="hidden" id="e_id">
+                <div class="form-group" style="flex: 2;"><label>Nome do Atleta</label><input type="text" id="e_nome"></div>
+                <div class="form-group" style="flex: 2;">
+                    <label>Foto do Atleta (Opcional)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="hidden" id="e_foto_url">
+                        <div class="upload-btn-wrapper" style="margin-top: 0; width: 100%;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px; width: 100%;"><i class="fa-solid fa-camera"></i> Escolher Foto do Celular</button>
+                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'e_foto_url')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
+                <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
+                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
+                    <input type="checkbox" id="e_bolsista">
+                    <label for="e_bolsista">Bolsista</label>
+                </div>
+                <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
+                <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
+            <div class="table-responsive">
+                <table><thead><tr><th>Foto</th><th>Jogador</th><th>Estatísticas</th><th>Ações</th></tr></thead><tbody id="tb-elenco"></tbody></table>
+            </div>
+        </div>
+
+        <div id="chamada" class="tab-content">
+            <h2>Lista de Presença - Treino</h2>
+            <div class="form-row" style="background: #eef2f5;">
+                <div class="form-group"><label>Data do Treino</label><input type="date" id="pres_data"></div>
+                <div class="form-group"><label>Filtrar Categoria</label><select id="pres_cat_filtro" onchange="renderizarChamada()"><option value="Todos">Todas as Categorias</option><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Atleta</th><th>Categoria</th><th>Presente?</th></tr></thead>
+                    <tbody id="tb-presenca"></tbody>
+                </table>
+            </div>
+            <button class="btn-add" style="width: 100%; margin-top: 15px; background-color: #28a745;" onclick="salvarPresenca()"><i class="fa-solid fa-check-double"></i> Salvar Lista de Presença de Hoje</button>
         </div>
 
         <div id="avaliacao" class="tab-content">
-            <h2>Boletim do Atleta</h2>
-            <div class="form-row">
-                <div class="form-group"><label>Atleta</label><select id="av_atleta" onchange="carregarNotas()"></select></div>
-                <button class="btn-add" onclick="gerarFeedbackIA()">Gerar Análise IA</button>
+            <h2>Boletim em Formato de Imagem (Card Oficial)</h2>
+            <p>Avalie o atleta e baixe a imagem para enviar direto no WhatsApp dos pais!</p>
+            <div class="form-row" style="background: #eef2f5;">
+                <div class="form-group" style="flex: 2;"><label>Selecione o Atleta</label><select id="av_atleta" onchange="carregarNotas()"><option value="">-- Escolha --</option></select></div>
+                <div class="form-group"><label>Mês Avaliação</label><input type="month" id="av_mes"></div>
             </div>
-            <canvas id="radarTela" width="300" height="300"></canvas>
-            <textarea id="av_obs" rows="4" style="width:100%; margin-top:10px;"></textarea>
-            <button class="btn-add" style="width:100%; margin-top:10px;" onclick="salvarAvaliacao()">Salvar Boletim</button>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 300px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div class="form-group"><label>🏃‍♂️ Físico</label><input type="number" id="av_fis" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🎯 Finalização</label><input type="number" id="av_chute" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>👟 Passe</label><input type="number" id="av_passe" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🧠 Tática</label><input type="number" id="av_coord" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🦅 Cabeceio</label><input type="number" id="av_cab" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                        <div class="form-group"><label>🤝 Disciplina</label><input type="number" id="av_disc" min="1" max="10" placeholder="1-10" onchange="atualizarRadar()"></div>
+                    </div>
+                    <button class="btn-add" style="background: #000; color: #fff; width: 100%; margin-bottom: 15px;" onclick="gerarFeedbackIA()"><i class="fa-solid fa-robot"></i> Gerar Análise Automática (IA)</button>
+                    <div class="form-group"><label>📝 Parecer do Treinador</label><textarea id="av_obs" rows="3" placeholder="Análise do atleta..."></textarea></div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar na Nuvem</button>
+                        <button class="btn-add" id="btn-pdf" style="background: #007bff; color: white; flex: 1;" onclick="gerarBoletimImagemEZap()"><i class="fa-solid fa-image"></i> Baixar CARD Oficial</button>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 300px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+                    <canvas id="radarTela" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="agenda" class="tab-content">
+            <h2>Calendário de Jogos e Convocações</h2>
+            <div class="form-row">
+                <input type="hidden" id="j_id">
+                <div class="form-group"><label>Data</label><input type="date" id="j_data"></div>
+                <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
+                <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
+                <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar / Salvar</button>
+                <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
+            </div>
+            <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
+        </div>
+
+        <div id="uniformes" class="tab-content">
+            <h2>Venda de Kits (R$ 120,00)</h2>
+            <div class="form-row">
+                <input type="hidden" id="u_id">
+                <div class="form-group" style="flex: 2;"><label>Nome do Aluno</label><input type="text" id="u_nome"></div>
+                <div class="form-group"><label>Tam.</label><select id="u_tam"><option>10</option><option>12</option><option>14</option><option>P</option><option>M</option><option>G</option><option>GG</option></select></div>
+                <button class="btn-add" id="btn-u-salvar" onclick="saveUniforme()"><i class="fa-solid fa-shirt"></i> Salvar Pedido</button>
+                <button class="btn-cancel" id="btn-u-cancel" style="display:none;" onclick="resetFormU()">Cancelar</button>
+            </div>
+            <div class="table-responsive"><table><thead><tr><th>Nome</th><th>Tamanho</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-uniformes"></tbody></table></div>
+        </div>
+
+        <div id="patrocinadores" class="tab-content">
+            <h2>Gestão de Patrocínios</h2>
+            <div class="form-row">
+                <input type="hidden" id="p_id">
+                <div class="form-group" style="flex: 2;"><label>Empresa / Patrocinador</label><input type="text" id="p_nome"></div>
+                <div class="form-group"><label>Valor Mensal (R$)</label><input type="number" id="p_valor" step="0.01"></div>
+                <div class="form-group"><label>Status</label><select id="p_status"><option value="pendente">A Receber</option><option value="pago">Já Recebido</option></select></div>
+                <button class="btn-add" id="btn-p-salvar" onclick="savePatrocinio()"><i class="fa-solid fa-handshake"></i> Salvar</button>
+                <button class="btn-cancel" id="btn-p-cancel" style="display:none;" onclick="resetFormP()">Cancelar</button>
+            </div>
+            <div class="table-responsive">
+                <table><thead><tr><th>Empresa</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-patrocinadores"></tbody></table>
+            </div>
+        </div>
+
+        <div id="despesas" class="tab-content">
+            <h2>Registro de Despesas (Saídas)</h2>
+            <div class="form-row">
+                <input type="hidden" id="d_id">
+                <div class="form-group" style="flex: 2;"><label>Descrição</label><input type="text" id="d_desc" placeholder="Ex: Arbitragem, Água..."></div>
+                <div class="form-group"><label>Cat.</label><select id="d_cat"><option>Professores</option><option>Logística</option><option>Materiais</option><option>Arbitragem</option><option>Transporte</option><option>Outros</option></select></div>
+                <div class="form-group"><label>Valor (R$)</label><input type="number" id="d_valor" step="0.01"></div>
+                <button class="btn-add" id="btn-d-salvar" onclick="saveDespesa()"><i class="fa-solid fa-file-invoice-dollar"></i> Salvar</button>
+                <button class="btn-cancel" id="btn-d-cancel" style="display:none;" onclick="resetFormD()">Cancelar</button>
+            </div>
+            <div class="table-responsive"><table><thead><tr><th>Data</th><th>Descrição</th><th>Cat.</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="tb-despesas"></tbody></table></div>
+        </div>
+
+        <div id="relatorios" class="tab-content">
+            <h2>Relatórios Estratégicos</h2>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px; background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
+                    <h3 style="margin-top:0; color:#721c24;"><i class="fa-brands fa-whatsapp"></i> Cobrança Rápida</h3>
+                    <p style="color: #721c24;">Gera uma lista pronta com os alunos inadimplentes para você colar no grupo ou privado.</p>
+                    <button class="btn-add" style="background:#dc3545; color:white; width: 100%;" onclick="gerarRelatorioDevedores()"><i class="fa-regular fa-copy"></i> Copiar Lista de Inadimplentes</button>
+                </div>
+                <div style="flex: 1; min-width: 300px; background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff;">
+                    <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-table"></i> Baixar Dados (Excel)</h3>
+                    <p style="color: #002244;">Faça o download de todo o banco de dados (mensalidades, elenco e finanças) em formato CSV.</p>
+                    <button class="btn-add" style="background-color: #217346; color: white; width: 100%;" onclick="exportarExcel()"><i class="fa-solid fa-file-excel"></i> Baixar Planilha (.csv)</button>
+                </div>
+            </div>
+            <div id="preview-relatorio" style="margin-top:20px; white-space: pre-wrap; background:#fff; padding:15px; border:1px solid #ddd; display:none;"></div>
+        </div>
+
+        <div id="inscricao" class="tab-content">
+            <div class="public-form-container">
+                <h2 style="text-align: center; color: var(--azul-escuro);"><i class="fa-regular fa-futbol"></i> Ficha de Inscrição Oficial</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 14px;">Preencha os dados abaixo para matricular o atleta no <strong>AC Nova Geração</strong>. Os dados serão enviados diretamente para o sistema do treinador.</p>
+                
+                <h3 class="form-section-title">Dados do Atleta</h3>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
+                    <input type="text" id="pub_nome" placeholder="Digite o nome completo">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Data de Nascimento <span class="required">*</span></label>
+                    <input type="date" id="pub_nasc">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
+                    <select id="pub_cat">
+                        <option value="Sub-07">Sub-07</option>
+                        <option value="Sub-09">Sub-09</option>
+                        <option value="Sub-11">Sub-11</option>
+                        <option value="Sub-13">Sub-13</option>
+                        <option value="Sub-15">Sub-15</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Foto do Aluno(a) para carteirinha <span style="font-weight: normal; color: #888;">(Opcional - Escolha do Celular)</span></label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="hidden" id="pub_foto_url">
+                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
+                            <button class="btn-add" id="btn-pub-foto" style="background-color: #6c757d; font-size: 14px; width: 100%;"><i class="fa-solid fa-camera"></i> Toque aqui para anexar foto</button>
+                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_foto_url', 'btn-pub-foto')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
+                    <select id="pub_camisa">
+                        <option value="10">Tamanho 10</option>
+                        <option value="12">Tamanho 12</option>
+                        <option value="14">Tamanho 14</option>
+                        <option value="P">Tamanho P (Adulto)</option>
+                        <option value="M">Tamanho M (Adulto)</option>
+                        <option value="G">Tamanho G (Adulto)</option>
+                        <option value="GG">Tamanho GG (Adulto)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Escola onde estuda <span class="required">*</span></label>
+                    <input type="text" id="pub_escola" placeholder="Nome da Escola">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Turno Escolar <span class="required">*</span></label>
+                    <select id="pub_turno">
+                        <option value="Manhã">Manhã</option>
+                        <option value="Tarde">Tarde</option>
+                    </select>
+                </div>
+                
+                <h3 class="form-section-title">Dados do Responsável & Saúde</h3>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Nome Completo do Responsável <span class="required">*</span></label>
+                    <input type="text" id="pub_resp_nome" placeholder="Nome do pai, mãe ou responsável">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Grau de Parentesco <span class="required">*</span></label>
+                    <select id="pub_parentesco">
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
+                    <input type="tel" id="pub_tel" placeholder="Ex: 82999999999">
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Endereço Completo <span class="required">*</span></label>
+                    <textarea id="pub_endereco" rows="2" placeholder="Rua, Número, Bairro..."></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>O aluno possui alguma alergia ou faz uso de medicamentos? <span class="required">*</span></label>
+                    <textarea id="pub_saude" rows="2" placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Anexe aqui o Atestado Médico <span style="font-weight: normal; color: #888;">(Opcional agora)</span></label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="hidden" id="pub_atestado_url">
+                        <div class="upload-btn-wrapper" style="width: 100%; margin-top: 0;">
+                            <button class="btn-add" id="btn-pub-atestado" style="background-color: #6c757d; font-size: 14px; width: 100%;"><i class="fa-solid fa-paperclip"></i> Anexar Foto do Atestado</button>
+                            <input type="file" accept="image/*" onchange="handleImageCompression(event, 'pub_atestado_url', 'btn-pub-atestado')" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 10px; align-items: flex-start; margin-top: 20px;">
+                    <input type="checkbox" id="pub_auth_med" style="margin-top: 4px;">
+                    <label for="pub_auth_med"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 15px; margin-top:15px;">
+                    <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
+                    <select id="pub_venc">
+                        <option value="05">Dia 05</option>
+                        <option value="10">Dia 10</option>
+                        <option value="15">Dia 15</option>
+                    </select>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start;">
+                    <input type="checkbox" id="pub_auth_esc" style="margin-top: 4px;">
+                    <label for="pub_auth_esc"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos. <span class="required">*</span></label>
+                </div>
+                
+                <div class="form-group checkbox-group" style="margin-bottom: 25px; align-items: flex-start; background: #eef2f5; padding: 10px; border-radius: 5px;">
+                    <input type="checkbox" id="pub_auth_final" style="margin-top: 4px;">
+                    <label for="pub_auth_final">Eu, responsável legal pelo aluno inscrito, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
+                </div>
+                
+                <button class="btn-add" style="width: 100%; font-size: 18px; padding: 15px;" onclick="enviarInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Ficha de Inscrição</button>
+            </div>
         </div>
 
         <div id="configuracoes" class="tab-content">
-            <h2>Configurações</h2>
-            <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff;">
-                <h3>Link de Inscrição para Pais</h3>
-                <p>Compartilhe este link no WhatsApp:</p>
-                <input type="text" id="link_oficial" readonly style="width: 100%; padding: 10px; margin: 10px 0;" value="">
-                <button class="btn-add" onclick="copyLink()">Copiar Link</button>
+            <h2>Configurações do Sistema</h2>
+            
+            <div class="form-row" style="background: #eef2f5; margin-bottom: 30px;">
+                <div class="form-group" style="flex: 2;">
+                    <label>Minha Imagem da Equipe (URL do Escudo)</label>
+                    <input type="url" id="cfg_logo" placeholder="Ex: https://...">
+                </div>
+                <button class="btn-add" onclick="salvarLogo()"><i class="fa-solid fa-shield-halved"></i> Salvar</button>
+            </div>
+
+            <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
+                <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link para os Pais (Inscrição Online)</h3>
+                <p>Copie o link abaixo e envie no WhatsApp para os pais preencherem a ficha de inscrição. Os dados cairão direto no sistema!</p>
+                <p style="font-size:12px; color:red;"><b>Nota:</b> Para que este link funcione no celular dos pais, você precisa hospedar este arquivo em um servidor na internet (Ex: GitHub Pages).</p>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar Link</button>
+                </div>
+            </div>
+
+            <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
+                <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
+                <p>Retorna todas as mensalidades e patrocínios para "Pendente" para iniciar um novo mês de cobrança (ignora Bolsistas).</p>
+                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês (Zerar Pagamentos)</button>
+            </div>
+        </div>
+    </div> 
+
+    <div id="modalJogo" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-modal" onclick="document.getElementById('modalJogo').style.display='none'">&times;</span>
+            <h2 id="modal_jogo_titulo" style="margin-top: 0; color: var(--azul-escuro);"><i class="fa-solid fa-users-gear"></i> Gerenciar Jogo / Convocação</h2>
+            <input type="hidden" id="modal_jogo_id">
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; background: #f4f4f9; padding: 10px; border-radius: 8px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; font-weight: bold;">Adversário</label>
+                    <input type="text" id="modal_jogo_adv" style="width: 100%; padding: 8px;" disabled>
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: bold;">Data</label>
+                    <input type="text" id="modal_jogo_data" style="width: 100%; padding: 8px;" disabled>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 10px; border-bottom: 2px solid #eee; padding-bottom: 5px;">Lista de Convocação</h3>
+            <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Atleta</th>
+                            <th>Convocado?</th>
+                            <th>Confirmou?</th>
+                            <th>Pagou Taxa?</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tb-convocacao"></tbody>
+                </table>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn-add" style="flex: 1; background-color: #28a745;" onclick="salvarConvocacao()"><i class="fa-solid fa-check"></i> Salvar Alterações</button>
+                <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarConvocacaoWpp()"><i class="fa-brands fa-whatsapp"></i> Enviar no Grupo</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // CONFIGURAÇÃO DO FIREBASE (PROSAUDE)
+    <div id="modalPerfil" class="modal">
+        <div class="modal-content" id="modal-box">
+            <span class="close-modal" onclick="document.getElementById('modalPerfil').style.display='none'">&times;</span>
+            <div class="perfil-header" style="display: flex; flex-direction: column; align-items: center;">
+                <img id="perf_foto" src="" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; display: none; margin-bottom: 10px; border: 4px solid var(--azul-escuro);">
+                <div class="circulo-pdf circulo-atleta" style="margin-bottom:10px;" id="perf_letra">👤</div>
+                <h2 id="perf_nome" style="margin: 10px 0; color: var(--azul-escuro);"></h2>
+                <span id="perf_cat" class="cat-tag" style="font-size: 14px;"></span>
+            </div>
+            <div class="perfil-stats" style="display: flex; justify-content: space-around; background: #f4f4f9; padding: 15px; border-radius: 8px; margin: 15px 0; font-weight: bold; text-align: center;">
+                <div>⚽ Gols<br><span id="perf_gols" style="font-size: 24px; color: #002244;">0</span></div>
+                <div>🟨 Amar<br><span id="perf_amar" style="font-size: 24px; color: #ffc107;">0</span></div>
+                <div>🟥 Verm<br><span id="perf_verm" style="font-size: 24px; color: #dc3545;">0</span></div>
+            </div>
+            
+            <h4 style="margin-bottom: 5px; text-align: center;">Evolução: Atual x 1ª Avaliação</h4>
+            <div class="radar-container"><canvas id="radarModal"></canvas></div>
+            <div class="historico-box" id="caixa-historico" style="max-height: 200px; overflow-y: auto;"></div>
+            <button class="btn-add" style="width: 100%; background: #dc3545; color: white; margin-top: 10px;" onclick="document.getElementById('modalPerfil').style.display='none'">Fechar Perfil ❌</button>
+        </div>
+    </div>
+
+    <div id="relatorio-print-container">
+        <div id="relatorio-print">
+            <div class="pdf-header">
+                <div class="circulo-pdf circulo-clube" id="img_letra_clube">AC</div>
+                <img id="img_logo_relatorio" src="" style="width: 70px; height: 70px; object-fit: contain; display:none;">
+                <div class="pdf-title"><h1>AC NOVA GERAÇÃO</h1><h3>Boletim Oficial de Desempenho</h3></div>
+                <div class="circulo-pdf circulo-atleta" id="img_letra_atleta">👤</div>
+                <img id="img_foto_relatorio" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #002244; display:none;">
+            </div>
+            <div class="pdf-body">
+                <div class="pdf-info">
+                    <p><strong>👤 Atleta:</strong> <span id="img_nome"></span></p>
+                    <p><strong>🏷️ Categoria:</strong> <span id="img_cat"></span></p>
+                    <p><strong>📅 Referência:</strong> <span id="img_mes"></span></p>
+                    <hr>
+                    <p><strong>⚽ Jogo:</strong> Gols: <span id="img_gols" style="color:#000;font-weight:bold;"></span> | Cartões: <span id="img_amar" style="color:#ffc107;font-weight:bold;"></span> 🟨 / <span id="img_verm" style="color:#dc3545;font-weight:bold;"></span> 🟥</p>
+                </div>
+                <div class="pdf-radar"><canvas id="radarImagem" width="350" height="350"></canvas></div>
+            </div>
+            <div id="img_historico_box" style="margin-top: 15px;"></div>
+            <div class="pdf-feedback"><strong>📝 Parecer Técnico Oficial:</strong><br><span id="img_obs"></span></div>
+            <div style="text-align: center; margin-top: 30px; font-size: 16px; color: #888; font-weight: bold; padding-top: 20px; border-top: 2px solid #eee;">
+                Desenvolvido por Adriano "Cabeça" - A Nova Geração é Nossa!
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // CONFIGURAÇÃO DO SEU FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyDP3yVMqP_4C2CyVRzLW7jTYzCAAMJXIco",
-            authDomain: "prosaude-e9130.firebaseapp.com",
-            databaseURL: "https://prosaude-e9130-default-rtdb.firebaseio.com",
-            projectId: "prosaude-e9130",
-            storageBucket: "prosaude-e9130.firebasestorage.app",
-            messagingSenderId: "999318121562",
-            appId: "1:999318121562:web:1f192d4c0f14a64fb57c63"
+            apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
+            authDomain: "ac-nova-geracao.firebaseapp.com",
+            databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com",
+            projectId: "ac-nova-geracao",
+            storageBucket: "ac-nova-geracao.firebasestorage.app",
+            messagingSenderId: "409905433868",
+            appId: "1:409905433868:web:a9349a533b591df7310d29"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const database = firebase.database();
         const dbRef = database.ref('sistema_ac_dados');
 
-        let db = { mensalidades: [], elenco: [] };
+        let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
+        let sys_logo = localStorage.getItem('sys_logo') || "";
+        let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
 
-        // PUXAR DADOS DA NUVEM
-        dbRef.on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                db = data;
-                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-check'></i> Sistema Sincronizado!";
-                document.getElementById('nuvem-status').style.background = "#28a745";
-                document.getElementById('nuvem-status').style.color = "#fff";
-                setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
-                renderizarTudo();
+        document.addEventListener("DOMContentLoaded", () => {
+            // Gerar Link de inscrição com base na URL atual
+            let url = window.location.href.split('?')[0] + '?tab=inscricao';
+            document.getElementById('link_inscricao').value = url;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('tab') === 'inscricao') {
+                document.getElementById('main-nav').style.display = 'none';
+                document.getElementById('main-dash').style.display = 'none';
+                openTab('inscricao');
             }
         });
 
-        function formatarMoeda(v) { return `R$ ${parseFloat(v).toFixed(2).replace('.', ',')}`; }
+        // PUXA DADOS DA NUVEM EM TEMPO REAL E GARANTE SINCRONIA
+        dbRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Mescla os dados da nuvem com a estrutura básica
+                db.mensalidades = data.mensalidades || [];
+                db.elenco = data.elenco || [];
+                db.uniformes = data.uniformes || [];
+                db.jogos = data.jogos || [];
+                db.despesas = data.despesas || [];
+                db.patrocinadores = data.patrocinadores || [];
+                db.presencas = data.presencas || [];
+                
+                // Sincroniza alunos do elenco que faltam nas mensalidades (Caso o DB tenha desincronizado no passado)
+                let modified = false;
+                db.elenco.forEach(jogador => {
+                    let existeMensalidade = db.mensalidades.find(m => m.id === jogador.id);
+                    if (!existeMensalidade) {
+                        db.mensalidades.push({
+                            id: jogador.id,
+                            nome: jogador.nome,
+                            tel: "", 
+                            venc: "05",
+                            pago: false,
+                            bolsista: false
+                        });
+                        modified = true;
+                    }
+                });
+                
+                if(modified) { salvarDB(); } // Salva na nuvem a correção
+                
+                document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
+                document.getElementById('nuvem-status').style.background = "#28a745";
+                setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
+            } 
 
-        function openTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            if(tabName === 'avaliacao') atualizarSelectAtletas();
-        }
+            // Garante chaves nas listas
+            db.elenco.forEach(j => { 
+                if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; 
+                if(!j.historico) j.historico = []; 
+                if(!j.foto) j.foto = "";
+            });
+            db.jogos.forEach(j => { 
+                if(j.confirmados === undefined) j.confirmados = 0; 
+                if(j.arrecadado === undefined) j.arrecadado = 0; 
+                if(!j.convocados) j.convocados = [];
+                if(!j.presencas_jogo) j.presencas_jogo = [];
+                if(!j.taxas_pagas) j.taxas_pagas = [];
+            });
 
-        function toggleVisibility() {
-            isValuesHidden = !isValuesHidden;
-            document.getElementById('eye-icon').className = isValuesHidden ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+            if(sys_logo) { 
+                document.getElementById('escudo-topo').src = sys_logo; 
+                document.getElementById('escudo-topo').style.display = 'block';
+                document.getElementById('topo_letra').style.display = 'none';
+                document.getElementById('cfg_logo').value = sys_logo; 
+            }
+            
+            localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
             renderizarTudo();
+        });
+
+        function salvarDB() {
+            dbRef.set({
+                mensalidades: db.mensalidades,
+                elenco: db.elenco,
+                uniformes: db.uniformes,
+                jogos: db.jogos,
+                despesas: db.despesas,
+                patrocinadores: db.patrocinadores,
+                presencas: db.presencas,
+                sys_logo: sys_logo
+            }).catch(e => console.error("Erro ao salvar no Firebase:", e));
+            
+            localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
         }
 
-        function copyLink() {
-            let url = window.location.href.split('?')[0] + 'inscricao.html';
-            document.getElementById('link_oficial').value = url;
-            navigator.clipboard.writeText(url);
-            alert("Link Copiado!");
+        // =========================================================
+        // UTILIDADES E NAVEGAÇÃO
+        // =========================================================
+        function formatarMoeda(v) { return `R$ ${parseFloat(v).toFixed(2).replace('.', ',')}`; }
+        
+        window.openTab = function(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active'); 
+            
+            if(document.getElementById('main-nav').style.display !== 'none') {
+                try { event.currentTarget.classList.add('active'); } catch(e) {}
+            }
+            
+            document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'inscricao' || tabName === 'relatorios') ? 'none' : 'block';
+            
+            if(tabName === 'avaliacao') { atualizarSelectAtletas(); atualizarRadarTela(); }
+            if(tabName === 'chamada') { document.getElementById('pres_data').valueAsDate = new Date(); renderizarChamada(); }
         }
 
-        function renderizarTudo() {
-            let total = 0;
-            let prev = 0;
+        window.onclick = function(event) { 
+            let modal1 = document.getElementById('modalPerfil'); 
+            let modal2 = document.getElementById('modalJogo'); 
+            if (event.target == modal1) { modal1.style.display = "none"; } 
+            if (event.target == modal2) { modal2.style.display = "none"; } 
+        }
 
-            // Render Mensalidades
-            document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
-                if(m.pago) total += 60; else prev += 60;
-                let mask = isValuesHidden ? 'blurred-text' : '';
-                return `<tr>
-                    <td>${m.nome}</td>
-                    <td>${m.venc}</td>
-                    <td>${m.pago ? 'Pago' : 'Pendente'}</td>
-                    <td><button class="btn-sm btn-edit" onclick="editM('${m.id}')">✏️</button></td>
-                </tr>`;
-            }).join('');
+        window.toggleVisibility = function() {
+            isValuesHidden = !isValuesHidden;
+            const icon = document.getElementById('eye-icon');
+            const text = document.getElementById('eye-text');
+            
+            if (isValuesHidden) {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                text.innerText = "Mostrar Valores";
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                text.innerText = "Ocultar Valores";
+            }
+            renderizarTudo(); 
+        }
 
-            // Render Elenco
-            document.getElementById('tb-elenco').innerHTML = db.elenco.map(j => `
+        // Função para redimensionar a imagem antes de salvar (Evita estourar o limite do Firebase)
+        window.handleImageCompression = function(event, targetInputId, buttonId) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if(buttonId) document.getElementById(buttonId).innerText = "Carregando...";
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    const MAX_WIDTH = 400; // Redimensiona para no máximo 400px
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    const dataUrl = canvas.toDataURL("image/jpeg", 0.7); // Comprime qualidade para 70%
+                    document.getElementById(targetInputId).value = dataUrl;
+                    if(buttonId) document.getElementById(buttonId).innerHTML = "<i class='fa-solid fa-check'></i> Imagem Carregada!";
+                };
+            };
+        }
+
+        // =========================================================
+        // INSCRIÇÃO ONLINE
+        // =========================================================
+        window.enviarInscricao = function() {
+            let authMed = document.getElementById('pub_auth_med').checked;
+            let authEsc = document.getElementById('pub_auth_esc').checked;
+            let authFinal = document.getElementById('pub_auth_final').checked;
+
+            if(!authMed || !authEsc || !authFinal) {
+                alert("Você precisa concordar com todos os termos e autorizações para concluir a inscrição.");
+                return;
+            }
+
+            let nome = document.getElementById('pub_nome').value;
+            let nasc = document.getElementById('pub_nasc').value;
+            let cat = document.getElementById('pub_cat').value;
+            let resp = document.getElementById('pub_resp_nome').value;
+            let tel = document.getElementById('pub_tel').value.replace(/\D/g, '');
+            let venc = document.getElementById('pub_venc').value;
+            let foto = document.getElementById('pub_foto_url').value;
+
+            if(!nome || !nasc || !resp || !tel) {
+                alert("Por favor, preencha os campos obrigatórios (*).");
+                return;
+            }
+
+            let newId = Date.now().toString();
+
+            db.elenco.push({ 
+                id: newId, 
+                nome: nome, 
+                foto: foto, 
+                cat: cat, 
+                nasc: nasc.split('-').reverse().join('/'), 
+                gols: 0, amarelos: 0, vermelhos: 0, 
+                notas: {fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, 
+                historico: [] 
+            });
+
+            db.mensalidades.push({
+                id: newId,
+                nome: resp + " (Resp. " + nome.split(' ')[0] + ")",
+                tel: tel, 
+                venc: venc,
+                pago: false,
+                bolsista: false 
+            });
+
+            salvarDB();
+            
+            let msg = `*NOVA INSCRIÇÃO - AC NOVA GERAÇÃO* ⚽\n\n`;
+            msg += `*Atleta:* ${nome}\n`;
+            msg += `*Categoria:* ${cat}\n`;
+            msg += `*Responsável:* ${resp}\n`;
+            msg += `*Telefone:* ${document.getElementById('pub_tel').value}\n`;
+            msg += `*Vencimento Escolhido:* Dia ${venc}\n\n`;
+            msg += `_Ficha preenchida e enviada pelo sistema online._`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+            
+            alert("Inscrição enviada com sucesso! O treinador entrará em contato em breve.");
+            
+            // Limpa o form e recarrega para limpar cache de imagens
+            location.reload();
+        }
+
+        window.copiarLinkInscricao = function() {
+            let linkInput = document.getElementById('link_inscricao');
+            linkInput.select();
+            document.execCommand('copy');
+            alert("Link copiado! Envie no WhatsApp para os pais preencherem a ficha de inscrição.");
+        }
+
+        // =========================================================
+        // MENSALIDADES
+        // =========================================================
+        window.saveMensalidade = function() {
+            let id = document.getElementById('m_id').value;
+            let n = document.getElementById('m_nome').value; 
+            let t = document.getElementById('m_tel').value.replace(/\D/g, ''); 
+            let v = document.getElementById('m_venc').value; 
+            let bolsista = document.getElementById('m_bolsista').checked;
+
+            if(!n) return alert("Preencha o nome!");
+            
+            if(id) {
+                let m = db.mensalidades.find(x => x.id === id);
+                m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
+                // Atualiza o nome no elenco se o professor mudar aqui
+                let e = db.elenco.find(x => x.id === id);
+                if(e && !m.nome.includes("Resp.")) e.nome = n; 
+            } else {
+                let newId = Date.now().toString();
+                db.mensalidades.push({id:newId, nome:n, tel:t, venc:v, pago:false, bolsista: bolsista});
+                db.elenco.push({id:newId, nome:n, foto:'', cat:'Sub-07', nasc:'', gols:0, amarelos:0, vermelhos:0, notas:{fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, historico:[]});
+            }
+            resetFormM(); salvarDB();
+        }
+        window.editMensalidade = function(id) {
+            let m = db.mensalidades.find(x => x.id === id);
+            document.getElementById('m_id').value = m.id;
+            document.getElementById('m_nome').value = m.nome;
+            document.getElementById('m_tel').value = m.tel;
+            document.getElementById('m_venc').value = m.venc;
+            document.getElementById('m_bolsista').checked = m.bolsista || false;
+            document.getElementById('btn-m-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-m-salvar').classList.add('btn-edit');
+            document.getElementById('btn-m-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormM = function() {
+            document.getElementById('m_id').value = ''; document.getElementById('m_nome').value = ''; document.getElementById('m_tel').value = ''; document.getElementById('m_bolsista').checked = false;
+            document.getElementById('btn-m-salvar').innerHTML = "<i class='fa-solid fa-plus'></i> Adicionar";
+            document.getElementById('btn-m-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-m-cancel').style.display = 'none';
+        }
+        window.pagarMensalidade = function(id) { 
+            let m = db.mensalidades.find(x => x.id === id);
+            m.pago=true; 
+            salvarDB(); 
+            let msg = `Olá! 🦅\n\nConfirmamos o recebimento da mensalidade de *${m.nome}*. \n\nO *AC Nova Geração* agradece o apoio e confiança! ⚽🏆`;
+            if(m.tel) window.open(`https://wa.me/55${m.tel}?text=${encodeURIComponent(msg)}`, '_blank');
+        } 
+        window.delMensalidade = function(id) { 
+            if(confirm('Excluir? Este aluno será apagado do elenco e das mensalidades.')){
+                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
+                db.elenco=db.elenco.filter(m=>m.id!==id); 
+                salvarDB();
+            } 
+        }
+
+        // =========================================================
+        // ELENCO
+        // =========================================================
+        window.saveJogador = function() { 
+            let id = document.getElementById('e_id').value;
+            let n=document.getElementById('e_nome').value; 
+            let f=document.getElementById('e_foto_url').value; 
+            let c=document.getElementById('e_cat').value; 
+            let dn=document.getElementById('e_nasc').value; 
+            if(!n) return alert("Preencha o nome!"); 
+            
+            if(id) {
+                let j = db.elenco.find(x => x.id === id);
+                j.nome = n; j.foto = f; j.cat = c; j.nasc = dn?dn.split('-').reverse().join('/'):'-';
+            } else {
+                let newId = Date.now().toString();
+                db.elenco.push({ id: newId, nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); 
+                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: false});
+            }
+            resetFormE(); salvarDB(); 
+        }
+        window.editJogador = function(id) {
+            let j = db.elenco.find(x => x.id === id);
+            document.getElementById('e_id').value = j.id;
+            document.getElementById('e_nome').value = j.nome;
+            document.getElementById('e_foto_url').value = j.foto || "";
+            document.getElementById('e_cat').value = j.cat;
+            document.getElementById('e_nasc').value = j.nasc !== '-' ? j.nasc.split('/').reverse().join('-') : '';
+            document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-e-salvar').classList.add('btn-edit');
+            document.getElementById('btn-e-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormE = function() {
+            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = '';
+            document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-user-plus'></i> Salvar";
+            document.getElementById('btn-e-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-e-cancel').style.display = 'none';
+        }
+        window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
+        window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
+        window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
+        window.delJogador = function(id) { 
+            if(confirm('Remover jogador do elenco?')) { 
+                db.elenco=db.elenco.filter(j=>j.id!==id); 
+                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
+                salvarDB(); 
+            } 
+        }
+
+        // =========================================================
+        // CHAMADA
+        // =========================================================
+        window.renderizarChamada = function() {
+            let f = document.getElementById('pres_cat_filtro').value;
+            let lista = db.elenco || [];
+            if(f !== "Todos") lista = db.elenco.filter(j => j.cat === f);
+            
+            document.getElementById('tb-presenca').innerHTML = lista.map(j => `
                 <tr>
-                    <td><img src="${j.foto || ''}" class="avatar-mini" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'"></td>
-                    <td>${j.nome}</td>
-                    <td>⚽ ${j.gols || 0}</td>
-                    <td><button class="btn-sm btn-edit" onclick="editE('${j.id}')">✏️</button></td>
+                    <td>
+                        <div class="atleta-info">
+                            ${j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>'}
+                            <strong>${j.nome}</strong>
+                        </div>
+                    </td>
+                    <td>${j.cat}</td>
+                    <td><input type="checkbox" class="chk-pres" data-id="${j.id}" style="width:25px; height:25px;" checked></td>
                 </tr>
             `).join('');
-
-            // Dashboard
-            const maskVal = (v) => isValuesHidden ? 'R$ ***' : formatarMoeda(v);
-            document.getElementById('dash-receita').innerText = maskVal(total);
-            document.getElementById('dash-previsao').innerText = maskVal(prev);
-            document.getElementById('dash-saldo').innerText = maskVal(total);
+        }
+        window.salvarPresenca = function() {
+            let data = document.getElementById('pres_data').value;
+            if(!data) return alert("Selecione uma data.");
+            let checks = document.querySelectorAll('.chk-pres');
+            let presentes = [];
+            checks.forEach(c => { if(c.checked) presentes.push(c.dataset.id); });
+            
+            let jaExiste = db.presencas.findIndex(p => p.data === data);
+            if(jaExiste >= 0) {
+                db.presencas[jaExiste].presentes = presentes;
+            } else {
+                db.presencas.push({ id: Date.now().toString(), data: data, presentes: presentes });
+            }
+            salvarDB(); 
+            alert("Chamada salva com sucesso!");
         }
 
-        function saveMensalidade() {
-            let n = document.getElementById('m_nome').value;
-            if(!n) return;
-            db.mensalidades.push({id: Date.now(), nome: n, tel: document.getElementById('m_tel').value, venc: document.getElementById('m_venc').value, pago: false});
-            dbRef.set(db);
+        // =========================================================
+        // PATROCINADORES
+        // =========================================================
+        window.savePatrocinio = function() {
+            let id = document.getElementById('p_id').value;
+            let n = document.getElementById('p_nome').value;
+            let v = parseFloat(document.getElementById('p_valor').value);
+            let s = document.getElementById('p_status').value;
+            
+            if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
+
+            if(id) {
+                let p = db.patrocinadores.find(x => x.id === id);
+                p.nome = n; p.valor = v; p.status = s;
+            } else {
+                db.patrocinadores.push({ id: Date.now().toString(), nome: n, valor: v, status: s });
+            }
+            resetFormP(); salvarDB();
         }
+        window.editPatrocinio = function(id) {
+            let p = db.patrocinadores.find(x => x.id === id);
+            document.getElementById('p_id').value = p.id;
+            document.getElementById('p_nome').value = p.nome;
+            document.getElementById('p_valor').value = p.valor;
+            document.getElementById('p_status').value = p.status;
+            document.getElementById('btn-p-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-p-salvar').classList.add('btn-edit');
+            document.getElementById('btn-p-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.pagarPatrocinio = function(id) { db.patrocinadores.find(p => p.id === id).status = 'pago'; salvarDB(); }
+        window.delPatrocinio = function(id) { if(confirm('Remover Patrocinador?')) { db.patrocinadores = db.patrocinadores.filter(p => p.id !== id); salvarDB(); } }
+        window.resetFormP = function() {
+            document.getElementById('p_id').value = ''; document.getElementById('p_nome').value = ''; document.getElementById('p_valor').value = '';
+            document.getElementById('btn-p-salvar').innerHTML = "<i class='fa-solid fa-handshake'></i> Lançar";
+            document.getElementById('btn-p-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-p-cancel').style.display = 'none';
+        }
+
+        // =========================================================
+        // JOGOS E GERENCIAR CONVOCAÇÃO
+        // =========================================================
+        window.saveJogo = function() { 
+            let id = document.getElementById('j_id').value;
+            let d=document.getElementById('j_data').value; 
+            let a=document.getElementById('j_adv').value; 
+            let t=document.getElementById('j_tipo').value;
+            let l=document.getElementById('j_local').value;
+            if(!d || !a) return alert("Preencha data e adversário!");
+            
+            if(id) {
+                let j = db.jogos.find(x => x.id === id);
+                j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l;
+            } else {
+                db.jogos.push({id:Date.now().toString(), data:d.split('-').reverse().join('/'), adv:a, tipo:t, local:l, confirmados: 0, arrecadado: 0, convocados: [], presencas_jogo: [], taxas_pagas: []}); 
+            }
+            resetFormJ(); salvarDB();
+        }
+        window.editJogo = function(id) {
+            let j = db.jogos.find(x => x.id === id);
+            document.getElementById('j_id').value = j.id;
+            document.getElementById('j_adv').value = j.adv;
+            document.getElementById('j_tipo').value = j.tipo;
+            document.getElementById('j_local').value = j.local;
+            document.getElementById('j_data').value = j.data.split('/').reverse().join('-');
+            document.getElementById('btn-j-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-j-salvar').classList.add('btn-edit');
+            document.getElementById('btn-j-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormJ = function() {
+            document.getElementById('j_id').value = ''; document.getElementById('j_adv').value = ''; document.getElementById('j_data').value = ''; document.getElementById('j_local').value = '';
+            document.getElementById('btn-j-salvar').innerHTML = "<i class='fa-solid fa-calendar-plus'></i> Agendar";
+            document.getElementById('btn-j-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-j-cancel').style.display = 'none';
+        }
+        window.delJogo = function(id) { if(confirm("Excluir jogo?")) {db.jogos=db.jogos.filter(j=>j.id!==id); salvarDB();} }
+
+        window.gerenciarJogo = function(id) {
+            let j = db.jogos.find(x => x.id === id);
+            document.getElementById('modal_jogo_id').value = j.id;
+            document.getElementById('modal_jogo_adv').value = j.adv;
+            document.getElementById('modal_jogo_data').value = j.data;
+            
+            if(!j.convocados) j.convocados = [];
+            if(!j.presencas_jogo) j.presencas_jogo = [];
+            if(!j.taxas_pagas) j.taxas_pagas = [];
+
+            let tbody = document.getElementById('tb-convocacao');
+            tbody.innerHTML = db.elenco.map(atleta => {
+                let isConv = j.convocados.includes(atleta.id) ? 'checked' : '';
+                let isPres = j.presencas_jogo.includes(atleta.id) ? 'checked' : '';
+                let isPago = j.taxas_pagas.includes(atleta.id) ? 'checked' : '';
+                
+                return `<tr>
+                    <td>${atleta.nome} (${atleta.cat})</td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-convocado" data-id="${atleta.id}" ${isConv} style="width:20px; height:20px;"></td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-presente-jogo" data-id="${atleta.id}" ${isPres} style="width:20px; height:20px;"></td>
+                    <td style="text-align:center;"><input type="checkbox" class="chk-pago-jogo" data-id="${atleta.id}" ${isPago} style="width:20px; height:20px;"></td>
+                </tr>`;
+            }).join('');
+            
+            document.getElementById('modalJogo').style.display = 'flex';
+        }
+
+        window.salvarConvocacao = function() {
+            let id = document.getElementById('modal_jogo_id').value;
+            let j = db.jogos.find(x => x.id === id);
+            
+            let conv = [], pres = [], pagos = [];
+            document.querySelectorAll('.chk-convocado:checked').forEach(c => conv.push(c.dataset.id));
+            document.querySelectorAll('.chk-presente-jogo:checked').forEach(c => pres.push(c.dataset.id));
+            document.querySelectorAll('.chk-pago-jogo:checked').forEach(c => pagos.push(c.dataset.id));
+            
+            j.convocados = conv;
+            j.presencas_jogo = pres;
+            j.taxas_pagas = pagos;
+            j.confirmados = pres.length; 
+            
+            let val = prompt("Qual o valor da taxa paga por cada atleta hoje? (Deixe em branco para não alterar ou digite 0)");
+            if(val && !isNaN(parseFloat(val))) {
+                j.arrecadado = pagos.length * parseFloat(val);
+            }
+
+            salvarDB();
+            document.getElementById('modalJogo').style.display = 'none';
+            alert("Convocação e Taxas salvas com sucesso!");
+        }
+
+        window.enviarConvocacaoWpp = function() {
+            let id = document.getElementById('modal_jogo_id').value;
+            let j = db.jogos.find(x => x.id === id);
+            
+            let conv = [];
+            document.querySelectorAll('.chk-convocado:checked').forEach(c => {
+                let atleta = db.elenco.find(e => e.id === c.dataset.id);
+                if(atleta) conv.push(atleta.nome);
+            });
+            
+            if(conv.length === 0) {
+                alert("Nenhum atleta marcado como convocado!");
+                return;
+            }
+            
+            let msg = `⚽ *CONVOCAÇÃO AC NOVA GERAÇÃO* ⚽\n\n`;
+            msg += `📅 *Data:* ${j.data}\n`;
+            msg += `🆚 *Adversário:* ${j.adv}\n`;
+            msg += `🏟️ *Local:* ${j.local}\n`;
+            msg += `🏆 *Tipo:* ${j.tipo}\n\n`;
+            msg += `*ATLETAS CONVOCADOS:*\n`;
+            
+            conv.forEach(nome => {
+                msg += `- ${nome}\n`;
+            });
+            
+            msg += `\n*Por favor, confirmem presença no grupo!* 🦅`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // =========================================================
+        // UNIFORMES
+        // =========================================================
+        window.addUniforme = function() { 
+            let id = document.getElementById('u_id').value;
+            let n=document.getElementById('u_nome').value; 
+            let t=document.getElementById('u_tam').value;
+            if(!n) return alert("Preencha o nome!");
+
+            if(id) {
+                let u = db.uniformes.find(x => x.id === id);
+                u.nome = n; u.tam = t;
+            } else {
+                db.uniformes.push({id:Date.now().toString(), nome:n, tam:t, pago:false}); 
+            }
+            resetFormU(); salvarDB();
+        }
+        window.editUniforme = function(id) {
+            let u = db.uniformes.find(x => x.id === id);
+            document.getElementById('u_id').value = u.id;
+            document.getElementById('u_nome').value = u.nome;
+            document.getElementById('u_tam').value = u.tam;
+            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-u-salvar').classList.add('btn-edit');
+            document.getElementById('btn-u-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormU = function() {
+            document.getElementById('u_id').value = ''; document.getElementById('u_nome').value = '';
+            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-shirt'></i> Encomendar";
+            document.getElementById('btn-u-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-u-cancel').style.display = 'none';
+        }
+        window.pagarUniforme = function(id) { db.uniformes.find(u=>u.id===id).pago=true; salvarDB(); } 
+        window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id!==id); salvarDB();} }
+
+        // =========================================================
+        // DESPESAS
+        // =========================================================
+        window.saveDespesa = function() { 
+            let id = document.getElementById('d_id').value;
+            let d=document.getElementById('d_desc').value; 
+            let v=parseFloat(document.getElementById('d_valor').value); 
+            let c=document.getElementById('d_cat').value;
+            if(!d || isNaN(v)) return alert("Preencha descrição e valor!");
+            
+            if(id) {
+                let desp = db.despesas.find(x => x.id === id);
+                desp.desc = d; desp.valor = v; desp.cat = c;
+            } else {
+                db.despesas.push({id:Date.now().toString(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:c, valor:v}); 
+            }
+            resetFormD(); salvarDB();
+        }
+        window.editDespesa = function(id) {
+            let d = db.despesas.find(x => x.id === id);
+            document.getElementById('d_id').value = d.id;
+            document.getElementById('d_desc').value = d.desc;
+            document.getElementById('d_valor').value = d.valor;
+            document.getElementById('d_cat').value = d.cat;
+            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-d-salvar').classList.add('btn-edit');
+            document.getElementById('btn-d-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormD = function() {
+            document.getElementById('d_id').value = ''; document.getElementById('d_desc').value = ''; document.getElementById('d_valor').value = '';
+            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-file-invoice-dollar'></i> Lançar";
+            document.getElementById('btn-d-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-d-cancel').style.display = 'none';
+        }
+        window.delDespesa = function(id) { if(confirm("Excluir despesa?")){db.despesas=db.despesas.filter(d=>d.id!==id); salvarDB();} }
+        
+        // =========================================================
+        // RENDER GERAL (Dashboard e Tabelas)
+        // =========================================================
+        function renderizarTudo() {
+            atualizarAlertasIniciais();
+            let entrou = 0; let previsao = 0;
+            
+            if(db.mensalidades) {
+                db.mensalidades.forEach(m => { 
+                    if(!m.bolsista) {
+                        if(m.pago) entrou += 60; else previsao += 60; 
+                    }
+                });
+            }
+            if(db.patrocinadores) {
+                db.patrocinadores.forEach(p => { if(p.status === 'pago') entrou += p.valor; else previsao += p.valor; });
+            }
+            if(db.jogos) {
+                db.jogos.forEach(j => { entrou += (j.arrecadado || 0); });
+            }
+            if(db.uniformes) {
+                db.uniformes.forEach(u => { if(u.pago) entrou += 120; else previsao += 120; });
+            }
+            
+            let saiu = 0;
+            if(db.despesas) {
+                saiu = db.despesas.reduce((acc, d) => acc + parseFloat(d.valor), 0);
+            }
+
+            let fmtEntrou = formatarMoeda(entrou);
+            let fmtPrevisao = formatarMoeda(previsao);
+            let fmtSaiu = formatarMoeda(saiu);
+            let fmtSaldo = formatarMoeda(entrou - saiu);
+
+            if(!isValuesHidden) {
+                document.getElementById('dash-receita').innerText = fmtEntrou;
+                document.getElementById('dash-previsao').innerText = fmtPrevisao;
+                document.getElementById('dash-despesa').innerText = fmtSaiu;
+                document.getElementById('dash-saldo').innerText = fmtSaldo;
+            } else {
+                document.getElementById('dash-receita').innerText = 'R$ ***';
+                document.getElementById('dash-previsao').innerText = 'R$ ***';
+                document.getElementById('dash-despesa').innerText = 'R$ ***';
+                document.getElementById('dash-saldo').innerText = 'R$ ***';
+            }
+            
+            document.getElementById('dash-receita').setAttribute('data-original', fmtEntrou);
+            document.getElementById('dash-previsao').setAttribute('data-original', fmtPrevisao);
+            document.getElementById('dash-despesa').setAttribute('data-original', fmtSaiu);
+            document.getElementById('dash-saldo').setAttribute('data-original', fmtSaldo);
+
+            let dia = new Date().getDate();
+            if(db.mensalidades) {
+                document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
+                    let st, txt, btnTexto, btnCor, baixaBtn = '';
+                    let valText = m.bolsista ? 'Bolsista' : 'R$ 60,00';
+                    let valClass = isValuesHidden && !m.bolsista ? 'blurred-text' : '';
+
+                    if(m.bolsista){
+                        st = `<span class="badge badge-bolsa">Bolsista</span>`;
+                        txt = `Olá! Passando para lembrar do treino da AC Nova Geração. 🦅⚽`;
+                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Contato`; btnCor = `#007bff`;
+                    } else if(m.pago) { 
+                        st = `<span class="badge badge-ok">Pago</span>`; 
+                        txt = `Olá! Agradecemos o pagamento da mensalidade de ${m.nome}. O AC Nova Geração agradece o apoio! 🦅⚽`;
+                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Recibo`; btnCor = `#28a745`;
+                    } else if(dia > parseInt(m.venc)) { 
+                        st = `<span class="badge badge-atrasado">Atrasado</span>`; 
+                        txt = `Olá, responsável. Consta pendência na mensalidade de ${m.nome} (vencida dia ${m.venc}). Chave PIX: acnovageracao@outlook.com 🦅`;
+                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Cobrar`; btnCor = `#dc3545`;
+                        baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
+                    } else { 
+                        st = `<span class="badge badge-pendente">A Vencer</span>`; 
+                        txt = `Olá! Lembrete: a mensalidade de ${m.nome} vence dia ${m.venc}. PIX: acnovageracao@outlook.com 🦅`;
+                        btnTexto = `<i class="fa-brands fa-whatsapp"></i> Lembrete`; btnCor = `#ffc107; color:#000`;
+                        baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
+                    }
+                    
+                    return `<tr>
+                        <td><strong>${m.nome}</strong><br><small>${m.tel}</small><br><small style="color:${m.bolsista?'#007bff':'green'};font-weight:bold;" class="${valClass}">${valText}</small></td>
+                        <td>Dia ${m.venc}</td><td>${st}</td>
+                        <td class="action-btns">
+                            <a href="https://wa.me/55${m.tel}?text=${encodeURIComponent(txt)}" target="_blank" class="btn-sm" style="background:${btnCor}; text-decoration:none;">${btnTexto}</a>
+                            ${baixaBtn}
+                            <button class="btn-sm btn-edit" onclick="editMensalidade('${m.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-sm btn-del" onclick="delMensalidade('${m.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td></tr>`;
+                }).join('');
+            }
+            
+            if(db.elenco) {
+                document.getElementById('tb-elenco').innerHTML = db.elenco.map(j => {
+                    let imgHtml = j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>';
+                    return `<tr>
+                        <td>${imgHtml}</td>
+                        <td><strong>${j.nome}</strong><br><span class="cat-tag">${j.cat}</span></td>
+                        <td class="action-btns"><button class="btn-sm btn-gol" onclick="addGol('${j.id}')">+⚽ ${j.gols}</button><button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')">+🟨 ${j.amarelos}</button><button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')">+🟥 ${j.vermelhos}</button></td>
+                        <td class="action-btns">
+                        <button class="btn-sm btn-perfil" onclick="abrirPerfil('${j.id}')">Evolução 📈</button> 
+                        <button class="btn-sm btn-edit" onclick="editJogador('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
+                        <button class="btn-sm btn-del" onclick="delJogador('${j.id}')"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>`
+                }).join('');
+            }
+            
+            if(db.patrocinadores) {
+                document.getElementById('tb-patrocinadores').innerHTML = db.patrocinadores.map(p => {
+                    let valClass = isValuesHidden ? 'blurred-text' : '';
+                    return `<tr>
+                        <td><strong>${p.nome}</strong></td>
+                        <td style="color:green; font-weight:bold;" class="${valClass}">${formatarMoeda(p.valor)}</td>
+                        <td>${p.status==='pago'?'<span class="badge badge-ok">Recebido</span>':'<span class="badge badge-pendente">Pendente</span>'}</td>
+                        <td class="action-btns">
+                            ${p.status==='pendente'? `<button class="btn-sm btn-pay" onclick="pagarPatrocinio('${p.id}')"><i class="fa-solid fa-check"></i> Baixa</button>` : ''}
+                            <button class="btn-sm btn-edit" onclick="editPatrocinio('${p.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-sm btn-del" onclick="delPatrocinio('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            }
+
+            if(db.jogos) {
+                document.getElementById('tb-jogos').innerHTML = db.jogos.map(j => {
+                    let valClass = isValuesHidden ? 'blurred-text' : '';
+                    return `<tr>
+                        <td><strong>${j.data}</strong></td>
+                        <td>${j.adv}<br><small>${j.tipo} - ${j.local}</small></td>
+                        <td><span style="font-size:16px; font-weight:bold; color:var(--azul-escuro);">👥 ${j.confirmados||0}</span></td>
+                        <td><span style="font-size:16px; font-weight:bold; color:green;" class="${valClass}">${formatarMoeda(j.arrecadado||0)}</span></td>
+                        <td class="action-btns">
+                            <button class="btn-sm btn-azul" onclick="gerenciarJogo('${j.id}')"><i class="fa-solid fa-users-gear"></i> Gerenciar</button> 
+                            <button class="btn-sm btn-edit" onclick="editJogo('${j.id}')"><i class="fa-solid fa-pen"></i></button> 
+                            <button class="btn-sm btn-del" onclick="delJogo('${j.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            }
+            
+            if(db.uniformes) {
+                document.getElementById('tb-uniformes').innerHTML = db.uniformes.map(u => `<tr><td>${u.nome}</td><td>${u.tam}</td><td>${u.pago?'<span class="badge badge-ok">Pago</span>':'<span class="badge badge-pendente">Pendente</span>'}</td><td class="action-btns">${!u.pago?`<button class="btn-sm btn-pay" onclick="pagarUniforme('${u.id}')">Baixa</button>`:''}<button class="btn-sm btn-edit" onclick="editUniforme('${u.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delUniforme('${u.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
+            }
+            
+            if(db.despesas) {
+                document.getElementById('tb-despesas').innerHTML = db.despesas.map(d => {
+                    let valClass = isValuesHidden ? 'blurred-text' : '';
+                    return `<tr><td>${d.data}</td><td><strong>${d.desc}</strong><br><small>${d.cat}</small></td><td style="color:red; font-weight:bold;" class="${valClass}">${formatarMoeda(d.valor)}</td><td class="action-btns"><button class="btn-sm btn-edit" onclick="editDespesa('${d.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delDespesa('${d.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+                }).join('');
+            }
+        }
+
+        // =========================================================
+        // RELATÓRIOS E AVALIAÇÃO
+        // =========================================================
+        window.gerarRelatorioDevedores = function() {
+            let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
+            if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
+            
+            let msg = "*🚨 LISTA DE PENDÊNCIAS - AC NOVA GERAÇÃO 🚨*\n\n";
+            devedores.forEach(m => { 
+                msg += `👉 *${m.nome}* (Venc: Dia ${m.venc})\n`; 
+            });
+            msg += "\n*Chave PIX:* acnovageracao@outlook.com\n_Por favor, regularizem as mensalidades para ajudar a manter o nosso projeto! A Nova Geração é Nossa! 🦅_";
+            
+            navigator.clipboard.writeText(msg).then(() => {
+                alert("Lista copiada! Cole no grupo do WhatsApp.");
+            }).catch(err => {
+                document.getElementById('preview-relatorio').style.display = 'block';
+                document.getElementById('preview-relatorio').innerText = msg;
+            });
+        }
+
+        window.exportarExcel = function() { 
+            let c = "data:text/csv;charset=utf-8,\uFEFF=== MENSALIDADES ===\nNome;WhatsApp;Vencimento;Status;Bolsista\n"; 
+            db.mensalidades.forEach(m => { c += `${m.nome};${m.tel};Dia ${m.venc};${m.pago ? "Pago" : "Pendente"};${m.bolsista ? "Sim" : "Nao"}\n`; }); 
+            c += "\n=== ELENCO (JOGADORES) ===\nJogador;Categoria;Data Nasc;Gols;Amarelos;Vermelhos\n"; 
+            db.elenco.forEach(e => { c += `${e.nome};${e.cat};${e.nasc};${e.gols};${e.amarelos || 0};${e.vermelhos || 0}\n`; }); 
+            let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); 
+        }
+
+        window.atualizarSelectAtletas = function() { 
+            let s = document.getElementById('av_atleta'); 
+            s.innerHTML = '<option value="">-- Escolha --</option>' + db.elenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
+            document.getElementById('av_mes').value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`; 
+        }
+
+        window.carregarNotas = function() { 
+            let id = document.getElementById('av_atleta').value; 
+            if(!id) return; 
+            let a = db.elenco.find(j => j.id === id); 
+            if(a && a.notas) { 
+                document.getElementById('av_fis').value = a.notas.fis||0; 
+                document.getElementById('av_chute').value = a.notas.chute||0; 
+                document.getElementById('av_passe').value = a.notas.passe||0; 
+                document.getElementById('av_coord').value = a.notas.coord||0; 
+                document.getElementById('av_cab').value = a.notas.cab||0; 
+                document.getElementById('av_disc').value = a.notas.disc||0; 
+                document.getElementById('av_obs').value = a.notas.obs||''; 
+                atualizarRadar(); 
+            } 
+        }
+
+        window.gerarFeedbackIA = function() { 
+            let fis = parseInt(document.getElementById('av_fis').value) || 0;
+            let chu = parseInt(document.getElementById('av_chute').value) || 0;
+            let pas = parseInt(document.getElementById('av_passe').value) || 0;
+            let tat = parseInt(document.getElementById('av_coord').value) || 0;
+            let cab = parseInt(document.getElementById('av_cab').value) || 0;
+            let dis = parseInt(document.getElementById('av_disc').value) || 0;
+            
+            let n = { "Físico": fis, "Finalização": chu, "Passe": pas, "Tática": tat, "Cabeceio": cab, "Disciplina": dis }; 
+            let max = Object.keys(n).reduce((a, b) => n[a] > n[b] ? a : b); 
+            let min = Object.keys(n).reduce((a, b) => n[a] < n[b] ? a : b); 
+            
+            if(n[max] === 0 && n[min] === 0) {
+                 document.getElementById('av_obs').value = "Por favor, preencha as notas de 1 a 10 primeiro para gerar a análise."; 
+                 return;
+            }
+
+            let feed = `O atleta tem se destacado na área de ${max}. Nosso foco principal nos próximos treinos será trabalhar exercícios específicos para evoluir a área de ${min}, buscando um desenvolvimento completo. A Nova Geração é Nossa!`; 
+            
+            if (dis < 5) {
+                feed += `\n\n*Nota: O atleta precisa melhorar o comportamento e a disciplina durante os treinamentos.`;
+            }
+
+            document.getElementById('av_obs').value = feed; 
+        }
+
+        window.atualizarRadar = function() {
+            let id = document.getElementById('av_atleta').value;
+            let a = db.elenco.find(j => j.id == id);
+            let ctx = document.getElementById('radarTela').getContext('2d');
+            if(chartTela) chartTela.destroy();
+            
+            let datasets = [{
+                label: 'Atual',
+                data: [document.getElementById('av_fis').value, document.getElementById('av_chute').value, document.getElementById('av_passe').value, document.getElementById('av_coord').value, document.getElementById('av_cab').value, document.getElementById('av_disc').value],
+                backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244'
+            }];
+
+            if(a && a.historico && a.historico.length > 0) {
+                let h0 = a.historico[0].notas;
+                datasets.push({
+                    label: 'Início',
+                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
+                    backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
+                });
+            }
+
+            chartTela = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
+        }
+
+        window.salvarAvaliacao = function() { 
+            let id = document.getElementById('av_atleta').value; 
+            if(!id) return alert("Selecione um atleta!"); 
+            let a = db.elenco.find(j => j.id == id); 
+            let m = document.getElementById('av_mes').value; 
+            let n = { fis: document.getElementById('av_fis').value, chute: document.getElementById('av_chute').value, passe: document.getElementById('av_passe').value, coord: document.getElementById('av_coord').value, cab: document.getElementById('av_cab').value, disc: document.getElementById('av_disc').value, obs: document.getElementById('av_obs').value }; 
+            a.notas = n; 
+            if(!a.historico) a.historico = []; 
+            let i = a.historico.findIndex(h => h.mes === m); 
+            if(i >= 0) { a.historico[i] = { mes: m, notas: n }; } 
+            else { a.historico.push({ mes: m, notas: n }); } 
+            salvarDB(); alert("Salvo na Nuvem!"); atualizarRadar(); 
+        }
+
+        function gerarTabelaEvolucaoHTML(hArr) {
+            if(!hArr || hArr.length === 0) return `<p style="font-size:13px; color:#666; text-align:center;">Nenhuma avaliação salva.</p>`;
+            let ht = `<table class="historico-table"><tr><th>Mês</th><th>Fís</th><th>Fin</th><th>Pas</th><th>Tát</th><th>Cab</th><th>Disc</th></tr>`;
+            [...hArr].sort((a,b) => b.mes.localeCompare(a.mes)).forEach(h => { ht += `<tr><td>${h.mes.split('-').reverse().join('/')}</td><td>${h.notas.fis||0}</td><td>${h.notas.chute||0}</td><td>${h.notas.passe||0}</td><td>${h.notas.coord||0}</td><td>${h.notas.cab||0}</td><td>${h.notas.disc||0}</td></tr>`; });
+            return ht + `</table>`;
+        }
+
+        window.abrirPerfil = function(id) {
+            let a = db.elenco.find(j => j.id === id);
+            
+            if(a.foto && a.foto !== '') {
+                document.getElementById('perf_foto').src = a.foto;
+                document.getElementById('perf_foto').style.display = 'block';
+                document.getElementById('perf_letra').style.display = 'none';
+            } else {
+                document.getElementById('perf_foto').style.display = 'none';
+                document.getElementById('perf_letra').style.display = 'flex';
+                document.getElementById('perf_letra').innerText = a.nome.charAt(0).toUpperCase();
+            }
+            
+            document.getElementById('perf_nome').innerText = a.nome; 
+            document.getElementById('perf_cat').innerText = "Cat: " + a.cat; 
+            document.getElementById('perf_gols').innerText = a.gols; 
+            document.getElementById('perf_amar').innerText = a.amarelos; 
+            document.getElementById('perf_verm').innerText = a.vermelhos;
+            document.getElementById('caixa-historico').innerHTML = `<h5>📈 Histórico de Evolução</h5>` + gerarTabelaEvolucaoHTML(a.historico);
+            document.getElementById('modalPerfil').style.display = 'flex'; 
+            
+            let ctx = document.getElementById('radarModal').getContext('2d');
+            if(chartModal) chartModal.destroy();
+            let datasets = [{
+                label: 'Atual',
+                data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0],
+                backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244'
+            }];
+            if(a.historico && a.historico.length > 1) {
+                 let h0 = a.historico[0].notas;
+                 datasets.push({
+                    label: 'Início',
+                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
+                    backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
+                });
+            }
+            chartModal = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
+        }
+
+        window.gerarBoletimImagemEZap = function() {
+            let id = document.getElementById('av_atleta').value; if(!id) return alert("Selecione um atleta!");
+            let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Foto...';
+            
+            let a = db.elenco.find(j => j.id == id); let mIn = document.getElementById('av_mes').value;
+            
+            if(sys_logo) { document.getElementById('img_logo_relatorio').src = sys_logo; document.getElementById('img_logo_relatorio').style.display = 'block'; document.getElementById('img_letra_clube').style.display = 'none'; } 
+            else { document.getElementById('img_logo_relatorio').style.display = 'none'; document.getElementById('img_letra_clube').style.display = 'flex'; }
+
+            if(a.foto && a.foto !== '') { document.getElementById('img_foto_relatorio').src = a.foto; document.getElementById('img_foto_relatorio').style.display = 'block'; document.getElementById('img_letra_atleta').style.display = 'none'; } 
+            else { document.getElementById('img_foto_relatorio').style.display = 'none'; document.getElementById('img_letra_atleta').style.display = 'flex'; document.getElementById('img_letra_atleta').innerText = a.nome.charAt(0).toUpperCase(); }
+
+            document.getElementById('img_nome').innerText = a.nome; document.getElementById('img_cat').innerText = a.cat; document.getElementById('img_mes').innerText = mIn.split('-').reverse().join('/'); document.getElementById('img_gols').innerText = a.gols; document.getElementById('img_amar').innerText = a.amarelos; document.getElementById('img_verm').innerText = a.vermelhos; document.getElementById('img_obs').innerText = document.getElementById('av_obs').value || '-';
+            document.getElementById('img_historico_box').innerHTML = `<h4 style="margin-bottom:5px; color:#002244;">📈 Histórico de Avaliações</h4>` + gerarTabelaEvolucaoHTML(a.historico);
+
+            let ctx = document.getElementById('radarImagem').getContext('2d');
+            if(chartImagem) chartImagem.destroy();
+            let datasets = [{ label: 'Atual', data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0], backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244' }];
+            if(a.historico && a.historico.length > 1) {
+                 let h0 = a.historico[0].notas;
+                 datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] });
+            }
+            chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
+            
+            // Move container outside the view temporarily to render the image properly
+            let container = document.getElementById('relatorio-print-container'); 
+            
+            setTimeout(() => {
+                html2canvas(document.getElementById('relatorio-print'), { scale: 2, useCORS: true }).then(canvas => {
+                    let link = document.createElement('a'); link.download = `Card_Boletim_${a.nome.replace(/\s/g, '_')}.png`; link.href = canvas.toDataURL("image/png"); link.click();
+                    btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; 
+                    
+                    let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\n_(A imagem já foi salva na galeria do seu celular. Por favor, anexe a foto clicando no ícone do clipe 📎 ou câmera 📷 aqui na nossa conversa!)_\n\nA Nova Geração é Nossa!`;
+                    let mens = db.mensalidades.find(x => x.nome.toLowerCase().includes(a.nome.split(' ')[0].toLowerCase()));
+                    if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
+                    else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
+                }).catch(err => {
+                    btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("Erro de bloqueio de imagem (CORS). Tente usar o atleta sem foto.");
+                });
+            }, 500); 
+        }
+
+        window.salvarLogo = function() { 
+            let n = document.getElementById('cfg_logo').value; 
+            if(n) { document.getElementById('escudo-topo').src = n; document.getElementById('escudo-topo').style.display = 'block'; document.getElementById('topo_letra').style.display = 'none'; } 
+            else { document.getElementById('escudo-topo').style.display = 'none'; document.getElementById('topo_letra').style.display = 'flex'; }
+            sys_logo = n; salvarDB(); alert('Escudo atualizado na Nuvem!'); 
+        }
+        window.resetarMensalidades = function() { if(confirm("Zerar pagamentos do mês?")) { db.mensalidades.forEach(m => { if(!m.bolsista) m.pago = false; }); db.patrocinadores.forEach(p => p.status = 'pendente'); salvarDB(); } }
+
     </script>
 </body>
 </html>
