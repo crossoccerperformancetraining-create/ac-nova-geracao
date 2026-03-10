@@ -86,6 +86,7 @@
         .badge-ok { background-color: #28a745; } .badge-pendente { background-color: #ffc107; color: #333; } .badge-atrasado { background-color: #dc3545; } .badge-bolsa { background-color: #17a2b8; }
         .cat-tag { background-color: var(--azul-escuro); color: var(--dourado); padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
         
+        .atleta-info { display: flex; align-items: center; gap: 10px; }
         .avatar-mini { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dourado); background: #eee; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 15px; overflow-y: auto;}
@@ -104,20 +105,15 @@
 
         .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; margin-top: 5px; width: 100%;}
         .upload-btn-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%;}
+
+        /* Ocultar Valores CSS */
         .blurred-text { filter: blur(5px); user-select: none; color: transparent; text-shadow: 0 0 8px #000; }
 
-        /* CORREÇÃO DO BOLETIM FANTASMA: Agora não quebra layout e não aparece na tela */
+        /* CORREÇÃO DO BOLETIM FANTASMA: Oculto perfeitamente */
         #relatorio-print-container { 
-            position: fixed; 
-            top: -9999px; 
-            left: -9999px; 
-            width: 800px; 
-            background: white; 
-            z-index: -100; 
-            opacity: 0;
-            pointer-events: none;
+            display: none; 
         }
-        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
+        #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; width: 800px; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
         .pdf-title { text-align: center; flex: 1; }
         .pdf-title h1 { margin: 0; color: var(--azul-escuro); font-size: 32px; text-transform: uppercase; }
@@ -192,7 +188,7 @@
                 <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
                 <div class="form-group checkbox-group" style="min-width: 100px;">
                     <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista" style="margin-bottom:0;">Bolsista</label>
+                    <label for="m_bolsista">Bolsista</label>
                 </div>
                 <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
@@ -219,6 +215,10 @@
                 </div>
                 <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
                 <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
+                <div class="form-group checkbox-group" style="min-width: 100px;">
+                    <input type="checkbox" id="e_bolsista">
+                    <label for="e_bolsista">Bolsista</label>
+                </div>
                 <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
             </div>
@@ -281,7 +281,7 @@
                 <div class="form-group" style="flex: 2;"><label>Adversário</label><input type="text" id="j_adv"></div>
                 <div class="form-group"><label>Tipo</label><select id="j_tipo"><option>Amistoso</option><option>Campeonato</option></select></div>
                 <div class="form-group"><label>Local</label><input type="text" id="j_local"></div>
-                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Agendar</button>
+                <button class="btn-add" id="btn-j-salvar" onclick="saveJogo()"><i class="fa-solid fa-calendar-plus"></i> Salvar</button>
                 <button class="btn-cancel" id="btn-j-cancel" style="display:none;" onclick="resetFormJ()">Cancelar</button>
             </div>
             <div class="table-responsive"><table><thead><tr><th>Data</th><th>Jogo / Local</th><th>Convocações</th><th>Arrecadação</th><th>Ações</th></tr></thead><tbody id="tb-jogos"></tbody></table></div>
@@ -341,7 +341,7 @@
             <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 5px solid #dc3545;">
                 <h3 style="margin-top:0; color:#721c24;"><i class="fa-solid fa-calendar-xmark"></i> Virada de Mês</h3>
                 <p>Retorna todas as mensalidades para "Pendente" para iniciar um novo mês de cobrança.</p>
-                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês (Zerar Pagamentos)</button>
+                <button class="btn-add" style="background: #dc3545; color: white;" onclick="resetarMensalidades()"><i class="fa-solid fa-rotate-left"></i> Iniciar Novo Mês</button>
             </div>
             
             <div style="background: #eef2f5; padding: 20px; border-radius: 8px; border-left: 5px solid #002244; margin-top: 20px;">
@@ -451,7 +451,7 @@
     </div>
 
     <script type="text/javascript">
-        // COLE SUAS CREDENCIAIS DO FIREBASE AQUI
+        // SUAS CREDENCIAIS CORRETAS DO FIREBASE ONDE ESTÃO OS DADOS DA EQUIPE
         const firebaseConfig = {
             apiKey: "AIzaSyDP3yVMqP_4C2CyVRzLW7jTYzCAAMJXIco",
             authDomain: "prosaude-e9130.firebaseapp.com",
@@ -459,7 +459,7 @@
             storageBucket: "prosaude-e9130.firebasestorage.app",
             messagingSenderId: "999318121562",
             appId: "1:999318121562:web:1f192d4c0f14a64fb57c63",
-            databaseURL: "https://prosaude-e9130-default-rtdb.firebaseio.com" // IMPORTANTE: Precisa da URL do Database!
+            databaseURL: "https://prosaude-e9130-default-rtdb.firebaseio.com" 
         };
 
         if (!firebase.apps.length) {
@@ -473,21 +473,10 @@
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
 
-        document.addEventListener("DOMContentLoaded", () => {
-             // Fallback caso a internet caia ou o firebase demore
-             setTimeout(() => {
-                 let statusEl = document.getElementById('nuvem-status');
-                 if(statusEl.innerText.includes("Conectando")) {
-                     statusEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Iniciado Offline (Verifique o Firebase)";
-                     statusEl.style.background = "#f39c12";
-                     setTimeout(() => statusEl.style.display = 'none', 4000);
-                 }
-             }, 4000);
-        });
-
-        // PUXA DADOS DA NUVEM EM TEMPO REAL
+        // Puxar os dados corretos da Nuvem
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
+            
             if (data) {
                 db.mensalidades = data.mensalidades || [];
                 db.elenco = data.elenco || [];
@@ -517,7 +506,7 @@
             renderizarTudo();
         }, (error) => {
             let statusEl = document.getElementById('nuvem-status');
-            statusEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Erro no Banco: " + error.message;
+            statusEl.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Erro ao buscar os dados na Nuvem!";
             statusEl.style.background = "#dc3545";
         });
 
@@ -549,7 +538,6 @@
                     if(j.vermelhos === undefined) { j.vermelhos = 0; modified = true; }
                     
                     if(!db.mensalidades) db.mensalidades = [];
-                    // USANDO '==' EM VEZ DE '===' PARA EVITAR ERROS COM IDS ANTIGOS NUMÉRICOS
                     let existeMensalidade = db.mensalidades.find(m => m.id == j.id);
                     if (!existeMensalidade) {
                         db.mensalidades.push({
@@ -715,7 +703,6 @@
             let bolsista = document.getElementById('m_bolsista').checked;
 
             if(!n) return alert("Preencha o nome!");
-            
             if(!db.mensalidades) db.mensalidades = [];
 
             if(id) {
@@ -894,7 +881,7 @@
         }
 
         // =========================================================
-        // PATROCINADORES E JOGOS
+        // PATROCINADORES
         // =========================================================
         window.savePatrocinio = function() {
             let id = document.getElementById('p_id').value;
@@ -903,6 +890,7 @@
             let s = document.getElementById('p_status').value;
             if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
             if(!db.patrocinadores) db.patrocinadores = [];
+
             if(id) {
                 let p = db.patrocinadores.find(x => x.id == id);
                 if(p){ p.nome = n; p.valor = v; p.status = s; }
@@ -932,6 +920,9 @@
             document.getElementById('btn-p-cancel').style.display = 'none';
         }
 
+        // =========================================================
+        // JOGOS E GERENCIAR CONVOCAÇÃO
+        // =========================================================
         window.saveJogo = function() { 
             let id = document.getElementById('j_id').value;
             let d=document.getElementById('j_data').value; 
@@ -940,6 +931,7 @@
             let l=document.getElementById('j_local').value;
             if(!d || !a) return alert("Preencha data e adversário!");
             if(!db.jogos) db.jogos = [];
+
             if(id) {
                 let j = db.jogos.find(x => x.id == id);
                 if(j){ j.data = d.split('-').reverse().join('/'); j.adv = a; j.tipo = t; j.local = l; }
@@ -1033,7 +1025,86 @@
         }
 
         // =========================================================
-        // RENDER GERAL E ATUALIZAÇÃO DE TABELAS
+        // UNIFORMES
+        // =========================================================
+        window.addUniforme = function() { 
+            let id = document.getElementById('u_id').value;
+            let n=document.getElementById('u_nome').value; 
+            let t=document.getElementById('u_tam').value;
+            if(!n) return alert("Preencha o nome!");
+            if(!db.uniformes) db.uniformes = [];
+            if(id) {
+                let u = db.uniformes.find(x => x.id == id);
+                if(u) { u.nome = n; u.tam = t; }
+            } else {
+                db.uniformes.push({id:Date.now().toString(), nome:n, tam:t, pago:false}); 
+            }
+            resetFormU(); salvarDB();
+        }
+        window.editUniforme = function(id) {
+            let u = db.uniformes.find(x => x.id == id);
+            if(!u) return;
+            document.getElementById('u_id').value = u.id;
+            document.getElementById('u_nome').value = u.nome;
+            document.getElementById('u_tam').value = u.tam;
+            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-u-salvar').classList.add('btn-edit');
+            document.getElementById('btn-u-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormU = function() {
+            document.getElementById('u_id').value = ''; document.getElementById('u_nome').value = '';
+            document.getElementById('btn-u-salvar').innerHTML = "<i class='fa-solid fa-shirt'></i> Encomendar";
+            document.getElementById('btn-u-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-u-cancel').style.display = 'none';
+        }
+        window.pagarUniforme = function(id) { let u = db.uniformes.find(x=>x.id == id); if(u){ u.pago=true; salvarDB(); } } 
+        window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id != id); salvarDB();} }
+
+        // =========================================================
+        // DESPESAS E RECEITAS EXTRAS
+        // =========================================================
+        window.saveDespesa = function() { 
+            let id = document.getElementById('d_id').value;
+            let d=document.getElementById('d_desc').value; 
+            let v=parseFloat(document.getElementById('d_valor').value); 
+            let c=document.getElementById('d_cat').value;
+            if(!d || isNaN(v)) return alert("Preencha descrição e valor!");
+            
+            if(c === 'Receita Extra' || c === 'Multa Cartão') v = -Math.abs(v);
+
+            if(!db.despesas) db.despesas = [];
+
+            if(id) {
+                let desp = db.despesas.find(x => x.id == id);
+                if(desp) { desp.desc = d; desp.valor = v; desp.cat = c; }
+            } else {
+                db.despesas.push({id:Date.now().toString(), data:new Date().toLocaleDateString('pt-BR'), desc:d, cat:c, valor:v}); 
+            }
+            resetFormD(); salvarDB();
+        }
+        window.editDespesa = function(id) {
+            let d = db.despesas.find(x => x.id == id);
+            if(!d) return;
+            document.getElementById('d_id').value = d.id;
+            document.getElementById('d_desc').value = d.desc;
+            document.getElementById('d_valor').value = Math.abs(d.valor);
+            document.getElementById('d_cat').value = d.cat;
+            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
+            document.getElementById('btn-d-salvar').classList.add('btn-edit');
+            document.getElementById('btn-d-cancel').style.display = 'inline-block';
+            window.scrollTo(0,0);
+        }
+        window.resetFormD = function() {
+            document.getElementById('d_id').value = ''; document.getElementById('d_desc').value = ''; document.getElementById('d_valor').value = '';
+            document.getElementById('btn-d-salvar').innerHTML = "<i class='fa-solid fa-file-invoice-dollar'></i> Lançar";
+            document.getElementById('btn-d-salvar').classList.remove('btn-edit');
+            document.getElementById('btn-d-cancel').style.display = 'none';
+        }
+        window.delDespesa = function(id) { if(confirm("Excluir lançamento?")){db.despesas=db.despesas.filter(d=>d.id != id); salvarDB();} }
+        
+        // =========================================================
+        // RENDER GERAL (Dashboard e Tabelas)
         // =========================================================
         function renderizarTudo() {
             atualizarAlertasIniciais();
@@ -1229,7 +1300,7 @@
 
         window.gerarBoletimImagemEZap = function() {
             let id = document.getElementById('av_atleta').value; if(!id) return alert("Selecione um atleta!");
-            let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando Foto...';
+            let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
             
             let a = db.elenco.find(j => j.id == id); let mIn = document.getElementById('av_mes').value;
             if(!a) return;
