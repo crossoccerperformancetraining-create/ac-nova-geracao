@@ -113,7 +113,7 @@
         .card-atleta:hover { transform: translateY(-5px); }
         .card-atleta .avatar-elenco { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; background-color: #ccc; border: 3px solid #555; }
         .card-atleta .nome-atleta { font-size: 15px; font-weight: bold; margin: 0 0 5px 0; text-transform: uppercase; color: #fff; min-height: 36px; display: flex; align-items: center; text-align: center; justify-content: center; width: 100%; }
-        .card-atleta .info-atleta { font-size: 12px; color: #99aab5; margin-bottom: 15px; }
+        .card-atleta .info-atleta { font-size: 12px; color: #99aab5; margin-bottom: 15px; line-height: 1.4; }
         .card-atleta .stats-min { background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 20px; font-size: 11px; margin-bottom: 15px; display: flex; gap: 10px; color: #ddd; }
         .card-atleta .acoes-atleta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; width: 100%; margin-top: auto; }
 
@@ -420,9 +420,10 @@
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link do Portal de Inscrição Online</h3>
                 <p>Copie o link do seu novo aplicativo secundário e envie no WhatsApp. <b>Atenção:</b> Para que os pais consigam acessar do celular deles, você precisa hospedar o arquivo "inscricao.html" na web (ex: GitHub Pages).</p>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="link_inscricao" readonly style="flex: 1; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="URL_DA_SUA_PAGINA_DE_INSCRICAO_AQUI">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="link_inscricao" style="flex: 1; min-width: 250px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="URL_DA_SUA_PAGINA_DE_INSCRICAO_AQUI">
                     <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar Link</button>
+                    <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarLinkInscricaoWpp()"><i class="fa-brands fa-whatsapp"></i> Enviar aos Pais</button>
                 </div>
             </div>
 
@@ -433,6 +434,18 @@
             </div>
         </div>
     </div> 
+
+    <div id="modalFicha" class="modal">
+        <div class="modal-content" style="max-width: 500px; text-align: left;">
+            <span class="close-modal" onclick="document.getElementById('modalFicha').style.display='none'">&times;</span>
+            <h2 style="color: var(--azul-escuro); text-align: center; margin-top: 0;"><i class="fa-solid fa-address-card"></i> Ficha do Atleta</h2>
+            
+            <div id="conteudo-ficha" style="line-height: 1.6; font-size: 14px; margin-top: 15px; background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+                </div>
+            
+            <button class="btn-add" style="width: 100%; margin-top: 20px; background: #666;" onclick="document.getElementById('modalFicha').style.display='none'">Fechar Janela</button>
+        </div>
+    </div>
 
     <div id="modalJogo" class="modal">
         <div class="modal-content" style="max-width: 800px;">
@@ -490,7 +503,7 @@
             <h4 style="margin-bottom: 5px; text-align: center;">Evolução: Atual x 1ª Avaliação</h4>
             <div class="radar-container"><canvas id="radarModal"></canvas></div>
             <div class="historico-box" id="caixa-historico" style="max-height: 200px; overflow-y: auto;"></div>
-            <button class="btn-add" style="width: 100%; background: #dc3545; color: white; margin-top: 10px;" onclick="document.getElementById('modalPerfil').style.display='none'">Fechar Perfil ❌</button>
+            <button class="btn-add" style="width: 100%; background: #dc3545; color: white; margin-top: 10px;" onclick="document.getElementById('modalPerfil').style.display='none'">Fechar Evolução ❌</button>
         </div>
     </div>
 
@@ -549,10 +562,8 @@
         dbRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // Mescla os dados da nuvem com a estrutura básica
                 db = { ...db, ...data };
                 
-                // Sincroniza alunos do elenco que faltam nas mensalidades
                 if(db.elenco) {
                     if(!db.mensalidades) db.mensalidades = [];
                     let modified = false;
@@ -578,7 +589,6 @@
                 setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
             } 
 
-            // Garante chaves nas listas
             if(db.elenco) {
                 db.elenco.forEach(j => { 
                     if(!j.notas) j.notas = { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }; 
@@ -620,9 +630,6 @@
             renderizarTudo();
         }
 
-        // =========================================================
-        // UTILIDADES E NAVEGAÇÃO
-        // =========================================================
         function formatarMoeda(v) { return `R$ ${parseFloat(v).toFixed(2).replace('.', ',')}`; }
         
         window.openTab = function(tabName) {
@@ -632,7 +639,6 @@
             
             if(document.getElementById('main-nav').style.display !== 'none') {
                 try { 
-                    // Pinta o botão correto
                     let botoes = document.querySelectorAll('.tab-btn');
                     botoes.forEach(b => {
                         if(b.getAttribute('onclick').includes(tabName)) {
@@ -651,8 +657,10 @@
         window.onclick = function(event) { 
             let modal1 = document.getElementById('modalPerfil'); 
             let modal2 = document.getElementById('modalJogo'); 
+            let modal3 = document.getElementById('modalFicha'); 
             if (event.target == modal1) { modal1.style.display = "none"; } 
             if (event.target == modal2) { modal2.style.display = "none"; } 
+            if (event.target == modal3) { modal3.style.display = "none"; } 
         }
 
         window.toggleVisibility = function() {
@@ -691,6 +699,12 @@
             alert("Link copiado! Mande no WhatsApp para os pais.");
         }
 
+        window.enviarLinkInscricaoWpp = function() {
+            let link = document.getElementById("link_inscricao").value;
+            let msg = `Olá! 🦅\n\nFaça a inscrição ou renovação no *AC Nova Geração* através do nosso portal online:\n\n👉 ${link}\n\nA Nova Geração é Nossa! ⚽🏆`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         function atualizarAlertasIniciais() {
             let hoje = new Date(); let mesAtual = String(hoje.getMonth() + 1).padStart(2, '0'); let diaAtual = String(hoje.getDate()).padStart(2, '0');
             let nivers = db.elenco ? db.elenco.filter(j => { if(!j.nasc || j.nasc === '-') return false; return j.nasc.split('/')[1] === mesAtual; }) : [];
@@ -726,7 +740,7 @@
         }
 
         // =========================================================
-        // NOVA LÓGICA DE INSCRIÇÃO COMPLETA
+        // LÓGICA DE INSCRIÇÃO COMPLETA
         // =========================================================
         window.saveInscricao = function() { 
             let id = document.getElementById('ins_id').value;
@@ -761,13 +775,11 @@
             if(!db.mensalidades) db.mensalidades = [];
 
             if(id) {
-                // Atualiza Atleta
                 let j = db.elenco.find(x => x.id === id);
                 j.nome = n; j.foto = foto; j.cat = cat; j.nasc = dn.split('-').reverse().join('/');
                 j.camisa = camisa; j.escola = escola; j.turno = turno; j.resp = resp; j.parentesco = parentesco;
                 j.tel = tel; j.endereco = endereco; j.saude = saude; j.atestado = atestado;
 
-                // Atualiza Mensalidade
                 let m = db.mensalidades.find(x => x.id === id);
                 if(m) { m.nome = n; m.tel = tel; m.venc = venc; m.bolsista = bolsista; }
                 
@@ -775,7 +787,6 @@
                 openTab('elenco');
             } else {
                 let newId = Date.now().toString();
-                // Salva novo no Elenco
                 db.elenco.push({ 
                     id: newId, nome: n, foto: foto, cat: cat, nasc: dn.split('-').reverse().join('/'), 
                     camisa: camisa, escola: escola, turno: turno, resp: resp, parentesco: parentesco,
@@ -783,7 +794,6 @@
                     gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] 
                 }); 
                 
-                // Salva novo nas Mensalidades
                 db.mensalidades.push({id: newId, nome: n, tel: tel, venc: venc, pago: false, bolsista: bolsista});
                 alert("Nova Ficha de Inscrição cadastrada com sucesso!");
                 openTab('elenco');
@@ -817,7 +827,6 @@
             document.getElementById('btn-ins-cancel').style.display = 'none';
         }
 
-        // AGORA O EDITAR JOGADOR CHAMA A FICHA COMPLETA
         window.editJogador = function(id) {
             let j = db.elenco.find(x => x.id === id);
             let m = db.mensalidades.find(x => x.id === id);
@@ -828,7 +837,6 @@
             document.getElementById('ins_cat').value = j.cat || "Sub-07";
             document.getElementById('ins_nasc').value = j.nasc && j.nasc !== '-' ? j.nasc.split('/').reverse().join('-') : '';
             
-            // Campos Extras
             document.getElementById('ins_camisa').value = j.camisa || "Não Informado";
             document.getElementById('ins_escola').value = j.escola || "";
             document.getElementById('ins_turno').value = j.turno || "Manhã";
@@ -842,7 +850,6 @@
             document.getElementById('ins_venc').value = m ? m.venc : "05";
             document.getElementById('ins_bolsista').checked = m ? m.bolsista : false;
 
-            // Para edições, assumimos que os termos já estão aceitos
             document.getElementById('ins_check_medico').checked = true;
             document.getElementById('ins_check_escola').checked = true;
             document.getElementById('ins_check_regras').checked = true;
@@ -850,8 +857,31 @@
             document.getElementById('btn-ins-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar Ficha de Inscrição";
             document.getElementById('btn-ins-cancel').style.display = 'inline-block';
             
-            openTab('inscricao'); // Abre a aba de inscrição
+            openTab('inscricao'); 
             window.scrollTo(0,0);
+        }
+
+        window.verFicha = function(id) {
+            let j = db.elenco.find(x => x.id === id);
+            if(!j) return;
+            
+            let html = `
+                <p><strong>Nome:</strong> ${j.nome}</p>
+                <p><strong>Nascimento:</strong> ${j.nasc || '--/--/----'}</p>
+                <p><strong>Categoria:</strong> ${j.cat}</p>
+                <p><strong>Camisa de Treino:</strong> ${j.camisa || 'Não Informado'}</p>
+                <hr style="border:0; border-top:1px solid #ccc; margin:10px 0;">
+                <p><strong>Escola:</strong> ${j.escola || '--'} (${j.turno || '--'})</p>
+                <p><strong>Responsável:</strong> ${j.resp || '--'} (${j.parentesco || '--'})</p>
+                <p><strong>WhatsApp:</strong> ${j.tel || '--'}</p>
+                <p><strong>Endereço:</strong> ${j.endereco || '--'}</p>
+                <hr style="border:0; border-top:1px solid #ccc; margin:10px 0;">
+                <p><strong>Saúde/Alergias:</strong> ${j.saude || 'Nenhuma'}</p>
+                ${j.atestado && j.atestado !== '' ? `<p><strong>Atestado Médico:</strong> <a href="${j.atestado}" target="_blank" style="color:var(--azul-escuro); font-weight:bold;"><i class="fa-solid fa-paperclip"></i> Ver Anexo</a></p>` : `<p><strong>Atestado Médico:</strong> Não anexado</p>`}
+            `;
+            
+            document.getElementById('conteudo-ficha').innerHTML = html;
+            document.getElementById('modalFicha').style.display = 'flex';
         }
 
         window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
@@ -865,7 +895,6 @@
             } 
         }
 
-        // MENSALIDADE: EDIÇÃO RÁPIDA SÓ DE NOME, VENC E TEL
         window.editMensalidade = function(id) {
             let m = db.mensalidades.find(x => x.id === id);
             document.getElementById('m_id').value = m.id;
@@ -894,12 +923,12 @@
             if(!n) return alert("Preencha o nome!");
             if(!db.mensalidades) db.mensalidades = [];
 
-            if(id) { // Só atualiza se for edição
+            if(id) { 
                 let m = db.mensalidades.find(x => x.id === id);
                 m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
                 let e = db.elenco.find(x => x.id === id);
                 if(e) { e.nome = n; e.tel = t; }
-            } else { // Se for novo, alerta que deve ser feito na inscrição
+            } else { 
                 alert("Por favor, use a aba 'Ficha de Inscrição' para cadastrar novos alunos com todos os dados!");
                 return;
             }
@@ -913,11 +942,8 @@
             let msg = `Olá! 🦅\n\nConfirmamos o recebimento da mensalidade de *${m.nome}*. \n\nO *AC Nova Geração* agradece o apoio e confiança! ⚽🏆`;
             if(m.tel) window.open(`https://wa.me/55${m.tel}?text=${encodeURIComponent(msg)}`, '_blank');
         } 
-        window.delMensalidade = function(id) { delJogador(id); } // Aproveita a mesma função pra deletar de ambos
+        window.delMensalidade = function(id) { delJogador(id); }
 
-        // =========================================================
-        // CHAMADA
-        // =========================================================
         window.renderizarChamada = function() {
             let f = document.getElementById('pres_cat_filtro').value;
             let lista = db.elenco || [];
@@ -954,9 +980,6 @@
             alert("Chamada salva com sucesso!");
         }
 
-        // =========================================================
-        // PATROCINADORES
-        // =========================================================
         window.savePatrocinio = function() {
             let id = document.getElementById('p_id').value;
             let n = document.getElementById('p_nome').value;
@@ -964,7 +987,6 @@
             let s = document.getElementById('p_status').value;
             
             if(!n || isNaN(v)) return alert("Preencha a empresa e o valor!");
-            
             if(!db.patrocinadores) db.patrocinadores = [];
 
             if(id) {
@@ -995,9 +1017,6 @@
             document.getElementById('btn-p-cancel').style.display = 'none';
         }
 
-        // =========================================================
-        // JOGOS E GERENCIAR CONVOCAÇÃO
-        // =========================================================
         window.saveJogo = function() { 
             let id = document.getElementById('j_id').value;
             let d=document.getElementById('j_data').value; 
@@ -1118,9 +1137,6 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // =========================================================
-        // UNIFORMES
-        // =========================================================
         window.addUniforme = function() { 
             let id = document.getElementById('u_id').value;
             let n=document.getElementById('u_nome').value; 
@@ -1156,9 +1172,6 @@
         window.pagarUniforme = function(id) { db.uniformes.find(u=>u.id===id).pago=true; salvarDB(); } 
         window.delUniforme = function(id) { if(confirm("Excluir pedido?")){db.uniformes=db.uniformes.filter(u=>u.id!==id); salvarDB();} }
 
-        // =========================================================
-        // DESPESAS
-        // =========================================================
         window.saveDespesa = function() { 
             let id = document.getElementById('d_id').value;
             let d=document.getElementById('d_desc').value; 
@@ -1195,9 +1208,6 @@
         }
         window.delDespesa = function(id) { if(confirm("Excluir despesa?")){db.despesas=db.despesas.filter(d=>d.id!==id); salvarDB();} }
         
-        // =========================================================
-        // RENDER GERAL (Dashboard e Tabelas)
-        // =========================================================
         function renderizarTudo() {
             atualizarAlertasIniciais();
             let entrou = 0; let previsao = 0;
@@ -1241,7 +1251,6 @@
                 document.getElementById('dash-saldo').innerText = 'R$ ***';
             }
 
-            // Tabela Mensalidades (COM FOTOS DOS ATLETAS)
             let dia = new Date().getDate();
             if(db.mensalidades) {
                 document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
@@ -1270,7 +1279,6 @@
                         baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
                     }
 
-                    // FOTO NA ABA MENSALIDADE
                     let atleta = db.elenco ? db.elenco.find(e => e.id === m.id) : null;
                     let imgHtml = (atleta && atleta.foto && atleta.foto !== '') 
                         ? `<img src="${atleta.foto}" class="avatar-mini">` 
@@ -1297,7 +1305,6 @@
                 }).join('');
             }
             
-            // Tabela Elenco transformada em Cards
             if(db.elenco) {
                 let gridContainer = document.getElementById('grid-elenco');
                 if (gridContainer) {
@@ -1328,6 +1335,7 @@
                                 <button class="btn-sm btn-amarelo" onclick="addAmarelo('${j.id}')" title="Cartão Amarelo">+🟨</button>
                                 <button class="btn-sm btn-vermelho" onclick="addVermelho('${j.id}')" title="Cartão Vermelho">+🟥</button>
                                 
+                                <button class="btn-sm btn-azul" style="flex:1;" onclick="verFicha('${j.id}')" title="Ver Informações do Aluno"><i class="fa-solid fa-eye"></i> Ficha</button> 
                                 <button class="btn-sm btn-perfil" style="flex:1;" onclick="abrirPerfil('${j.id}')">Evolução 📈</button> 
                                 
                                 <button class="btn-sm btn-edit" onclick="editJogador('${j.id}')" title="Editar Ficha"><i class="fa-solid fa-pen"></i></button> 
@@ -1338,7 +1346,6 @@
                 }
             }
             
-            // Tabela Patrocinadores
             if(db.patrocinadores) {
                 document.getElementById('tb-patrocinadores').innerHTML = db.patrocinadores.map(p => {
                     let valClass = isValuesHidden ? 'blurred-text' : '';
@@ -1355,7 +1362,6 @@
                 }).join('');
             }
 
-            // Tabela Jogos
             if(db.jogos) {
                 document.getElementById('tb-jogos').innerHTML = db.jogos.map(j => {
                     let valClass = isValuesHidden ? 'blurred-text' : '';
@@ -1373,12 +1379,10 @@
                 }).join('');
             }
             
-            // Tabela Uniformes
             if(db.uniformes) {
                 document.getElementById('tb-uniformes').innerHTML = db.uniformes.map(u => `<tr><td>${u.nome}</td><td>${u.tam}</td><td>${u.pago?'<span class="badge badge-ok">Pago</span>':'<span class="badge badge-pendente">Pendente</span>'}</td><td class="action-btns">${!u.pago?`<button class="btn-sm btn-pay" onclick="pagarUniforme('${u.id}')">Baixa</button>`:''}<button class="btn-sm btn-edit" onclick="editUniforme('${u.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-sm btn-del" onclick="delUniforme('${u.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
             }
             
-            // Tabela Despesas
             if(db.despesas) {
                 document.getElementById('tb-despesas').innerHTML = db.despesas.map(d => {
                     let valClass = isValuesHidden ? 'blurred-text' : '';
@@ -1387,9 +1391,6 @@
             }
         }
 
-        // =========================================================
-        // RELATÓRIOS (WhatsApp e Excel)
-        // =========================================================
         window.gerarRelatorioDevedores = function() {
             let devedores = db.mensalidades.filter(m => !m.pago && !m.bolsista);
             if(devedores.length === 0) return alert("Parabéns! Todos os atletas estão com a mensalidade em dia!");
@@ -1416,9 +1417,6 @@
             let l = document.createElement("a"); l.setAttribute("href", encodeURI(c)); l.setAttribute("download", "Relatorio_AC.csv"); document.body.appendChild(l); l.click(); l.remove(); 
         }
 
-        // =========================================================
-        // AVALIAÇÃO E BOLETIM (Radar de Evolução e IA)
-        // =========================================================
         window.atualizarSelectAtletas = function() { 
             let s = document.getElementById('av_atleta'); 
             s.innerHTML = '<option value="">-- Escolha --</option>' + db.elenco.map(j => `<option value="${j.id}">${j.nome}</option>`).join('');
@@ -1575,7 +1573,6 @@
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
-            // Temporary show to render image
             let container = document.getElementById('relatorio-print-container'); 
             container.style.zIndex = "9999";
             
@@ -1595,7 +1592,6 @@
             }, 500); 
         }
 
-        // CONFIGURACOES GERAIS
         window.salvarLogo = function() { 
             let n = document.getElementById('cfg_logo').value; 
             if(n) { document.getElementById('escudo-topo').src = n; document.getElementById('escudo-topo').style.display = 'block'; document.getElementById('topo_letra').style.display = 'none'; } 
