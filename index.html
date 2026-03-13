@@ -59,9 +59,9 @@
         .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
         label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
         input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;}
-        .checkbox-group { flex-direction: row; align-items: center; gap: 8px; display:flex;}
-        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
-        .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 14px; line-height: 1.4;}
+        .checkbox-group { flex-direction: row; align-items: flex-start; gap: 8px; display:flex;}
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; margin-top: 2px; }
+        .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 14px; line-height: 1.4; font-weight: normal; color: #333;}
 
         button.btn-add { background-color: var(--azul-escuro); color: var(--dourado); padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; height: 40px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
         button.btn-add:hover { background-color: #00152b; }
@@ -107,17 +107,18 @@
         /* Ocultar Valores CSS */
         .blurred-text { filter: blur(5px); user-select: none; color: transparent; text-shadow: 0 0 8px #000; }
 
-        /* CORREÇÃO DO BOLETIM FANTASMA: Esconder completamente da tela normal */
-        #relatorio-print-container { 
-            position: absolute; 
-            top: -9999px; 
-            left: -9999px; 
-            width: 800px; 
-            background: white; 
-            z-index: -100; 
-            opacity: 0;
-            pointer-events: none;
-        }
+        /* CARDS DO ELENCO */
+        .grid-elenco { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 15px; }
+        .card-atleta { background-color: #2c2f33; border-radius: 10px; padding: 20px 15px; text-align: center; color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; border: 1px solid #444; transition: transform 0.2s; }
+        .card-atleta:hover { transform: translateY(-5px); }
+        .card-atleta .avatar-elenco { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; background-color: #ccc; border: 3px solid #555; }
+        .card-atleta .nome-atleta { font-size: 15px; font-weight: bold; margin: 0 0 5px 0; text-transform: uppercase; color: #fff; min-height: 36px; display: flex; align-items: center; text-align: center; justify-content: center; width: 100%; }
+        .card-atleta .info-atleta { font-size: 12px; color: #99aab5; margin-bottom: 15px; }
+        .card-atleta .stats-min { background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 20px; font-size: 11px; margin-bottom: 15px; display: flex; gap: 10px; color: #ddd; }
+        .card-atleta .acoes-atleta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; width: 100%; margin-top: auto; }
+
+        /* PDF INVISIVEL */
+        #relatorio-print-container { position: absolute; top: -9999px; left: -9999px; width: 800px; background: white; z-index: -100; opacity: 0; pointer-events: none; }
         #relatorio-print { background: #fff; padding: 40px; color: #000; border: 12px solid var(--azul-escuro); border-radius: 15px; font-family: Arial, sans-serif; }
         .pdf-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dourado); padding-bottom: 20px; margin-bottom: 20px; }
         .pdf-title { text-align: center; flex: 1; }
@@ -130,75 +131,9 @@
         .circulo-pdf { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; }
         .circulo-clube { background: var(--azul-escuro); color: var(--dourado); border: 2px solid var(--dourado); }
         .circulo-atleta { background: var(--dourado); color: var(--azul-escuro); border: 2px solid var(--azul-escuro); font-size: 30px;}
-
-        /* NOVO VISUAL - CARDS DO ELENCO */
-        .grid-elenco {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
-        }
-        .card-atleta {
-            background-color: #2c2f33; 
-            border-radius: 10px;
-            padding: 20px 15px;
-            text-align: center;
-            color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #444;
-            transition: transform 0.2s;
-        }
-        .card-atleta:hover {
-            transform: translateY(-5px);
-        }
-        .card-atleta .avatar-elenco {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 12px;
-            background-color: #ccc;
-            border: 3px solid #555;
-        }
-        .card-atleta .nome-atleta {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 0 0 5px 0;
-            text-transform: uppercase;
-            color: #fff;
-            min-height: 36px; 
-            display: flex;
-            align-items: center;
-            text-align: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .card-atleta .info-atleta {
-            font-size: 12px;
-            color: #99aab5;
-            margin-bottom: 15px;
-        }
-        .card-atleta .stats-min {
-            background: rgba(0,0,0,0.4);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-            color: #ddd;
-        }
-        .card-atleta .acoes-atleta {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 4px;
-            width: 100%;
-            margin-top: auto;
-        }
+        
+        /* HEADERS DE SESSÃO NA INSCRIÇÃO */
+        .section-header { background: var(--azul-escuro); color: white; padding: 10px 15px; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: bold; text-transform: uppercase; border-left: 5px solid var(--dourado);}
     </style>
 </head>
 <body>
@@ -216,8 +151,9 @@
     </div>
 
     <div class="nav-bar" id="main-nav">
+        <button class="tab-btn" onclick="openTab('inscricao')"><i class="fa-solid fa-address-card"></i> Ficha Inscrição</button>
+        <button class="tab-btn" onclick="openTab('elenco')"><i class="fa-solid fa-users"></i> Elenco (Cards)</button>
         <button class="tab-btn active" onclick="openTab('mensalidades')"><i class="fa-solid fa-file-invoice"></i> Mensalidades</button>
-        <button class="tab-btn" onclick="openTab('elenco')"><i class="fa-solid fa-users"></i> Elenco</button>
         <button class="tab-btn" onclick="openTab('chamada')"><i class="fa-solid fa-calendar-check"></i> Chamada</button>
         <button class="tab-btn highlight" onclick="openTab('avaliacao')"><i class="fa-solid fa-image"></i> Card Boletim</button>
         <button class="tab-btn" onclick="openTab('agenda')"><i class="fa-regular fa-futbol"></i> Jogos</button>
@@ -257,48 +193,101 @@
             </div>
         </div>
 
+        <div id="inscricao" class="tab-content">
+            <h2 style="color: var(--azul-escuro);"><i class="fa-solid fa-address-card"></i> Ficha de Inscrição Oficial</h2>
+            <p>Preencha os dados abaixo para matricular o atleta no AC Nova Geração ou edite um atleta existente.</p>
+            
+            <input type="hidden" id="ins_id">
+            
+            <div class="section-header">1. DADOS DO ATLETA</div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;"><label>Nome Completo do Aluno(a) *</label><input type="text" id="ins_nome"></div>
+                <div class="form-group"><label>Data de Nascimento *</label><input type="date" id="ins_nasc"></div>
+                <div class="form-group"><label>Categoria (Ano de Nasc) *</label><select id="ins_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1.5;">
+                    <label>Foto do Aluno(a) (Opcional)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="url" id="ins_foto_url" placeholder="Toque para anexar foto" style="flex: 1;">
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;"><i class="fa-solid fa-camera"></i> Anexar</button>
+                            <input type="file" accept="image/*" onchange="handleFileUpload(event, 'ins_foto_url')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Tamanho Camisa de Treino *</label><select id="ins_camisa"><option value="Não Informado">Selecione...</option><option>10</option><option>12</option><option>14</option><option>P</option><option>M</option><option>G</option><option>GG</option></select></div>
+                <div class="form-group" style="flex: 1.5;"><label>Escola onde estuda *</label><input type="text" id="ins_escola" placeholder="Nome da escola..."></div>
+                <div class="form-group"><label>Turno Escolar *</label><select id="ins_turno"><option>Manhã</option><option>Tarde</option><option>Integral</option></select></div>
+            </div>
+
+            <div class="section-header">2. DADOS DO RESPONSÁVEL & SAÚDE</div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;"><label>Nome Completo do Responsável *</label><input type="text" id="ins_resp" placeholder="Nome da mãe, pai, etc..."></div>
+                <div class="form-group"><label>Grau de Parentesco *</label><input type="text" id="ins_parentesco" placeholder="Ex: Mãe"></div>
+                <div class="form-group"><label>Telefone / WhatsApp *</label><input type="text" id="ins_tel" placeholder="Ex: 82999999999"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;"><label>Endereço Completo *</label><input type="text" id="ins_endereco" placeholder="Rua, Número, Bairro..."></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;"><label>Possui alergia ou usa medicamentos? *</label><input type="text" id="ins_saude" placeholder="Se não possuir, digite 'Nenhum'"></div>
+                <div class="form-group" style="flex: 1.5;">
+                    <label>Atestado Médico (Opcional)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="text" id="ins_atestado" placeholder="Anexar Imagem..." style="flex: 1;" readonly>
+                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
+                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;"><i class="fa-solid fa-paperclip"></i> Anexar</button>
+                            <input type="file" accept="image/*" onchange="handleFileUpload(event, 'ins_atestado')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="checkbox-group" style="width: 100%;">
+                    <input type="checkbox" id="ins_check_medico"> 
+                    <label for="ins_check_medico"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. *</label>
+                </div>
+            </div>
+
+            <div class="section-header">3. MENSALIDADE E TERMOS DE COMPROMISSO</div>
+            <div class="form-row" style="align-items: center;">
+                <div class="form-group" style="max-width: 300px;"><label>Vencimento Mensalidade (R$ 60,00) *</label><select id="ins_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
+                <div class="checkbox-group" style="margin-top: 15px; margin-left: 15px;">
+                    <input type="checkbox" id="ins_bolsista">
+                    <label for="ins_bolsista"><strong>Aluno Bolsista (Isento de Pagamento)</strong></label>
+                </div>
+            </div>
+            <div class="form-row" style="flex-direction: column; gap: 15px;">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ins_check_escola"> 
+                    <label for="ins_check_escola"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos. *</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ins_check_regras"> 
+                    <label for="ins_check_regras">Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). *</label>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="btn-add" id="btn-ins-salvar" style="flex: 2; font-size: 16px;" onclick="saveInscricao()"><i class="fa-solid fa-paper-plane"></i> Enviar Inscrição Completa</button>
+                <button class="btn-cancel" id="btn-ins-cancel" style="display:none; flex: 1;" onclick="resetFormInscricao()">Cancelar Edição</button>
+            </div>
+        </div>
+
         <div id="mensalidades" class="tab-content active">
             <h2>Controle de Mensalidades</h2>
-            <div class="form-row">
-                <input type="hidden" id="m_id">
-                <div class="form-group" style="flex: 2;"><label>Atleta/Responsável</label><input type="text" id="m_nome"></div>
-                <div class="form-group"><label>WhatsApp</label><input type="text" id="m_tel" placeholder="Ex: 82999999999"></div>
-                <div class="form-group"><label>Vencimento</label><select id="m_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
-                <div class="form-group checkbox-group" style="align-items: center; justify-content: center; min-width: 100px;">
-                    <input type="checkbox" id="m_bolsista">
-                    <label for="m_bolsista">Bolsista (Isento)</label>
-                </div>
-                <button class="btn-add" id="btn-m-salvar" onclick="saveMensalidade()"><i class="fa-solid fa-plus"></i> Salvar</button>
-                <button class="btn-cancel" id="btn-m-cancel" style="display:none;" onclick="resetFormM()">Cancelar</button>
-            </div>
             <div class="table-responsive">
-                <table><thead><tr><th>Nome</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
+                <table><thead><tr><th>Atleta / Info</th><th>Venc.</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-mensalidades"></tbody></table>
             </div>
         </div>
 
         <div id="elenco" class="tab-content">
-            <h2>Gestão do Elenco</h2>
-            <div class="form-row">
-                <input type="hidden" id="e_id">
-                <div class="form-group" style="flex: 2;"><label>Nome do Atleta</label><input type="text" id="e_nome"></div>
-                <div class="form-group" style="flex: 2;">
-                    <label>Foto do Atleta (URL ou Arquivo)</label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="url" id="e_foto_url" placeholder="Link da foto..." style="flex: 1;">
-                        <div class="upload-btn-wrapper" style="width: auto; margin-top: 0;">
-                            <button class="btn-add" style="background-color: #6c757d; font-size: 12px; height: 39px;">Arquivo</button>
-                            <input type="file" accept="image/*" onchange="handleFileUpload(event, 'e_foto_url')" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group"><label>Cat.</label><select id="e_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
-                <div class="form-group"><label>Nasc.</label><input type="date" id="e_nasc"></div>
-                <button class="btn-add" id="btn-e-salvar" onclick="saveJogador()"><i class="fa-solid fa-user-plus"></i> Salvar</button>
-                <button class="btn-cancel" id="btn-e-cancel" style="display:none;" onclick="resetFormE()">Cancelar</button>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Gestão do Elenco</h2>
+                <button class="btn-add" style="background-color: #28a745;" onclick="openTab('inscricao')"><i class="fa-solid fa-user-plus"></i> Nova Ficha de Inscrição</button>
             </div>
-            
             <div class="grid-elenco" id="grid-elenco"></div>
-            
         </div>
 
         <div id="chamada" class="tab-content">
@@ -563,7 +552,7 @@
                 // Mescla os dados da nuvem com a estrutura básica
                 db = { ...db, ...data };
                 
-                // Sincroniza alunos do elenco que faltam nas mensalidades (Caso o DB tenha desincronizado)
+                // Sincroniza alunos do elenco que faltam nas mensalidades
                 if(db.elenco) {
                     if(!db.mensalidades) db.mensalidades = [];
                     let modified = false;
@@ -573,7 +562,7 @@
                             db.mensalidades.push({
                                 id: jogador.id,
                                 nome: jogador.nome,
-                                tel: "", 
+                                tel: jogador.tel || "", 
                                 venc: "05",
                                 pago: false,
                                 bolsista: false
@@ -581,7 +570,7 @@
                             modified = true;
                         }
                     });
-                    if(modified) { salvarDB(); } // Salva na nuvem a correção
+                    if(modified) { salvarDB(); } 
                 }
                 
                 document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado e Online!";
@@ -642,7 +631,15 @@
             document.getElementById(tabName).classList.add('active'); 
             
             if(document.getElementById('main-nav').style.display !== 'none') {
-                try { event.currentTarget.classList.add('active'); } catch(e) {}
+                try { 
+                    // Pinta o botão correto
+                    let botoes = document.querySelectorAll('.tab-btn');
+                    botoes.forEach(b => {
+                        if(b.getAttribute('onclick').includes(tabName)) {
+                            b.classList.add('active');
+                        }
+                    });
+                } catch(e) {}
             }
             
             document.getElementById('main-dash').style.display = (tabName === 'configuracoes' || tabName === 'avaliacao' || tabName === 'relatorios') ? 'none' : 'block';
@@ -686,6 +683,14 @@
             }
         }
 
+        window.copiarLinkInscricao = function() {
+            let link = document.getElementById("link_inscricao");
+            link.select();
+            link.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(link.value);
+            alert("Link copiado! Mande no WhatsApp para os pais.");
+        }
+
         function atualizarAlertasIniciais() {
             let hoje = new Date(); let mesAtual = String(hoje.getMonth() + 1).padStart(2, '0'); let diaAtual = String(hoje.getDate()).padStart(2, '0');
             let nivers = db.elenco ? db.elenco.filter(j => { if(!j.nasc || j.nasc === '-') return false; return j.nasc.split('/')[1] === mesAtual; }) : [];
@@ -721,31 +726,146 @@
         }
 
         // =========================================================
-        // MENSALIDADES E ELENCO
+        // NOVA LÓGICA DE INSCRIÇÃO COMPLETA
         // =========================================================
-        window.saveMensalidade = function() {
-            let id = document.getElementById('m_id').value;
-            let n = document.getElementById('m_nome').value; 
-            let t = document.getElementById('m_tel').value.replace(/\D/g, ''); 
-            let v = document.getElementById('m_venc').value; 
-            let bolsista = document.getElementById('m_bolsista').checked;
-
-            if(!n) return alert("Preencha o nome!");
+        window.saveInscricao = function() { 
+            let id = document.getElementById('ins_id').value;
+            let n = document.getElementById('ins_nome').value; 
+            let dn = document.getElementById('ins_nasc').value; 
+            let cat = document.getElementById('ins_cat').value; 
+            let foto = document.getElementById('ins_foto_url').value; 
+            let camisa = document.getElementById('ins_camisa').value; 
+            let escola = document.getElementById('ins_escola').value; 
+            let turno = document.getElementById('ins_turno').value; 
+            let resp = document.getElementById('ins_resp').value; 
+            let parentesco = document.getElementById('ins_parentesco').value; 
+            let tel = document.getElementById('ins_tel').value.replace(/\D/g, ''); 
+            let endereco = document.getElementById('ins_endereco').value; 
+            let saude = document.getElementById('ins_saude').value; 
+            let atestado = document.getElementById('ins_atestado').value; 
             
+            let venc = document.getElementById('ins_venc').value; 
+            let bolsista = document.getElementById('ins_bolsista').checked; 
+            let checkMed = document.getElementById('ins_check_medico').checked;
+            let checkEscola = document.getElementById('ins_check_escola').checked;
+            let checkRegras = document.getElementById('ins_check_regras').checked;
+
+            if(!n || !dn || !cat || !camisa || !escola || !turno || !resp || !parentesco || !tel || !endereco || !saude) {
+                return alert("Por favor, preencha todos os campos obrigatórios (*).");
+            }
+            if(!checkMed || !checkEscola || !checkRegras) {
+                return alert("Você precisa aceitar os termos de Autorização Médica, Escolar e Regras do Clube nas caixas de seleção!");
+            }
+            
+            if(!db.elenco) db.elenco = [];
             if(!db.mensalidades) db.mensalidades = [];
 
             if(id) {
+                // Atualiza Atleta
+                let j = db.elenco.find(x => x.id === id);
+                j.nome = n; j.foto = foto; j.cat = cat; j.nasc = dn.split('-').reverse().join('/');
+                j.camisa = camisa; j.escola = escola; j.turno = turno; j.resp = resp; j.parentesco = parentesco;
+                j.tel = tel; j.endereco = endereco; j.saude = saude; j.atestado = atestado;
+
+                // Atualiza Mensalidade
                 let m = db.mensalidades.find(x => x.id === id);
-                m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
-                let e = db.elenco.find(x => x.id === id);
-                if(e) e.nome = n;
+                if(m) { m.nome = n; m.tel = tel; m.venc = venc; m.bolsista = bolsista; }
+                
+                alert("Ficha do atleta atualizada com sucesso!");
+                openTab('elenco');
             } else {
                 let newId = Date.now().toString();
-                db.mensalidades.push({id:newId, nome:n, tel:t, venc:v, pago:false, bolsista: bolsista});
-                db.elenco.push({id:newId, nome:n, foto:'', cat:'Sub-07', nasc:'', gols:0, amarelos:0, vermelhos:0, notas:{fis:0,chute:0,passe:0,coord:0,cab:0,disc:0,obs:''}, historico:[]});
+                // Salva novo no Elenco
+                db.elenco.push({ 
+                    id: newId, nome: n, foto: foto, cat: cat, nasc: dn.split('-').reverse().join('/'), 
+                    camisa: camisa, escola: escola, turno: turno, resp: resp, parentesco: parentesco,
+                    tel: tel, endereco: endereco, saude: saude, atestado: atestado,
+                    gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] 
+                }); 
+                
+                // Salva novo nas Mensalidades
+                db.mensalidades.push({id: newId, nome: n, tel: tel, venc: venc, pago: false, bolsista: bolsista});
+                alert("Nova Ficha de Inscrição cadastrada com sucesso!");
+                openTab('elenco');
             }
-            resetFormM(); salvarDB();
+            resetFormInscricao(); salvarDB(); 
         }
+
+        window.resetFormInscricao = function() {
+            document.getElementById('ins_id').value = '';
+            document.getElementById('ins_nome').value = ''; 
+            document.getElementById('ins_nasc').value = ''; 
+            document.getElementById('ins_cat').value = 'Sub-07'; 
+            document.getElementById('ins_foto_url').value = ''; 
+            document.getElementById('ins_camisa').value = 'Não Informado'; 
+            document.getElementById('ins_escola').value = ''; 
+            document.getElementById('ins_turno').value = 'Manhã'; 
+            document.getElementById('ins_resp').value = ''; 
+            document.getElementById('ins_parentesco').value = ''; 
+            document.getElementById('ins_tel').value = ''; 
+            document.getElementById('ins_endereco').value = ''; 
+            document.getElementById('ins_saude').value = ''; 
+            document.getElementById('ins_atestado').value = ''; 
+            document.getElementById('ins_venc').value = '05'; 
+            
+            document.getElementById('ins_bolsista').checked = false; 
+            document.getElementById('ins_check_medico').checked = false;
+            document.getElementById('ins_check_escola').checked = false;
+            document.getElementById('ins_check_regras').checked = false;
+
+            document.getElementById('btn-ins-salvar').innerHTML = "<i class='fa-solid fa-paper-plane'></i> Enviar Inscrição Completa";
+            document.getElementById('btn-ins-cancel').style.display = 'none';
+        }
+
+        // AGORA O EDITAR JOGADOR CHAMA A FICHA COMPLETA
+        window.editJogador = function(id) {
+            let j = db.elenco.find(x => x.id === id);
+            let m = db.mensalidades.find(x => x.id === id);
+            
+            document.getElementById('ins_id').value = j.id;
+            document.getElementById('ins_nome').value = j.nome;
+            document.getElementById('ins_foto_url').value = j.foto || "";
+            document.getElementById('ins_cat').value = j.cat || "Sub-07";
+            document.getElementById('ins_nasc').value = j.nasc && j.nasc !== '-' ? j.nasc.split('/').reverse().join('-') : '';
+            
+            // Campos Extras
+            document.getElementById('ins_camisa').value = j.camisa || "Não Informado";
+            document.getElementById('ins_escola').value = j.escola || "";
+            document.getElementById('ins_turno').value = j.turno || "Manhã";
+            document.getElementById('ins_resp').value = j.resp || "";
+            document.getElementById('ins_parentesco').value = j.parentesco || "";
+            document.getElementById('ins_tel').value = j.tel || (m ? m.tel : "");
+            document.getElementById('ins_endereco').value = j.endereco || "";
+            document.getElementById('ins_saude').value = j.saude || "";
+            document.getElementById('ins_atestado').value = j.atestado || "";
+            
+            document.getElementById('ins_venc').value = m ? m.venc : "05";
+            document.getElementById('ins_bolsista').checked = m ? m.bolsista : false;
+
+            // Para edições, assumimos que os termos já estão aceitos
+            document.getElementById('ins_check_medico').checked = true;
+            document.getElementById('ins_check_escola').checked = true;
+            document.getElementById('ins_check_regras').checked = true;
+
+            document.getElementById('btn-ins-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar Ficha de Inscrição";
+            document.getElementById('btn-ins-cancel').style.display = 'inline-block';
+            
+            openTab('inscricao'); // Abre a aba de inscrição
+            window.scrollTo(0,0);
+        }
+
+        window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
+        window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
+        window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
+        window.delJogador = function(id) { 
+            if(confirm('Remover jogador do elenco e da ficha de inscrições?')) { 
+                db.elenco=db.elenco.filter(j=>j.id!==id); 
+                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
+                salvarDB(); 
+            } 
+        }
+
+        // MENSALIDADE: EDIÇÃO RÁPIDA SÓ DE NOME, VENC E TEL
         window.editMensalidade = function(id) {
             let m = db.mensalidades.find(x => x.id === id);
             document.getElementById('m_id').value = m.id;
@@ -760,10 +880,32 @@
         }
         window.resetFormM = function() {
             document.getElementById('m_id').value = ''; document.getElementById('m_nome').value = ''; document.getElementById('m_tel').value = ''; document.getElementById('m_bolsista').checked = false;
-            document.getElementById('btn-m-salvar').innerHTML = "<i class='fa-solid fa-plus'></i> Adicionar";
+            document.getElementById('btn-m-salvar').innerHTML = "<i class='fa-solid fa-plus'></i> Adicionar Mensalidade Avulsa";
             document.getElementById('btn-m-salvar').classList.remove('btn-edit');
             document.getElementById('btn-m-cancel').style.display = 'none';
         }
+        window.saveMensalidade = function() {
+            let id = document.getElementById('m_id').value;
+            let n = document.getElementById('m_nome').value; 
+            let t = document.getElementById('m_tel').value.replace(/\D/g, ''); 
+            let v = document.getElementById('m_venc').value; 
+            let bolsista = document.getElementById('m_bolsista').checked;
+
+            if(!n) return alert("Preencha o nome!");
+            if(!db.mensalidades) db.mensalidades = [];
+
+            if(id) { // Só atualiza se for edição
+                let m = db.mensalidades.find(x => x.id === id);
+                m.nome = n; m.tel = t; m.venc = v; m.bolsista = bolsista;
+                let e = db.elenco.find(x => x.id === id);
+                if(e) { e.nome = n; e.tel = t; }
+            } else { // Se for novo, alerta que deve ser feito na inscrição
+                alert("Por favor, use a aba 'Ficha de Inscrição' para cadastrar novos alunos com todos os dados!");
+                return;
+            }
+            resetFormM(); salvarDB();
+        }
+
         window.pagarMensalidade = function(id) { 
             let m = db.mensalidades.find(x => x.id === id);
             m.pago=true; 
@@ -771,64 +913,7 @@
             let msg = `Olá! 🦅\n\nConfirmamos o recebimento da mensalidade de *${m.nome}*. \n\nO *AC Nova Geração* agradece o apoio e confiança! ⚽🏆`;
             if(m.tel) window.open(`https://wa.me/55${m.tel}?text=${encodeURIComponent(msg)}`, '_blank');
         } 
-        window.delMensalidade = function(id) { 
-            if(confirm('Excluir? Este aluno será apagado do elenco e das mensalidades.')){
-                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
-                db.elenco=db.elenco.filter(m=>m.id!==id); 
-                salvarDB();
-            } 
-        }
-
-        window.saveJogador = function() { 
-            let id = document.getElementById('e_id').value;
-            let n=document.getElementById('e_nome').value; 
-            let f=document.getElementById('e_foto_url').value; 
-            let c=document.getElementById('e_cat').value; 
-            let dn=document.getElementById('e_nasc').value; 
-            if(!n) return alert("Preencha o nome!"); 
-            
-            if(!db.elenco) db.elenco = [];
-
-            if(id) {
-                let j = db.elenco.find(x => x.id === id);
-                j.nome = n; j.foto = f; j.cat = c; j.nasc = dn?dn.split('-').reverse().join('/'):'-';
-                let m = db.mensalidades.find(x => x.id === id);
-                if(m) m.nome = n;
-            } else {
-                let newId = Date.now().toString();
-                db.elenco.push({ id: newId, nome: n, foto: f, cat: c, nasc: dn?dn.split('-').reverse().join('/'):'-', gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] }); 
-                db.mensalidades.push({id:newId, nome:n, tel:'', venc:'05', pago:false, bolsista: false});
-            }
-            resetFormE(); salvarDB(); 
-        }
-        window.editJogador = function(id) {
-            let j = db.elenco.find(x => x.id === id);
-            document.getElementById('e_id').value = j.id;
-            document.getElementById('e_nome').value = j.nome;
-            document.getElementById('e_foto_url').value = j.foto || "";
-            document.getElementById('e_cat').value = j.cat;
-            document.getElementById('e_nasc').value = j.nasc !== '-' && j.nasc ? j.nasc.split('/').reverse().join('-') : '';
-            document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-save'></i> Atualizar";
-            document.getElementById('btn-e-salvar').classList.add('btn-edit');
-            document.getElementById('btn-e-cancel').style.display = 'inline-block';
-            window.scrollTo(0,0);
-        }
-        window.resetFormE = function() {
-            document.getElementById('e_id').value = ''; document.getElementById('e_nome').value = ''; document.getElementById('e_foto_url').value = ''; document.getElementById('e_nasc').value = '';
-            document.getElementById('btn-e-salvar').innerHTML = "<i class='fa-solid fa-user-plus'></i> Salvar";
-            document.getElementById('btn-e-salvar').classList.remove('btn-edit');
-            document.getElementById('btn-e-cancel').style.display = 'none';
-        }
-        window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
-        window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
-        window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
-        window.delJogador = function(id) { 
-            if(confirm('Remover jogador do elenco?')) { 
-                db.elenco=db.elenco.filter(j=>j.id!==id); 
-                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
-                salvarDB(); 
-            } 
-        }
+        window.delMensalidade = function(id) { delJogador(id); } // Aproveita a mesma função pra deletar de ambos
 
         // =========================================================
         // CHAMADA
@@ -842,7 +927,7 @@
                 <tr>
                     <td>
                         <div class="atleta-info">
-                            ${j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta" style="width:35px;height:35px;font-size:16px;">👤</div>'}
+                            ${j.foto ? `<img src="${j.foto}" class="avatar-mini">` : '<div class="circulo-pdf circulo-atleta avatar-mini" style="font-size:16px; border:none; display:flex; align-items:center; justify-content:center; background:#ccc; color:#fff;">👤</div>'}
                             <strong>${j.nome}</strong>
                         </div>
                     </td>
@@ -1117,7 +1202,6 @@
             atualizarAlertasIniciais();
             let entrou = 0; let previsao = 0;
             
-            // Calculo Receita x Previsão
             if(db.mensalidades) {
                 db.mensalidades.forEach(m => { 
                     if(!m.bolsista) {
@@ -1140,7 +1224,6 @@
                 saiu = db.despesas.reduce((acc, d) => acc + parseFloat(d.valor), 0);
             }
 
-            // Atualiza Dashboard (Respeitando a flag de ocultar/mostrar)
             let fmtEntrou = formatarMoeda(entrou);
             let fmtPrevisao = formatarMoeda(previsao);
             let fmtSaiu = formatarMoeda(saiu);
@@ -1157,14 +1240,8 @@
                 document.getElementById('dash-despesa').innerText = 'R$ ***';
                 document.getElementById('dash-saldo').innerText = 'R$ ***';
             }
-            
-            // Grava os originais de qualquer forma para o toggle funcionar
-            document.getElementById('dash-receita').setAttribute('data-original', fmtEntrou);
-            document.getElementById('dash-previsao').setAttribute('data-original', fmtPrevisao);
-            document.getElementById('dash-despesa').setAttribute('data-original', fmtSaiu);
-            document.getElementById('dash-saldo').setAttribute('data-original', fmtSaldo);
 
-            // Tabela Mensalidades
+            // Tabela Mensalidades (COM FOTOS DOS ATLETAS)
             let dia = new Date().getDate();
             if(db.mensalidades) {
                 document.getElementById('tb-mensalidades').innerHTML = db.mensalidades.map(m => {
@@ -1192,9 +1269,24 @@
                         btnTexto = `<i class="fa-brands fa-whatsapp"></i> Lembrete`; btnCor = `#ffc107; color:#000`;
                         baixaBtn = `<button class="btn-sm btn-pay" onclick="pagarMensalidade('${m.id}')"><i class="fa-solid fa-check"></i> Baixa</button>`;
                     }
+
+                    // FOTO NA ABA MENSALIDADE
+                    let atleta = db.elenco ? db.elenco.find(e => e.id === m.id) : null;
+                    let imgHtml = (atleta && atleta.foto && atleta.foto !== '') 
+                        ? `<img src="${atleta.foto}" class="avatar-mini">` 
+                        : `<div class="circulo-pdf circulo-atleta avatar-mini" style="font-size:16px; border:none; display:flex; align-items:center; justify-content:center; background:#ccc; color:#fff;">👤</div>`;
                     
                     return `<tr>
-                        <td><strong>${m.nome}</strong><br><small>${m.tel}</small><br><small style="color:${m.bolsista?'#007bff':'green'};font-weight:bold;" class="${valClass}">${valText}</small></td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                ${imgHtml}
+                                <div>
+                                    <strong>${m.nome}</strong><br>
+                                    <small>${m.tel}</small><br>
+                                    <small style="color:${m.bolsista?'#007bff':'green'};font-weight:bold;" class="${valClass}">${valText}</small>
+                                </div>
+                            </div>
+                        </td>
                         <td>Dia ${m.venc}</td><td>${st}</td>
                         <td class="action-btns">
                             <a href="https://wa.me/55${m.tel}?text=${encodeURIComponent(txt)}" target="_blank" class="btn-sm" style="background:${btnCor}; text-decoration:none;">${btnTexto}</a>
@@ -1210,12 +1302,10 @@
                 let gridContainer = document.getElementById('grid-elenco');
                 if (gridContainer) {
                     gridContainer.innerHTML = db.elenco.map(j => {
-                        // Verifica se tem foto, senão coloca o ícone padrão
                         let imgHtml = j.foto && j.foto !== '' 
                             ? `<img src="${j.foto}" class="avatar-elenco">` 
                             : `<div class="circulo-pdf circulo-atleta avatar-elenco" style="display:flex; justify-content:center; align-items:center; font-size:40px; border:none; background:#ccc; color:#fff;">👤</div>`;
                         
-                        // Proteção para data de nascimento vazia
                         let nascText = (j.nasc && j.nasc !== '-' && j.nasc.trim() !== '') ? j.nasc : '--/--/----';
 
                         return `
