@@ -419,10 +419,13 @@
 
             <div style="background: #e6f7ff; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; margin-bottom: 20px;">
                 <h3 style="margin-top:0; color:#002244;"><i class="fa-solid fa-link"></i> Link do Portal de Inscrição Online</h3>
-                <p>Copie o link do seu novo aplicativo secundário e envie no WhatsApp. <b>Atenção:</b> Para que os pais consigam acessar do celular deles, você precisa hospedar o arquivo "inscricao.html" na web (ex: GitHub Pages).</p>
+                <p>Cole abaixo o seu link do GitHub (Ex: https://seu-usuario.github.io/...). Ele ficará salvo no sistema.</p>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <input type="text" id="link_inscricao" style="flex: 1; min-width: 250px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="URL_DA_SUA_PAGINA_DE_INSCRICAO_AQUI">
-                    <button class="btn-add" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar Link</button>
+                    <input type="text" id="link_inscricao" style="flex: 1; min-width: 250px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Cole o seu link do GitHub aqui...">
+                    
+                    <button class="btn-add" onclick="salvarLink()"><i class="fa-solid fa-floppy-disk"></i> Salvar Link</button>
+                    
+                    <button class="btn-add" style="background-color: #6c757d; color: white;" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar</button>
                     <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarLinkInscricaoWpp()"><i class="fa-brands fa-whatsapp"></i> Enviar aos Pais</button>
                 </div>
             </div>
@@ -555,6 +558,8 @@
         let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
         
         let sys_logo = localStorage.getItem('sys_logo') || "";
+        let sys_link = ""; // Variável nova para salvar seu link do github
+        
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
 
@@ -564,6 +569,11 @@
             if (data) {
                 db = { ...db, ...data };
                 
+                if(data.sys_link) {
+                    sys_link = data.sys_link;
+                    document.getElementById('link_inscricao').value = sys_link;
+                }
+
                 if(db.elenco) {
                     if(!db.mensalidades) db.mensalidades = [];
                     let modified = false;
@@ -625,7 +635,8 @@
                 despesas: db.despesas,
                 patrocinadores: db.patrocinadores,
                 presencas: db.presencas,
-                sys_logo: sys_logo
+                sys_logo: sys_logo,
+                sys_link: sys_link // Salva o link do github na nuvem
             }).catch(e => console.error("Erro ao salvar no Firebase:", e));
             renderizarTudo();
         }
@@ -686,6 +697,8 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById(targetInputId).value = e.target.result;
+                    // Se for na aba de avaliação, também atualiza o radar
+                    if(targetInputId.includes('av_')) atualizarRadarTela();
                 };
                 reader.readAsDataURL(file);
             }
@@ -701,6 +714,9 @@
 
         window.enviarLinkInscricaoWpp = function() {
             let link = document.getElementById("link_inscricao").value;
+            if(!link || link.includes("URL_DA_SUA_PAGINA")) {
+                return alert("Você precisa colar o seu link do GitHub na caixa antes de enviar!");
+            }
             let msg = `Olá! 🦅\n\nFaça a inscrição ou renovação no *AC Nova Geração* através do nosso portal online:\n\n👉 ${link}\n\nA Nova Geração é Nossa! ⚽🏆`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
@@ -1435,7 +1451,7 @@
                 document.getElementById('av_cab').value = a.notas.cab||0; 
                 document.getElementById('av_disc').value = a.notas.disc||0; 
                 document.getElementById('av_obs').value = a.notas.obs||''; 
-                atualizarRadar(); 
+                atualizarRadarTela(); 
             } 
         }
 
@@ -1465,7 +1481,10 @@
             document.getElementById('av_obs').value = feed; 
         }
 
-        window.atualizarRadar = function() {
+        // ==========================================
+        // FUNÇÃO DO RADAR CORRIGIDA
+        // ==========================================
+        window.atualizarRadarTela = function() {
             let id = document.getElementById('av_atleta').value;
             let a = db.elenco.find(j => j.id == id);
             let ctx = document.getElementById('radarTela').getContext('2d');
@@ -1473,7 +1492,14 @@
             
             let datasets = [{
                 label: 'Atual',
-                data: [document.getElementById('av_fis').value, document.getElementById('av_chute').value, document.getElementById('av_passe').value, document.getElementById('av_coord').value, document.getElementById('av_cab').value, document.getElementById('av_disc').value],
+                data: [
+                    parseInt(document.getElementById('av_fis').value) || 0, 
+                    parseInt(document.getElementById('av_chute').value) || 0, 
+                    parseInt(document.getElementById('av_passe').value) || 0, 
+                    parseInt(document.getElementById('av_coord').value) || 0, 
+                    parseInt(document.getElementById('av_cab').value) || 0, 
+                    parseInt(document.getElementById('av_disc').value) || 0
+                ],
                 backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244'
             }];
 
@@ -1481,7 +1507,7 @@
                 let h0 = a.historico[0].notas;
                 datasets.push({
                     label: 'Início',
-                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
+                    data: [h0.fis||0, h0.chute||0, h0.passe||0, h0.coord||0, h0.cab||0, h0.disc||0],
                     backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
                 });
             }
@@ -1500,7 +1526,7 @@
             let i = a.historico.findIndex(h => h.mes === m); 
             if(i >= 0) { a.historico[i] = { mes: m, notas: n }; } 
             else { a.historico.push({ mes: m, notas: n }); } 
-            salvarDB(); alert("Salvo na Nuvem!"); atualizarRadar(); 
+            salvarDB(); alert("Salvo na Nuvem!"); atualizarRadarTela(); 
         }
 
         function gerarTabelaEvolucaoHTML(hArr) {
@@ -1542,7 +1568,7 @@
                  let h0 = a.historico[0].notas;
                  datasets.push({
                     label: 'Início',
-                    data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc],
+                    data: [h0.fis||0, h0.chute||0, h0.passe||0, h0.coord||0, h0.cab||0, h0.disc||0],
                     backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5]
                 });
             }
@@ -1569,7 +1595,7 @@
             let datasets = [{ label: 'Atual', data: [a.notas.fis||0, a.notas.chute||0, a.notas.passe||0, a.notas.coord||0, a.notas.cab||0, a.notas.disc||0], backgroundColor: 'rgba(207, 181, 59, 0.5)', borderColor: '#002244' }];
             if(a.historico && a.historico.length > 1) {
                  let h0 = a.historico[0].notas;
-                 datasets.push({ label: 'Início', data: [h0.fis, h0.chute, h0.passe, h0.coord, h0.cab, h0.disc], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] });
+                 datasets.push({ label: 'Início', data: [h0.fis||0, h0.chute||0, h0.passe||0, h0.coord||0, h0.cab||0, h0.disc||0], backgroundColor: 'rgba(0, 34, 68, 0.2)', borderColor: '#888', borderDash: [5,5] });
             }
             chartImagem = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } }, animation: false } });
             
@@ -1598,6 +1624,14 @@
             else { document.getElementById('escudo-topo').style.display = 'none'; document.getElementById('topo_letra').style.display = 'flex'; }
             sys_logo = n; salvarDB(); alert('Escudo atualizado na Nuvem!'); 
         }
+        
+        window.salvarLink = function() {
+            let n = document.getElementById('link_inscricao').value;
+            sys_link = n;
+            salvarDB();
+            alert('Link do formulário de inscrição salvo com sucesso na Nuvem!');
+        }
+
         window.resetarMensalidades = function() { if(confirm("Zerar pagamentos do mês?")) { db.mensalidades.forEach(m => { if(!m.bolsista) m.pago = false; }); db.patrocinadores.forEach(p => p.status = 'pendente'); salvarDB(); } }
 
     </script>
