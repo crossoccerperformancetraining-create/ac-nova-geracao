@@ -202,7 +202,7 @@
             <div class="section-header">1. DADOS DO ATLETA</div>
             <div class="form-row">
                 <div class="form-group" style="flex: 2;"><label>Nome Completo do Aluno(a) *</label><input type="text" id="ins_nome"></div>
-                <div class="form-group"><label>Data de Nascimento *</label><input type="date" id="ins_nasc"></div>
+                <div class="form-group"><label>Data de Nascimento</label><input type="date" id="ins_nasc"></div>
                 <div class="form-group"><label>Categoria (Ano de Nasc) *</label><select id="ins_cat"><option>Sub-07</option><option>Sub-09</option><option>Sub-11</option><option>Sub-13</option><option>Sub-15</option></select></div>
             </div>
             <div class="form-row">
@@ -216,22 +216,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group"><label>Tamanho Camisa de Treino *</label><select id="ins_camisa"><option value="Não Informado">Selecione...</option><option>10</option><option>12</option><option>14</option><option>P</option><option>M</option><option>G</option><option>GG</option></select></div>
-                <div class="form-group" style="flex: 1.5;"><label>Escola onde estuda *</label><input type="text" id="ins_escola" placeholder="Nome da escola..."></div>
-                <div class="form-group"><label>Turno Escolar *</label><select id="ins_turno"><option>Manhã</option><option>Tarde</option><option>Integral</option></select></div>
+                <div class="form-group"><label>Tamanho Camisa de Treino</label><select id="ins_camisa"><option value="Não Informado">Selecione...</option><option>10</option><option>12</option><option>14</option><option>P</option><option>M</option><option>G</option><option>GG</option></select></div>
+                <div class="form-group" style="flex: 1.5;"><label>Escola onde estuda</label><input type="text" id="ins_escola" placeholder="Nome da escola..."></div>
+                <div class="form-group"><label>Turno Escolar</label><select id="ins_turno"><option>Não Informado</option><option>Manhã</option><option>Tarde</option><option>Integral</option><option>Noite</option></select></div>
             </div>
 
             <div class="section-header">2. DADOS DO RESPONSÁVEL & SAÚDE</div>
             <div class="form-row">
-                <div class="form-group" style="flex: 2;"><label>Nome Completo do Responsável *</label><input type="text" id="ins_resp" placeholder="Nome da mãe, pai, etc..."></div>
-                <div class="form-group"><label>Grau de Parentesco *</label><input type="text" id="ins_parentesco" placeholder="Ex: Mãe"></div>
-                <div class="form-group"><label>Telefone / WhatsApp *</label><input type="text" id="ins_tel" placeholder="Ex: 82999999999"></div>
+                <div class="form-group" style="flex: 2;"><label>Nome Completo do Responsável</label><input type="text" id="ins_resp" placeholder="Nome da mãe, pai, etc..."></div>
+                <div class="form-group"><label>Grau de Parentesco</label><input type="text" id="ins_parentesco" placeholder="Ex: Mãe"></div>
+                <div class="form-group"><label>Telefone / WhatsApp</label><input type="text" id="ins_tel" placeholder="Ex: 82999999999"></div>
             </div>
             <div class="form-row">
-                <div class="form-group" style="flex: 2;"><label>Endereço Completo *</label><input type="text" id="ins_endereco" placeholder="Rua, Número, Bairro..."></div>
+                <div class="form-group" style="flex: 2;"><label>Endereço Completo</label><input type="text" id="ins_endereco" placeholder="Rua, Número, Bairro..."></div>
             </div>
             <div class="form-row">
-                <div class="form-group" style="flex: 2;"><label>Possui alergia ou usa medicamentos? *</label><input type="text" id="ins_saude" placeholder="Se não possuir, digite 'Nenhum'"></div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Possui alergia ou usa medicamentos?</label>
+                    <select id="ins_saude_op" onchange="toggleAlergia(this.value)">
+                        <option value="Não">Não</option>
+                        <option value="Sim">Sim</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 2; display: none;" id="div_saude_desc">
+                    <label>Qual(is)?</label>
+                    <input type="text" id="ins_saude_desc" placeholder="Ex: Dipirona, Asma...">
+                </div>
+
                 <div class="form-group" style="flex: 1.5;">
                     <label>Atestado Médico (Opcional)</label>
                     <div style="display: flex; gap: 5px;">
@@ -246,13 +257,13 @@
             <div class="form-row">
                 <div class="checkbox-group" style="width: 100%;">
                     <input type="checkbox" id="ins_check_medico"> 
-                    <label for="ins_check_medico"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. *</label>
+                    <label for="ins_check_medico"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia.</label>
                 </div>
             </div>
 
             <div class="section-header">3. MENSALIDADE E TERMOS DE COMPROMISSO</div>
             <div class="form-row" style="align-items: center;">
-                <div class="form-group" style="max-width: 300px;"><label>Vencimento Mensalidade (R$ 60,00) *</label><select id="ins_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
+                <div class="form-group" style="max-width: 300px;"><label>Vencimento Mensalidade (R$ 60,00)</label><select id="ins_venc"><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option></select></div>
                 <div class="checkbox-group" style="margin-top: 15px; margin-left: 15px;">
                     <input type="checkbox" id="ins_bolsista">
                     <label for="ins_bolsista"><strong>Aluno Bolsista (Isento de Pagamento)</strong></label>
@@ -261,11 +272,11 @@
             <div class="form-row" style="flex-direction: column; gap: 15px;">
                 <div class="checkbox-group">
                     <input type="checkbox" id="ins_check_escola"> 
-                    <label for="ins_check_escola"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos. *</label>
+                    <label for="ins_check_escola"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser suspenso dos treinos.</label>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="ins_check_regras"> 
-                    <label for="ins_check_regras">Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos. (Marcar esta caixa substitui a assinatura física). *</label>
+                    <label for="ins_check_regras">Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos.</label>
                 </div>
             </div>
 
@@ -307,7 +318,7 @@
 
         <div id="avaliacao" class="tab-content">
             <h2>Boletim em Formato de Imagem (Card Oficial)</h2>
-            <p>Avalie o atleta e baixe a imagem para enviar direto no WhatsApp dos pais!</p>
+            <p>Avalie o atleta e baixe a imagem. Se você estiver no celular/tablet, o sistema vai pedir para você escolher o WhatsApp direto!</p>
             <div class="form-row" style="background: #eef2f5;">
                 <div class="form-group" style="flex: 2;"><label>Selecione o Atleta</label><select id="av_atleta" onchange="carregarNotas()"><option value="">-- Escolha --</option></select></div>
                 <div class="form-group"><label>Mês Avaliação</label><input type="month" id="av_mes"></div>
@@ -327,7 +338,7 @@
                     
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                         <button class="btn-add" onclick="salvarAvaliacao()"><i class="fa-solid fa-floppy-disk"></i> Salvar na Nuvem</button>
-                        <button class="btn-add" id="btn-pdf" style="background: #007bff; color: white; flex: 1;" onclick="gerarBoletimImagemEZap()"><i class="fa-solid fa-image"></i> Baixar CARD Oficial</button>
+                        <button class="btn-add" id="btn-pdf" style="background: #25D366; color: white; flex: 1;" onclick="gerarBoletimImagemEZap()"><i class="fa-brands fa-whatsapp"></i> Enviar Boletim no WhatsApp</button>
                     </div>
                 </div>
                 <div style="flex: 1; min-width: 300px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
@@ -424,7 +435,6 @@
                     <input type="text" id="link_inscricao" style="flex: 1; min-width: 250px; background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Cole o seu link do GitHub aqui...">
                     
                     <button class="btn-add" onclick="salvarLink()"><i class="fa-solid fa-floppy-disk"></i> Salvar Link</button>
-                    
                     <button class="btn-add" style="background-color: #6c757d; color: white;" onclick="copiarLinkInscricao()"><i class="fa-regular fa-copy"></i> Copiar</button>
                     <button class="btn-add" style="background-color: #25D366; color: white;" onclick="enviarLinkInscricaoWpp()"><i class="fa-brands fa-whatsapp"></i> Enviar aos Pais</button>
                 </div>
@@ -558,7 +568,7 @@
         let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
         
         let sys_logo = localStorage.getItem('sys_logo') || "";
-        let sys_link = ""; // Variável nova para salvar seu link do github
+        let sys_link = ""; 
         
         let chartTela = null; let chartModal = null; let chartImagem = null;
         let isValuesHidden = false;
@@ -636,7 +646,7 @@
                 patrocinadores: db.patrocinadores,
                 presencas: db.presencas,
                 sys_logo: sys_logo,
-                sys_link: sys_link // Salva o link do github na nuvem
+                sys_link: sys_link 
             }).catch(e => console.error("Erro ao salvar no Firebase:", e));
             renderizarTudo();
         }
@@ -697,7 +707,6 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById(targetInputId).value = e.target.result;
-                    // Se for na aba de avaliação, também atualiza o radar
                     if(targetInputId.includes('av_')) atualizarRadarTela();
                 };
                 reader.readAsDataURL(file);
@@ -719,6 +728,15 @@
             }
             let msg = `Olá! 🦅\n\nFaça a inscrição ou renovação no *AC Nova Geração* através do nosso portal online:\n\n👉 ${link}\n\nA Nova Geração é Nossa! ⚽🏆`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        window.toggleAlergia = function(val) {
+            if(val === 'Sim') {
+                document.getElementById('div_saude_desc').style.display = 'flex';
+            } else {
+                document.getElementById('div_saude_desc').style.display = 'none';
+                document.getElementById('ins_saude_desc').value = '';
+            }
         }
 
         function atualizarAlertasIniciais() {
@@ -756,35 +774,45 @@
         }
 
         // =========================================================
-        // LÓGICA DE INSCRIÇÃO COMPLETA
+        // LÓGICA DE INSCRIÇÃO CORRIGIDA (SEM OBRIGAR TUDO NA EDIÇÃO)
         // =========================================================
         window.saveInscricao = function() { 
             let id = document.getElementById('ins_id').value;
             let n = document.getElementById('ins_nome').value; 
-            let dn = document.getElementById('ins_nasc').value; 
-            let cat = document.getElementById('ins_cat').value; 
+            let dn = document.getElementById('ins_nasc').value || ''; 
+            let cat = document.getElementById('ins_cat').value || 'Sub-07'; 
+            
+            // Só os 3 primeiros são 100% obrigatórios sempre
+            if(!n || !dn || !cat) {
+                return alert("Por favor, preencha pelo menos Nome, Data de Nascimento e Categoria (*).");
+            }
+
             let foto = document.getElementById('ins_foto_url').value; 
-            let camisa = document.getElementById('ins_camisa').value; 
-            let escola = document.getElementById('ins_escola').value; 
-            let turno = document.getElementById('ins_turno').value; 
-            let resp = document.getElementById('ins_resp').value; 
-            let parentesco = document.getElementById('ins_parentesco').value; 
-            let tel = document.getElementById('ins_tel').value.replace(/\D/g, ''); 
-            let endereco = document.getElementById('ins_endereco').value; 
-            let saude = document.getElementById('ins_saude').value; 
+            let camisa = document.getElementById('ins_camisa').value || 'Não Informado'; 
+            let escola = document.getElementById('ins_escola').value || 'Não Informado'; 
+            let turno = document.getElementById('ins_turno').value || 'Não Informado'; 
+            let resp = document.getElementById('ins_resp').value || 'Não Informado'; 
+            let parentesco = document.getElementById('ins_parentesco').value || 'Não Informado'; 
+            let tel = document.getElementById('ins_tel').value.replace(/\D/g, '') || ''; 
+            let endereco = document.getElementById('ins_endereco').value || 'Não Informado'; 
+            
+            let saudeOp = document.getElementById('ins_saude_op').value;
+            let saudeDesc = document.getElementById('ins_saude_desc').value;
+            let saudeFinal = saudeOp === 'Sim' ? (saudeDesc || 'Não Especificou') : 'Nenhuma';
+            
             let atestado = document.getElementById('ins_atestado').value; 
             
-            let venc = document.getElementById('ins_venc').value; 
+            let venc = document.getElementById('ins_venc').value || '05'; 
             let bolsista = document.getElementById('ins_bolsista').checked; 
-            let checkMed = document.getElementById('ins_check_medico').checked;
-            let checkEscola = document.getElementById('ins_check_escola').checked;
-            let checkRegras = document.getElementById('ins_check_regras').checked;
-
-            if(!n || !dn || !cat || !camisa || !escola || !turno || !resp || !parentesco || !tel || !endereco || !saude) {
-                return alert("Por favor, preencha todos os campos obrigatórios (*).");
-            }
-            if(!checkMed || !checkEscola || !checkRegras) {
-                return alert("Você precisa aceitar os termos de Autorização Médica, Escolar e Regras do Clube nas caixas de seleção!");
+            
+            // Verifica os termos só se for cadastro novo
+            if(!id) {
+                let checkMed = document.getElementById('ins_check_medico').checked;
+                let checkEscola = document.getElementById('ins_check_escola').checked;
+                let checkRegras = document.getElementById('ins_check_regras').checked;
+                if(!checkMed || !checkEscola || !checkRegras) {
+                    return alert("Você precisa aceitar os termos de Autorização Médica, Escolar e Regras do Clube nas caixas de seleção!");
+                }
             }
             
             if(!db.elenco) db.elenco = [];
@@ -794,7 +822,7 @@
                 let j = db.elenco.find(x => x.id === id);
                 j.nome = n; j.foto = foto; j.cat = cat; j.nasc = dn.split('-').reverse().join('/');
                 j.camisa = camisa; j.escola = escola; j.turno = turno; j.resp = resp; j.parentesco = parentesco;
-                j.tel = tel; j.endereco = endereco; j.saude = saude; j.atestado = atestado;
+                j.tel = tel; j.endereco = endereco; j.saude = saudeFinal; j.atestado = atestado;
 
                 let m = db.mensalidades.find(x => x.id === id);
                 if(m) { m.nome = n; m.tel = tel; m.venc = venc; m.bolsista = bolsista; }
@@ -806,7 +834,7 @@
                 db.elenco.push({ 
                     id: newId, nome: n, foto: foto, cat: cat, nasc: dn.split('-').reverse().join('/'), 
                     camisa: camisa, escola: escola, turno: turno, resp: resp, parentesco: parentesco,
-                    tel: tel, endereco: endereco, saude: saude, atestado: atestado,
+                    tel: tel, endereco: endereco, saude: saudeFinal, atestado: atestado,
                     gols: 0, amarelos: 0, vermelhos: 0, notas: { coord: '', passe: '', chute: '', cab: '', fis: '', disc: '', obs: '' }, historico: [] 
                 }); 
                 
@@ -825,12 +853,16 @@
             document.getElementById('ins_foto_url').value = ''; 
             document.getElementById('ins_camisa').value = 'Não Informado'; 
             document.getElementById('ins_escola').value = ''; 
-            document.getElementById('ins_turno').value = 'Manhã'; 
+            document.getElementById('ins_turno').value = 'Não Informado'; 
             document.getElementById('ins_resp').value = ''; 
             document.getElementById('ins_parentesco').value = ''; 
             document.getElementById('ins_tel').value = ''; 
             document.getElementById('ins_endereco').value = ''; 
-            document.getElementById('ins_saude').value = ''; 
+            
+            document.getElementById('ins_saude_op').value = 'Não';
+            document.getElementById('ins_saude_desc').value = '';
+            document.getElementById('div_saude_desc').style.display = 'none';
+            
             document.getElementById('ins_atestado').value = ''; 
             document.getElementById('ins_venc').value = '05'; 
             
@@ -854,13 +886,23 @@
             document.getElementById('ins_nasc').value = j.nasc && j.nasc !== '-' ? j.nasc.split('/').reverse().join('-') : '';
             
             document.getElementById('ins_camisa').value = j.camisa || "Não Informado";
-            document.getElementById('ins_escola').value = j.escola || "";
-            document.getElementById('ins_turno').value = j.turno || "Manhã";
-            document.getElementById('ins_resp').value = j.resp || "";
-            document.getElementById('ins_parentesco').value = j.parentesco || "";
+            document.getElementById('ins_escola').value = (j.escola === "Não Informado") ? "" : (j.escola || "");
+            document.getElementById('ins_turno').value = j.turno || "Não Informado";
+            document.getElementById('ins_resp').value = (j.resp === "Não Informado") ? "" : (j.resp || "");
+            document.getElementById('ins_parentesco').value = (j.parentesco === "Não Informado") ? "" : (j.parentesco || "");
             document.getElementById('ins_tel').value = j.tel || (m ? m.tel : "");
-            document.getElementById('ins_endereco').value = j.endereco || "";
-            document.getElementById('ins_saude').value = j.saude || "";
+            document.getElementById('ins_endereco').value = (j.endereco === "Não Informado") ? "" : (j.endereco || "");
+            
+            if(j.saude && j.saude !== 'Nenhuma' && j.saude !== 'Não Informado') {
+                document.getElementById('ins_saude_op').value = 'Sim';
+                document.getElementById('ins_saude_desc').value = j.saude;
+                document.getElementById('div_saude_desc').style.display = 'flex';
+            } else {
+                document.getElementById('ins_saude_op').value = 'Não';
+                document.getElementById('ins_saude_desc').value = '';
+                document.getElementById('div_saude_desc').style.display = 'none';
+            }
+            
             document.getElementById('ins_atestado').value = j.atestado || "";
             
             document.getElementById('ins_venc').value = m ? m.venc : "05";
@@ -903,11 +945,14 @@
         window.addGol = function(id) { db.elenco.find(j => j.id===id).gols+=1; salvarDB(); } 
         window.addAmarelo = function(id) { db.elenco.find(j => j.id===id).amarelos+=1; salvarDB(); } 
         window.addVermelho = function(id) { db.elenco.find(j => j.id===id).vermelhos+=1; salvarDB(); } 
+        
+        // CORRIGIDO O BOTÃO DE DELETAR
         window.delJogador = function(id) { 
-            if(confirm('Remover jogador do elenco e da ficha de inscrições?')) { 
-                db.elenco=db.elenco.filter(j=>j.id!==id); 
-                db.mensalidades=db.mensalidades.filter(m=>m.id!==id); 
+            if(confirm('Tem certeza que deseja apagar este jogador de todo o sistema? (Elenco e Mensalidades)')) { 
+                db.elenco = db.elenco.filter(j => j.id !== id); 
+                db.mensalidades = db.mensalidades.filter(m => m.id !== id); 
                 salvarDB(); 
+                alert("Jogador removido com sucesso!");
             } 
         }
 
@@ -1481,9 +1526,6 @@
             document.getElementById('av_obs').value = feed; 
         }
 
-        // ==========================================
-        // FUNÇÃO DO RADAR CORRIGIDA
-        // ==========================================
         window.atualizarRadarTela = function() {
             let id = document.getElementById('av_atleta').value;
             let a = db.elenco.find(j => j.id == id);
@@ -1575,6 +1617,9 @@
             chartModal = new Chart(ctx, { type: 'radar', data: { labels: ['Físico', 'Chute', 'Passe', 'Tática', 'Cabeceio', 'Disciplina'], datasets: datasets }, options: { scales: { r: { suggestedMin: 0, suggestedMax: 10 } } } });
         }
 
+        // ==========================================
+        // BOTÃO DE COMPARTILHAR IMAGEM NO ZAP (NOVO)
+        // ==========================================
         window.gerarBoletimImagemEZap = function() {
             let id = document.getElementById('av_atleta').value; if(!id) return alert("Selecione um atleta!");
             let btn = document.getElementById('btn-pdf'); btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
@@ -1605,15 +1650,36 @@
             setTimeout(() => {
                 html2canvas(document.getElementById('relatorio-print'), { scale: 2, useCORS: true }).then(canvas => {
                     container.style.zIndex = "-100";
-                    let link = document.createElement('a'); link.download = `Card_Boletim_${a.nome.replace(/\s/g, '_')}.png`; link.href = canvas.toDataURL("image/png"); link.click();
-                    btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; 
+                    let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\nA Nova Geração é Nossa!`;
                     
-                    let msg = `Olá! 🦅 \n\nAcabei de gerar o *Boletim Oficial de Desempenho (Card)* do atleta ${a.nome}.\n\n_(A imagem já foi salva na galeria do seu celular. Por favor, anexe a foto clicando no ícone do clipe 📎 ou câmera 📷 aqui na nossa conversa!)_\n\nA Nova Geração é Nossa!`;
-                    let mens = db.mensalidades.find(x => x.nome.toLowerCase().includes(a.nome.split(' ')[0].toLowerCase()));
-                    if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg)}`, '_blank'); } 
-                    else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
+                    canvas.toBlob(blob => {
+                        const file = new File([blob], `Card_Boletim_${a.nome.replace(/\s/g, '_')}.png`, { type: 'image/png' });
+                        
+                        // Verifica se o dispositivo suporta anexar arquivo nativamente (celulares/tablets)
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            navigator.share({
+                                title: 'Boletim AC Nova Geração',
+                                text: msg,
+                                files: [file]
+                            }).then(() => {
+                                btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar Boletim no WhatsApp'; 
+                            }).catch(err => {
+                                // Se o usuário cancelar ou dar erro
+                                let link = document.createElement('a'); link.download = file.name; link.href = URL.createObjectURL(blob); link.click();
+                                btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar Boletim no WhatsApp'; 
+                            });
+                        } else {
+                            // Se for PC ou não suportar, baixa e avisa pra mandar
+                            let link = document.createElement('a'); link.download = file.name; link.href = URL.createObjectURL(blob); link.click();
+                            btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar Boletim no WhatsApp'; 
+                            
+                            let mens = db.mensalidades.find(x => x.nome.toLowerCase().includes(a.nome.split(' ')[0].toLowerCase()));
+                            if(mens && mens.tel) { window.open(`https://wa.me/55${mens.tel}?text=${encodeURIComponent(msg + "\n\n(Por favor, anexe a imagem que acabou de baixar no clipe 📎)")}`, '_blank'); } 
+                            else { window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
+                        }
+                    }, 'image/png');
                 }).catch(err => {
-                    container.style.zIndex = "-100"; btn.innerHTML = '<i class="fa-solid fa-image"></i> Baixar CARD Oficial do Atleta'; alert("Erro de bloqueio de imagem (CORS). Tente usar o atleta sem foto.");
+                    container.style.zIndex = "-100"; btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Enviar Boletim no WhatsApp'; alert("Erro ao gerar imagem.");
                 });
             }, 500); 
         }
