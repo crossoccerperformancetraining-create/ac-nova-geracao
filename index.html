@@ -890,52 +890,61 @@ let isValuesHidden = false;
 document.addEventListener("DOMContentLoaded", () => {
 // Gerar Link de inscrição com base na URL atual
 let url = window.location.href.split('?')[0] + '?tab=inscricao';
-document.getElementById('link_inscricao').value = url;
-const urlParams = new URLSearchParams(window.location.search);
-if(urlParams.get('tab') === 'inscricao') {
-document.getElementById('main-nav').style.display = 'none';
-document.getElementById('main-dash').style.display = 'none';
-openTab('inscricao');
-} else {
-let localData = localStorage.getItem('acNovaGeracaoData');
-if(localData) {
-db = JSON.parse(localData);
-sincronizarListas();
-renderizarTudo();
-}
-}
+document.addEventListener("DOMContentLoaded", () => {
+    // Gerar Link de inscrição
+    let url = window.location.href.split('?')[0] + '?tab=inscricao';
+    document.getElementById('link_inscricao').value = url;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('tab') === 'inscricao') {
+        document.getElementById('main-nav').style.display = 'none';
+        document.getElementById('main-dash').style.display = 'none';
+        openTab('inscricao');
+    } else {
+        // REMOVEMOS a leitura do localStorage aqui para evitar carregar dados velhos
+        // O Firebase (dbRef.on) se encarregará de preencher o sistema assim que conectar.
+        document.getElementById('nuvem-status').style.display = 'block';
+    }
 });
 // PUXA DADOS DA NUVEM EM TEMPO REAL E GARANTE SINCRONIA
-// PUXA DADOS DA NUVEM EM TEMPO REAL
 dbRef.on('value', (snapshot) => {
-const data = snapshot.val();
-if (data) {
-                //
- Preserva os dados existentes na nuvem
-db.mensalidades = data.mensalidades || [];
-db.elenco = data.elenco || [];
-db.uniformes = data.uniformes || [];
-db.jogos = data.jogos || [];
-db.despesas = data.despesas || [];
-db.patrocinadores = data.patrocinadores || [];
-db.presencas = data.presencas || [];
-sincronizarListas(); 
-document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></
-i> Sistema Sincronizado e Online!";
-document.getElementById('nuvem-status').style.background = "#28a745";
-setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
-} 
-if(sys_logo) { 
-document.getElementById('escudo-topo').src = sys_logo; 
-document.getElementById('escudo-topo').style.display = 'block';
-document.getElementById('topo_letra').style.display = 'none';
-document.getElementById('cfg_logo').value = sys_logo; 
-}
-localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
-const urlParams = new URLSearchParams(window.location.search);
-if(urlParams.get('tab') !== 'inscricao') {
-renderizarTudo();
-}
+    const data = snapshot.val();
+    if (data) {
+        // 1. Atualiza a memória local do sistema com os dados da nuvem
+        db.mensalidades = data.mensalidades || [];
+        db.elenco = data.elenco || [];
+        db.uniformes = data.uniformes || [];
+        db.jogos = data.jogos || [];
+        db.despesas = data.despesas || [];
+        db.patrocinadores = data.patrocinadores || [];
+        db.presencas = data.presencas || [];
+        
+        // 2. Atualiza o logo se ele existir na nuvem
+        if(data.sys_logo) { 
+            sys_logo = data.sys_logo;
+            document.getElementById('escudo-topo').src = sys_logo; 
+            document.getElementById('escudo-topo').style.display = 'block';
+            document.getElementById('topo_letra').style.display = 'none';
+            document.getElementById('cfg_logo').value = sys_logo; 
+        }
+
+        sincronizarListas(); 
+
+        // 3. Feedback visual de sucesso
+        document.getElementById('nuvem-status').innerHTML = "<i class='fa-solid fa-cloud-check'></i> Sistema Sincronizado!";
+        document.getElementById('nuvem-status').style.background = "#28a745";
+        document.getElementById('nuvem-status').style.display = 'block';
+        setTimeout(() => document.getElementById('nuvem-status').style.display = 'none', 3000);
+
+        // 4. Salva no cache apenas para backup, mas prioriza a renderização da nuvem
+        localStorage.setItem('acNovaGeracaoData', JSON.stringify(db));
+
+        // 5. Renderiza as tabelas na tela (apenas se não for a ficha de inscrição)
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('tab') !== 'inscricao') {
+            renderizarTudo();
+        }
+    } // Fim do if (data)
 });
 function salvarDB() {
 dbRef.set({
