@@ -11,7 +11,26 @@ all.min.css">
 script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<style>
+
+<script>
+  // CONFIGURAÇÃO OFICIAL AC NOVA GERAÇÃO
+  const firebaseConfig = {
+    apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
+    authDomain: "ac-nova-geracao.firebaseapp.com",
+    databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com/",
+    projectId: "ac-nova-geracao",
+    storageBucket: "ac-nova-geracao.firebasestorage.app",
+    messagingSenderId: "409905433868",
+    appId: "1:409905433868:web:a9349a533b591df7310d29"
+  };
+
+  // INICIALIZAÇÃO DO MOTOR DO SISTEMA
+  if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+  }
+  const database = firebase.database();
+  const dbRef = database.ref('sistema_ac_dados');
+</script>
 :root { --azul-escuro: #002244; --dourado: #cfb53b; --fundo: #f4f4f9; --texto: #333; }
 * { box-sizing: border-box; }
 body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--fundo); margin: 0; 
@@ -863,44 +882,37 @@ Desenvolvido por Adriano "Cabeça" - A Nova Geração é Nossa!
 </div>
 </div>
 <script type="text/javascript">
-        //
- COLE SUAS CREDENCIAIS DO FIREBASE AQUI!
-        //
- COLE SUAS CREDENCIAIS DO FIREBASE AQUI
-const firebaseConfig = {
-apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
-authDomain: "ac-nova-geracao.firebaseapp.com",
-databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com/",
-projectId: "ac-nova-geracao",
-storageBucket: "ac-nova-geracao.firebasestorage.app",
-messagingSenderId: "409905433868",
-appId: "1:409905433868:web:a9349a533b591df7310d29"
-};
-if (!firebase.apps.length) {
-firebase.initializeApp(firebaseConfig);
-}
-const database = firebase.database();
-const dbRef = database.ref('sistema_ac_dados');
-let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], 
-presencas: [] };
-let sys_logo = localStorage.getItem('sys_logo') || "";
+
+// 1. VARIÁVEIS GLOBAIS (Obrigatório estarem aqui no topo do script)
+let db = { mensalidades: [], elenco: [], uniformes: [], jogos: [], despesas: [], patrocinadores: [], presencas: [] };
+let sys_logo = ""; 
 let chartTela = null; let chartModal = null; let chartImagem = null;
 let isValuesHidden = false;
-document.addEventListener("DOMContentLoaded", () => {
-// Gerar Link de inscrição com base na URL atual
-let url = window.location.href.split('?')[0] + '?tab=inscricao';
+
+// 2. INICIALIZAÇÃO DO SISTEMA
 document.addEventListener("DOMContentLoaded", () => {
     // Gerar Link de inscrição
     let url = window.location.href.split('?')[0] + '?tab=inscricao';
-    document.getElementById('link_inscricao').value = url;
+    const linkInput = document.getElementById('link_inscricao');
+    if(linkInput) linkInput.value = url;
 
     const urlParams = new URLSearchParams(window.location.search);
+    
     if(urlParams.get('tab') === 'inscricao') {
-        document.getElementById('main-nav').style.display = 'none';
-        document.getElementById('main-dash').style.display = 'none';
+        // Se for ficha de inscrição, esconde o painel do treinador
+        const nav = document.getElementById('main-nav');
+        const dash = document.getElementById('main-dash');
+        if(nav) nav.style.display = 'none';
+        if(dash) dash.style.display = 'none';
         openTab('inscricao');
     } else {
-        // REMOVEMOS a leitura do localStorage aqui para evitar carregar dados velhos
+        // Se for o painel, mostra que está sincronizando
+        const statusDiv = document.getElementById('nuvem-status');
+        if(statusDiv) statusDiv.style.display = 'block';
+    }
+});
+
+// A partir daqui você continua com o dbRef.on que ajustamos antes...
         // O Firebase (dbRef.on) se encarregará de preencher o sistema assim que conectar.
         document.getElementById('nuvem-status').style.display = 'block';
     }
