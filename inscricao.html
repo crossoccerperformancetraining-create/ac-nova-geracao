@@ -1,506 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha de Inscrição - AC Nova Geração</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-    <style>
-        :root {
-            --azul-escuro: #002244;
-            --dourado: #cfb53b;
-            --fundo: #f4f4f9;
-            --texto: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--fundo);
-            color: var(--texto);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-            border-top: 5px solid var(--azul-escuro);
-        }
-
-        h2 {
-            text-align: center;
-            color: var(--azul-escuro);
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        p.subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="tel"],
-        select,
-        textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            font-family: inherit;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--dourado);
-            box-shadow: 0 0 0 2px rgba(207, 181, 59, 0.2);
-        }
-
-        .required {
-            color: red;
-            font-weight: bold;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            background: #eef2f5;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            font-size: 13px;
-            font-weight: normal;
-            cursor: pointer;
-            line-height: 1.4;
-            margin-bottom: 0;
-        }
-
-        .radio-group {
-            margin-bottom: 15px;
-        }
-
-        .radio-group label {
-            font-weight: normal;
-            margin-left: 5px;
-        }
-
-        .btn-submit {
-            background-color: var(--azul-escuro);
-            color: var(--dourado);
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-submit:hover {
-            background-color: #00152b;
-        }
-
-        .upload-btn-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .btn-upload {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
-
-        .upload-btn-wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-        
-        #loadingOverlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.8);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        
-        .spinner {
-            border: 4px solid rgba(0,0,0,0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-left-color: var(--azul-escuro);
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Inscrição Oficial • Nova Geração Manager</title>
+<style>
+:root{--navy:#14285d;--navy2:#0b183e;--gold:#d8b455;--bg:#f2f5fb;--surface:#fff;--text:#17223b;--muted:#68758f;--border:#e2e7f0;--success:#17885c;--danger:#c93f4a;--shadow:0 24px 70px rgba(10,25,66,.14)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial;background:radial-gradient(circle at top right,rgba(216,180,85,.18),transparent 26%),linear-gradient(160deg,#eef2f9,#f9fafc);color:var(--text)}button,input,select,textarea{font:inherit}.shell{max-width:1020px;margin:auto;padding:28px 18px 60px}.hero{background:linear-gradient(135deg,var(--navy2),var(--navy));border-radius:26px;padding:28px;color:#fff;display:grid;grid-template-columns:1fr 140px;gap:18px;align-items:center;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:55px solid rgba(216,180,85,.13);right:-90px;top:-100px}.hero img{width:125px;height:125px;object-fit:contain;z-index:1;justify-self:end;filter:drop-shadow(0 16px 18px rgba(0,0,0,.25))}.hero small{color:#d9e2f7;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.hero h1{margin:7px 0 7px;font-size:32px}.hero p{margin:0;color:#d8e0f2}.card{background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:0 12px 35px rgba(15,31,70,.07);margin-top:20px;overflow:hidden}.card-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}.step{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#c89b35);color:#17223b;font-weight:900}.card-head h2{font-size:19px;margin:0}.card-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.card-body{padding:24px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800;color:#4c5870}.required{color:var(--danger)}input,select,textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px 13px;background:#fff;color:var(--text);outline:none;transition:.2s}input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(216,180,85,.15)}textarea{resize:vertical;min-height:90px}.help{font-size:11px;color:var(--muted)}.upload{border:1px dashed #b8c1d4;border-radius:14px;padding:16px;text-align:center;background:#fafbfe}.upload input{border:0;padding:8px;background:transparent}.preview{display:none;margin:12px auto 0;max-width:180px;max-height:180px;border-radius:16px;object-fit:contain;border:1px solid var(--border)}.checks{display:grid;gap:12px}.check{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fbfcfe}.check input{width:18px;height:18px;margin-top:2px}.check b{display:block;font-size:13px}.check span{font-size:12px;color:var(--muted);line-height:1.45}.notice{padding:15px;border:1px solid #ead59c;border-radius:14px;background:#fff9e9;color:#694d12;font-size:12px;line-height:1.5}.submit-area{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 24px;border-top:1px solid var(--border);background:#fafbfe}.submit-area small{color:var(--muted);max-width:560px}.btn{border:0;border-radius:13px;padding:13px 20px;font-weight:900;cursor:pointer}.btn-primary{background:linear-gradient(135deg,var(--gold),#c89a34);color:#17223b;box-shadow:0 8px 18px rgba(200,154,52,.28)}.btn-primary:disabled{opacity:.55;cursor:not-allowed}.success{display:none;text-align:center;padding:42px 24px}.success .icon{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;background:#e7f7f0;color:var(--success);font-size:36px}.success h2{margin:0 0 8px}.protocol{display:inline-block;margin:12px 0;padding:9px 14px;border-radius:999px;background:#eef2fa;color:var(--navy);font-weight:900}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}.category-hint{padding:10px 12px;border-radius:10px;background:#eef3ff;color:#315b9d;font-size:12px;display:none}.invalid{border-color:var(--danger)!important;box-shadow:0 0 0 4px rgba(201,63,74,.10)!important}.sensitive{border:1px solid #d5c27f;background:linear-gradient(135deg,#fffaf0,#fff);border-radius:16px;padding:15px}.sensitive-title{display:flex;gap:9px;align-items:center;font-weight:900;color:#5f4815;margin-bottom:6px}.conditional{display:none}.privacy-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#edf4ff;color:#264e88;font-size:11px;font-weight:900}
+@media(max-width:720px){.hero{grid-template-columns:1fr 90px;padding:22px}.hero h1{font-size:24px}.hero img{width:82px;height:82px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card-body{padding:18px}.submit-area{align-items:stretch;flex-direction:column}.btn{width:100%}}
+</style>
 </head>
 <body>
+<div class="shell">
+  <section class="hero">
+    <div><small>Nova Geração Manager</small><h1>Ficha de Inscrição Oficial</h1><p>Preencha os dados abaixo para solicitar a matrícula do atleta no AC Nova Geração.</p></div>
+    <img id="clubLogo" src="assets/escudo.png" alt="Escudo do clube">
+  </section>
 
-    <div id="loadingOverlay">
-        <div class="spinner"></div>
-        <p style="margin-top: 10px; font-weight: bold; color: var(--azul-escuro);">Enviando Inscrição...</p>
-    </div>
+  <form id="registrationForm" novalidate>
+    <section class="card">
+      <div class="card-head"><div class="step">1</div><div><h2>Dados do Atleta</h2><p>Informações para cadastro, categoria e carteirinha.</p></div></div>
+      <div class="card-body"><div class="form-grid">
+        <div class="field full"><label>Nome Completo do Aluno(a) <span class="required">*</span></label><input id="athleteName" required placeholder="Digite o nome completo" autocomplete="name"></div>
+        <div class="field"><label>Data de Nascimento <span class="required">*</span></label><input id="birthDate" type="date" required></div>
+        <div class="field"><label>Categoria (Ano de Nascimento) <span class="required">*</span></label><select id="category" required><option value="">Selecione...</option><option value="Sub-7">Sub-07</option><option value="Sub-9">Sub-09</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option></select><div id="categoryHint" class="category-hint"></div></div>
+        <div class="field full"><label>Foto do Aluno(a) para carteirinha <span class="help">(Opcional)</span></label><div class="upload"><b>Toque para anexar foto</b><input id="athletePhoto" type="file" accept="image/png,image/jpeg,image/webp" capture="user"><span class="help">A foto será reduzida para facilitar o envio.</span><img id="photoPreview" class="preview" alt="Prévia da foto"></div></div>
+        <div class="field"><label>Tamanho da Camisa de Treino <span class="required">*</span></label><select id="shirtSize" required><option value="">Selecione...</option><option>PP infantil</option><option>P infantil</option><option>M infantil</option><option>G infantil</option><option>PP adulto</option><option>P adulto</option><option>M adulto</option><option>G adulto</option><option>GG adulto</option></select></div>
+        <div class="field"><label>Escola onde estuda <span class="required">*</span></label><input id="school" required placeholder="Nome da Escola"></div>
+        <div class="field"><label>Turno Escolar <span class="required">*</span></label><select id="schoolShift" required><option value="">Selecione...</option><option>Manhã</option><option>Tarde</option><option>Noite</option><option>Integral</option></select></div>
+      </div></div>
+    </section>
 
-    <div class="form-container">
-        <h2><i class="fa-regular fa-futbol"></i> AC Nova Geração</h2>
-        <p class="subtitle">Ficha de Inscrição Oficial</p>
-        
-        <form id="registrationForm">
-            <div class="form-group">
-                <label>Nome Completo do Aluno(a) <span class="required">*</span></label>
-                <input type="text" id="alunoNome" required placeholder="Ex: João Silva">
-            </div>
+    <section class="card">
+      <div class="card-head"><div class="step">2</div><div><h2>Dados do Responsável</h2><p>Contato e endereço do responsável legal.</p></div></div>
+      <div class="card-body"><div class="form-grid">
+        <div class="field full"><label>Nome Completo do Responsável <span class="required">*</span></label><input id="guardianName" required placeholder="Nome do pai, mãe ou responsável"></div>
+        <div class="field"><label>Grau de Parentesco <span class="required">*</span></label><select id="relation" required><option value="">Selecione...</option><option>Mãe</option><option>Pai</option><option>Avó/Avô</option><option>Tia/Tio</option><option>Irmã/Irmão</option><option>Responsável legal</option><option>Outro</option></select></div>
+        <div class="field"><label>Telefone / WhatsApp do Responsável <span class="required">*</span></label><input id="phone" required inputmode="tel" placeholder="Ex.: (82) 99999-9999" maxlength="16"></div>
+        <div class="field full"><label>Endereço Completo <span class="required">*</span></label><input id="address" required placeholder="Rua, número, bairro, cidade"></div>
+        <div class="field"><label>Melhor dia para vencimento da mensalidade (R$ 60,00) <span class="required">*</span></label><select id="dueDay" required><option value="05">Dia 05</option><option value="10">Dia 10</option><option value="15">Dia 15</option><option value="20">Dia 20</option></select></div>
+      </div></div>
+    </section>
 
-            <div class="form-group">
-                <label>Data de Nascimento <span class="required">*</span></label>
-                <input type="date" id="alunoNasc" required>
-            </div>
+    <section class="card">
+      <div class="card-head"><div class="step">3</div><div><h2>Anamnese e Cuidados do Atleta</h2><p>Informações para segurança, acolhimento e adaptação dos treinos.</p></div></div>
+      <div class="card-body">
+        <div class="sensitive">
+          <div class="sensitive-title">🔒 Informações de saúde — acesso restrito</div>
+          <div class="help">Estes dados são sensíveis e serão utilizados somente para segurança, atendimento e organização esportiva do atleta. Não serão exibidos publicamente. O acesso deve ficar limitado a usuários autorizados do clube, observadas as regras de privacidade e proteção de dados.</div>
+        </div>
+        <div class="form-grid" style="margin-top:18px">
+          <div class="field"><label>O atleta possui diagnóstico de TDAH? <span class="required">*</span></label><select id="adhdStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim — informado pelo responsável</option><option>Em investigação/acompanhamento</option><option>Prefiro não informar</option></select><span class="help">Não fazemos diagnóstico pelo formulário; registre apenas informação já conhecida pelo responsável.</span></div>
+          <div class="field"><label>O atleta possui diagnóstico de TEA (autismo)? <span class="required">*</span></label><select id="autismStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim — informado pelo responsável</option><option>Em investigação/acompanhamento</option><option>Prefiro não informar</option></select></div>
+          <div class="field conditional" id="autismLevelField"><label>Nível de suporte do TEA <span class="help">(se constar em laudo)</span></label><select id="autismSupportLevel"><option value="">Não informado</option><option value="1">Nível 1 — requer suporte</option><option value="2">Nível 2 — requer suporte substancial</option><option value="3">Nível 3 — requer suporte muito substancial</option><option value="nao_informado">Não consta / não informado</option><option value="prefiro_nao_informar">Prefiro não informar</option></select></div>
+          <div class="field"><label>Asma ou bronquite? <span class="required">*</span></label><select id="asthmaStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim</option><option>Não sei informar</option></select></div>
+          <div class="field"><label>Epilepsia ou histórico de convulsões? <span class="required">*</span></label><select id="seizureStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim</option><option>Não sei informar</option></select></div>
+          <div class="field"><label>Diabetes? <span class="required">*</span></label><select id="diabetesStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim</option><option>Não sei informar</option></select></div>
+          <div class="field"><label>Possui condição cardíaca ou restrição médica para esforço? <span class="required">*</span></label><select id="cardiacStatus" required><option value="">Selecione...</option><option>Não</option><option>Sim</option><option>Não sei informar</option></select></div>
+          <div class="field full"><label>Alergias, medicamentos de uso contínuo ou outras condições importantes <span class="required">*</span></label><textarea id="healthInfo" required placeholder="Descreva o que a equipe precisa saber para cuidar do atleta. Se não houver, digite “Não”."></textarea></div>
+          <div class="field full"><label>O atleta necessita de alguma adaptação ou cuidado específico durante os treinos?</label><textarea id="trainingSupport" placeholder="Ex.: instruções mais objetivas, pausa em ambiente tranquilo, cuidado com ruídos, restrição de determinados exercícios, acompanhamento específico..."></textarea></div>
+          <div class="field full"><label>Recomendação médica, pedagógica ou observação importante</label><textarea id="careNotes" placeholder="Informe somente o que for relevante para a segurança e participação do atleta."></textarea></div>
+          <div class="field full"><label>Anexe aqui o Atestado Médico <span class="help">(Opcional agora)</span></label><div class="upload"><b>Anexar foto ou PDF do atestado</b><input id="medicalFile" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" capture="environment"><span class="help">Documentos médicos devem ser armazenados em área privada no Firebase Storage e acessíveis apenas a usuários autorizados.</span><img id="medicalPreview" class="preview" alt="Prévia do atestado"></div></div>
+        </div>
+      </div>
+    </section>
 
-            <div class="form-group">
-                <label>Categoria (Ano de Nascimento) <span class="required">*</span></label>
-                <select id="alunoCat" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="Sub-07">Sub-07</option>
-                    <option value="Sub-09">Sub-09</option>
-                    <option value="Sub-11">Sub-11</option>
-                    <option value="Sub-13">Sub-13</option>
-                    <option value="Sub-15">Sub-15</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Tamanho da Camisa de Treino <span class="required">*</span></label>
-                <select id="alunoCamisa" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="10">Tamanho 10</option>
-                    <option value="12">Tamanho 12</option>
-                    <option value="14">Tamanho 14</option>
-                    <option value="P">Tamanho P (Adulto)</option>
-                    <option value="M">Tamanho M (Adulto)</option>
-                    <option value="G">Tamanho G (Adulto)</option>
-                    <option value="GG">Tamanho GG (Adulto)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Foto do Aluno(a) (Opcional - Rosto para carteirinha)</label>
-                <div class="upload-btn-wrapper">
-                    <button type="button" class="btn-upload" id="btnFotoAluno"><i class="fa-solid fa-camera"></i> Escolher Foto</button>
-                    <input type="file" id="fileFotoAluno" accept="image/*" onchange="handleFileUpload(event, 'fotoUrl', 'btnFotoAluno')">
-                </div>
-                <input type="hidden" id="fotoUrl">
-            </div>
-
-            <div class="form-group">
-                <label>Escola onde estuda <span class="required">*</span></label>
-                <input type="text" id="escolaNome" required placeholder="Nome da escola">
-            </div>
-
-            <div class="form-group">
-                <label>Turno Escolar <span class="required">*</span></label>
-                <select id="escolaTurno" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="Manhã">Manhã</option>
-                    <option value="Tarde">Tarde</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Nome Completo do Responsável <span class="required">*</span></label>
-                <input type="text" id="respNome" required placeholder="Ex: Maria Silva">
-            </div>
-
-            <div class="form-group">
-                <label>Grau de Parentesco <span class="required">*</span></label>
-                <select id="respParentesco" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="Pai">Pai</option>
-                    <option value="Mãe">Mãe</option>
-                    <option value="Outro">Outro</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Telefone / WhatsApp do Responsável <span class="required">*</span></label>
-                <input type="tel" id="respTel" required placeholder="Ex: 82999999999">
-            </div>
-
-            <div class="form-group">
-                <label>Endereço Completo <span class="required">*</span></label>
-                <textarea id="endereco" rows="2" required placeholder="Rua, Número, Bairro, Cidade"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>O aluno possui alguma alergia ou faz uso contínuo de algum medicamento? <span class="required">*</span></label>
-                <textarea id="saudeInfo" rows="2" required placeholder="Se sim, descreva. Se não, digite 'Não'"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Atestado Médico (Opcional por enquanto)</label>
-                <div class="upload-btn-wrapper">
-                    <button type="button" class="btn-upload" id="btnAtestado"><i class="fa-solid fa-paperclip"></i> Anexar Atestado (Imagem/PDF)</button>
-                    <input type="file" id="fileAtestado" accept="image/*,.pdf" onchange="handleFileUpload(event, 'atestadoUrl', 'btnAtestado')">
-                </div>
-                <input type="hidden" id="atestadoUrl">
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="termMedico" required>
-                <label for="termMedico"><strong>Autorização Médica:</strong> Declaro que anexei o atestado médico acima OU estou ciente de que é minha total responsabilidade providenciar e manter os exames de aptidão física do aluno em dia. <span class="required">*</span></label>
-            </div>
-
-            <div class="form-group">
-                <label>Melhor dia para Vencimento da Mensalidade (R$ 60,00) <span class="required">*</span></label>
-                <select id="vencimento" required>
-                    <option value="" disabled selected>Selecione...</option>
-                    <option value="05">Dia 05</option>
-                    <option value="10">Dia 10</option>
-                    <option value="15">Dia 15</option>
-                </select>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="termEscola" required>
-                <label for="termEscola"><strong>TERMO DE COMPROMISSO ESCOLAR:</strong> Estou ciente de que o futebol e a escola devem caminhar juntos. Assumo o compromisso de monitorar as notas do meu filho(a). Estou ciente de que, em caso de notas baixas ou problemas disciplinares na escola, o atleta poderá ser suspenso temporariamente dos treinos. <span class="required">*</span></label>
-            </div>
-
-            <div class="form-group radio-group">
-                <label style="margin-bottom: 10px; display:block;">Participa do grupo oficial do WhatsApp do projeto? <span class="required">*</span></label>
-                <input type="radio" id="wppSim" name="wppGroup" value="Sim" required>
-                <label for="wppSim">Sim, já estou no grupo.</label><br>
-                <input type="radio" id="wppNao" name="wppGroup" value="Não">
-                <label for="wppNao">Não. (<a href="https://chat.whatsapp.com/FzUJNdjVrGCFQK3QZDztCU?mode=gi_t" target="_blank" style="color: blue; text-decoration: underline;">Clique aqui para entrar</a>)</label>
-            </div>
-
-            <div class="checkbox-group" style="background-color: #ffe8b3; border-left: 4px solid #ff9800;">
-                <input type="checkbox" id="termFinal" required>
-                <label for="termFinal"><strong>ASSINATURA DIGITAL:</strong> Eu, responsável legal pelo aluno inscrito, li o termo acima, concordo com as regras e autorizo a participação nos treinos do AC Nova Geração. (Marcar esta caixa substitui a assinatura física). <span class="required">*</span></label>
-            </div>
-
-            <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> Enviar Inscrição</button>
-        </form>
-    </div>
-
-    <script>
-        // CONFIGURAÇÃO DO SEU FIREBASE - COLOQUE SUAS CREDENCIAIS AQUI
-        const firebaseConfig = {
-            apiKey: "AIzaSyChexVWEhCeqxvSUQ1JLeI3JFAwLGBAtl4",
-            authDomain: "ac-nova-geracao.firebaseapp.com",
-            databaseURL: "https://ac-nova-geracao-default-rtdb.firebaseio.com",
-            projectId: "ac-nova-geracao",
-            storageBucket: "ac-nova-geracao.firebasestorage.app",
-            messagingSenderId: "409905433868",
-            appId: "1:409905433868:web:a9349a533b591df7310d29"
-        };
-
-        // Inicializa Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const database = firebase.database();
-        const dbRef = database.ref('sistema_ac_dados');
-
-        // Lógica de compressão de imagem para não estourar o limite do Firebase
-        function handleFileUpload(event, targetHiddenId, btnId) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const btn = document.getElementById(btnId);
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
-
-            // Se for PDF, converte para base64 direto (sem compressão de imagem)
-            if(file.type === "application/pdf") {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(targetHiddenId).value = e.target.result;
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> PDF Anexado!';
-                    btn.style.backgroundColor = "#28a745";
-                };
-                reader.readAsDataURL(file);
-                return;
-            }
-
-            // Se for imagem, comprime
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function (e) {
-                const img = new Image();
-                img.src = e.target.result;
-                img.onload = function () {
-                    const canvas = document.createElement("canvas");
-                    const MAX_WIDTH = 300; // Reduz a resolução para economizar espaço
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    // Converte para JPEG com 60% de qualidade
-                    const dataUrl = canvas.toDataURL("image/jpeg", 0.6); 
-                    document.getElementById(targetHiddenId).value = dataUrl;
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Foto Carregada!';
-                    btn.style.backgroundColor = "#28a745";
-                };
-            };
-        }
-
-        // Lidar com o envio do formulário
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede o recarregamento da página padrão
-
-            // Mostrar tela de carregamento
-            document.getElementById('loadingOverlay').style.display = 'flex';
-
-            // Coletar dados do form
-            const alunoNome = document.getElementById('alunoNome').value;
-            const alunoNascInput = document.getElementById('alunoNasc').value; // YYYY-MM-DD
-            const alunoCat = document.getElementById('alunoCat').value;
-            const fotoUrl = document.getElementById('fotoUrl').value;
-            const respNome = document.getElementById('respNome').value;
-            const respTelRaw = document.getElementById('respTel').value;
-            const vencimento = document.getElementById('vencimento').value;
-
-            // Formatar data para DD/MM/YYYY
-            const dateParts = alunoNascInput.split('-');
-            const alunoNascFormatted = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-
-            // Limpar telefone (apenas números)
-            const respTelClean = respTelRaw.replace(/\D/g, '');
-
-            // Buscar dados atuais do Firebase para dar um "push" sem apagar o que já existe
-            dbRef.once('value').then((snapshot) => {
-                let currentData = snapshot.val() || {};
-                let elenco = currentData.elenco || [];
-                let mensalidades = currentData.mensalidades || [];
-
-                const newId = Date.now().toString();
-
-                // Montar objeto do Aluno (Elenco)
-                const novoAluno = {
-                    id: newId,
-                    nome: alunoNome,
-                    foto: fotoUrl,
-                    cat: alunoCat,
-                    nasc: alunoNascFormatted,
-                    gols: 0,
-                    amarelos: 0,
-                    vermelhos: 0,
-                    notas: { fis: 0, chute: 0, passe: 0, coord: 0, cab: 0, disc: 0, obs: '' },
-                    historico: []
-                };
-
-                // Montar objeto da Mensalidade
-                const novaMensalidade = {
-                    id: newId,
-                    nome: `${respNome} (${alunoNome.split(' ')[0]})`, // Ex: Maria (João)
-                    tel: respTelClean,
-                    venc: vencimento,
-                    pago: false,
-                    bolsista: false
-                };
-
-                elenco.push(novoAluno);
-                mensalidades.push(novaMensalidade);
-
-                // Atualizar o Firebase
-                return dbRef.update({
-                    elenco: elenco,
-                    mensalidades: mensalidades
-                });
-
-            }).then(() => {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                
-                // Mensagem para o WhatsApp do Clube/Treinador (Opcional)
-                const wppMsg = `⚽ *Nova Inscrição Recebida!* ⚽%0A%0A*Atleta:* ${alunoNome}%0A*Categoria:* ${alunoCat}%0A*Responsável:* ${respNome}%0A*Telefone:* ${respTelClean}`;
-                
-                alert("Inscrição realizada com sucesso! O cadastro já está no sistema.");
-                
-                // Abre o WhatsApp do treinador avisando (substitua o número abaixo pelo seu se quiser, ex: 558299999999)
-                // window.open(`https://wa.me/SEUNUMEROAQUI?text=${wppMsg}`, '_blank');
-                
-                // Limpa o form
-                document.getElementById('registrationForm').reset();
-                document.getElementById('btnFotoAluno').innerHTML = '<i class="fa-solid fa-camera"></i> Escolher Foto';
-                document.getElementById('btnFotoAluno').style.backgroundColor = '#6c757d';
-                document.getElementById('btnAtestado').innerHTML = '<i class="fa-solid fa-paperclip"></i> Anexar Atestado (Imagem/PDF)';
-                document.getElementById('btnAtestado').style.backgroundColor = '#6c757d';
-
-            }).catch((error) => {
-                console.error(error);
-                document.getElementById('loadingOverlay').style.display = 'none';
-                alert("Ocorreu um erro ao enviar a inscrição. Verifique sua conexão com a internet.");
-            });
-        });
-    </script>
+    <section class="card">
+      <div class="card-head"><div class="step">4</div><div><h2>Autorizações e Compromissos</h2><p>Leia cada declaração antes de enviar.</p></div></div>
+      <div class="card-body">
+        <div class="notice"><b>Privacidade e confidencialidade:</b> os dados de saúde são informações pessoais sensíveis. Eles não devem aparecer em áreas públicas do aplicativo e o acesso deve ser restrito a profissionais autorizados do clube que necessitem dessas informações para segurança e acompanhamento do atleta. O clube deve manter autenticação, regras de acesso, registro de alterações e armazenamento protegido no Firebase.</div>
+        <div class="checks" style="margin-top:16px">
+          <label class="check"><input id="medicalConsent" type="checkbox" required><span><b>Autorização Médica <span class="required">*</span></b>Declaro que anexei o atestado médico acima ou estou ciente de que é minha responsabilidade providenciar e manter os exames de aptidão física do aluno em dia.</span></label>
+          <label class="check"><input id="schoolCommitment" type="checkbox" required><span><b>Termo de Compromisso Escolar <span class="required">*</span></b>Estou ciente de que, em caso de notas baixas na escola, o atleta poderá ser acompanhado e, conforme as regras do clube, temporariamente afastado dos treinos.</span></label>
+          <label class="check"><input id="participationConsent" type="checkbox" required><span><b>Autorização de Participação <span class="required">*</span></b>Eu, responsável legal, li e concordo com as regras e autorizo a participação nos treinos. Esta marcação registra a concordância eletrônica.</span></label>
+          <label class="check"><input id="privacyConsent" type="checkbox" required><span><b>Ciência sobre privacidade e dados de saúde <span class="required">*</span></b>Declaro que as informações fornecidas são verdadeiras e estou ciente de que dados pessoais e de saúde serão tratados para matrícula, segurança, comunicação e acompanhamento esportivo, com acesso restrito a pessoas autorizadas e sem divulgação pública, ressalvadas obrigações legais ou situações necessárias à proteção do atleta.</span></label>
+        </div>
+      </div>
+      <div class="submit-area"><small>O envio cria uma <b>pré-inscrição</b>. A matrícula só será confirmada após análise da secretaria e contato com o responsável.</small><button id="submitButton" class="btn btn-primary" type="submit">Enviar Inscrição</button></div>
+      <div id="success" class="success"><div class="icon">✓</div><h2>Inscrição enviada com sucesso!</h2><p>A secretaria recebeu os dados e entrará em contato pelo WhatsApp.</p><div id="protocol" class="protocol"></div><br><button type="button" class="btn btn-primary" onclick="location.reload()">Nova inscrição</button></div>
+    </section>
+  </form>
+  <div class="footer">Nova Geração Manager • Ficha pública de inscrição</div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const source=new URLSearchParams(location.search).get('origem')||'Direto';
+let photoData='',medicalPreviewData='';
+function getDb(){try{return JSON.parse(localStorage.getItem('ng_manager_v5')||localStorage.getItem('ng_manager_v4')||localStorage.getItem('ng_manager_v3')||'null')||{students:[],transactions:[],sessions:[],categories:[],games:[],applications:[],settings:{}}}catch{return{students:[],transactions:[],sessions:[],categories:[],games:[],applications:[],settings:{}}}}
+let db=getDb();db.applications=db.applications||[];
+if(db.settings?.logo)$('#clubLogo').src=db.settings.logo;
+if(db.settings?.clubName){document.title='Ficha de Inscrição • '+db.settings.clubName;document.querySelector('.hero p').textContent=`Preencha os dados abaixo para solicitar a matrícula do atleta no ${db.settings.clubName}.`}
+function normalizePhone(v){let d=v.replace(/\D/g,'').slice(0,11);if(d.length<=2)return d;if(d.length<=7)return `(${d.slice(0,2)}) ${d.slice(2)}`;if(d.length<=10)return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`}
+$('#phone').addEventListener('input',e=>e.target.value=normalizePhone(e.target.value));
+function suggestedCategory(date){if(!date)return'';let birthYear=Number(date.slice(0,4)),year=new Date().getFullYear(),age=year-birthYear;if(age<=7)return'Sub-7';if(age<=9)return'Sub-9';if(age<=11)return'Sub-11';if(age<=13)return'Sub-13';if(age<=15)return'Sub-15';return'Sub-17'}
+$('#birthDate').addEventListener('change',e=>{let c=suggestedCategory(e.target.value),hint=$('#categoryHint');if(c){$('#category').value=c;hint.style.display='block';hint.textContent=`Categoria sugerida pelo ano de nascimento: ${c==='Sub-7'?'Sub-07':c==='Sub-9'?'Sub-09':c}`}});
+async function imageToData(file,max=700,quality=.76){return new Promise((resolve,reject)=>{let r=new FileReader();r.onerror=reject;r.onload=()=>{let img=new Image();img.onerror=reject;img.onload=()=>{let scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',quality))};img.src=r.result};r.readAsDataURL(file)})}
+function toggleAutismLevel(){let yes=$('#autismStatus').value.startsWith('Sim');$('#autismLevelField').style.display=yes?'grid':'none';if(!yes)$('#autismSupportLevel').value=''}
+$('#autismStatus').addEventListener('change',toggleAutismLevel);
+$('#athletePhoto').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;if(f.size>5_000_000){alert('Escolha uma foto de até 5 MB.');e.target.value='';return}photoData=await imageToData(f,640,.76);$('#photoPreview').src=photoData;$('#photoPreview').style.display='block'});
+$('#medicalFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;if(f.size>8_000_000){alert('Escolha um arquivo de até 8 MB.');e.target.value='';return}if(f.type.startsWith('image/')){medicalPreviewData=await imageToData(f,1200,.68);$('#medicalPreview').src=medicalPreviewData;$('#medicalPreview').style.display='block'}else{medicalPreviewData='';$('#medicalPreview').style.display='none'}});
+function validate(){let ok=true;document.querySelectorAll('[required]').forEach(el=>{let valid=el.type==='checkbox'?el.checked:!!el.value.trim();el.classList.toggle('invalid',!valid);if(!valid)ok=false});let digits=$('#phone').value.replace(/\D/g,'');if(digits.length<10){$('#phone').classList.add('invalid');ok=false}return ok}
+$('#registrationForm').addEventListener('submit',e=>{e.preventDefault();if(!validate()){document.querySelector('.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});return}let btn=$('#submitButton');btn.disabled=true;btn.textContent='Enviando...';let id=Date.now(),createdAt=new Date().toISOString(),medical=$('#medicalFile').files[0];let healthProfile={adhdStatus:$('#adhdStatus').value,autismStatus:$('#autismStatus').value,autismSupportLevel:$('#autismSupportLevel').value,asthmaStatus:$('#asthmaStatus').value,seizureStatus:$('#seizureStatus').value,diabetesStatus:$('#diabetesStatus').value,cardiacStatus:$('#cardiacStatus').value,healthInfo:$('#healthInfo').value.trim(),trainingSupport:$('#trainingSupport').value.trim(),careNotes:$('#careNotes').value.trim(),updatedAt:createdAt};let app={id,createdAt,athleteName:$('#athleteName').value.trim(),birthDate:$('#birthDate').value,category:$('#category').value,photo:photoData,shirtSize:$('#shirtSize').value,school:$('#school').value.trim(),schoolShift:$('#schoolShift').value,guardianName:$('#guardianName').value.trim(),relation:$('#relation').value,phone:$('#phone').value.trim(),address:$('#address').value.trim(),healthInfo:healthProfile.healthInfo,healthProfile,medicalFileName:medical?.name||'',medicalFileType:medical?.type||'',medicalPreview:medicalPreviewData,dueDay:$('#dueDay').value,monthlyFee:60,medicalConsent:$('#medicalConsent').checked,schoolCommitment:$('#schoolCommitment').checked,participationConsent:$('#participationConsent').checked,privacyConsent:$('#privacyConsent').checked,privacyNoticeVersion:'2026-08-14',source,status:'Nova'};let fresh=getDb();fresh.applications=fresh.applications||[];fresh.applications.push(app);try{let data=JSON.stringify(fresh);localStorage.setItem('ng_manager_v5',data);localStorage.setItem('ng_manager_v4',data);if('BroadcastChannel'in window){let ch=new BroadcastChannel('ng_manager');ch.postMessage({type:'application-created',id});ch.close()}document.querySelectorAll('.card-body,.submit-area').forEach(x=>x.style.display='none');$('#success').style.display='block';$('#protocol').textContent='Protocolo: NG-'+String(id).slice(-8);window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}catch(err){alert('Não foi possível salvar. As imagens podem estar grandes demais para esta demonstração local. Tente novamente sem anexos.');btn.disabled=false;btn.textContent='Enviar Inscrição'}});
+</script>
 </body>
 </html>

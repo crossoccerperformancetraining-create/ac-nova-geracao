@@ -1,0 +1,59 @@
+NOVA GERAÇÃO MANAGER 5.0
+========================
+
+COMO ABRIR
+1. Extraia todos os arquivos deste pacote.
+2. No Windows, execute iniciar.bat.
+3. No Linux/macOS, execute iniciar.sh ou rode: python3 -m http.server 8080
+4. Abra http://localhost:8080 no navegador.
+
+PRINCIPAIS RECURSOS
+- Dashboard mensal com receitas, despesas, alunos, inscrições e frequência.
+- Formulário público de inscrição em inscricao.html.
+- Pré-inscrições com aprovação e criação automática do aluno.
+- Chamada rápida para tablet/celular com salvamento automático.
+- Categorias, jogos, agenda, alunos e relatórios.
+- Escudo, nome, slogan e cores personalizáveis.
+- Backup e importação dos dados.
+
+FINANCEIRO PROFISSIONAL 5.0
+- Contas a pagar e a receber.
+- Categorias como aluguel, energia, água, equipe, taxas e materiais.
+- Favorecido/fornecedor, mês de referência e data de vencimento.
+- Despesas recorrentes mensais.
+- Compras e contas parceladas.
+- Pagamento total ou parcial com histórico.
+- Formas de pagamento: PIX, dinheiro, transferência, cartão, boleto e débito automático.
+- Contas financeiras: Caixa, PIX e Conta bancária, com possibilidade de adicionar outras.
+- Alertas de contas atrasadas e vencimentos dos próximos 30 dias.
+- Visão por competência: receitas e despesas pertencentes ao mês.
+- Visão de caixa: valores realmente recebidos e pagos no mês.
+- Saldo projetado, contas a receber e contas a pagar.
+- Fechamento e reabertura mensal.
+- Cancelamento de lançamentos sem apagar o histórico.
+- Exportação financeira em CSV.
+
+INSCRIÇÃO POR LINK
+- A ficha pode ser aberta por inscricao.html ou pelo botão Inscrições online.
+- O link pode ser enviado pelo WhatsApp.
+- O cadastro entra como pré-inscrição e só vira aluno após aprovação da secretaria.
+
+IMPORTANTE SOBRE ESTA DEMONSTRAÇÃO
+- Os dados ficam no armazenamento local do navegador.
+- Abas do mesmo navegador podem sincronizar alterações.
+- Computadores, tablets e celulares diferentes ainda não compartilham dados.
+- Para sincronização real, login, permissões e documentos seguros, é necessário configurar Firebase.
+- Não use informações médicas ou documentos reais em produção antes da configuração de segurança.
+- Faça backups regularmente em Configurações.
+
+MIGRAÇÃO
+- A versão 5.0 procura automaticamente os dados das versões 4.0, 3.0 e 2.0 no mesmo navegador.
+- Depois de carregados, os dados são normalizados para o novo financeiro.
+
+
+VERSÃO 6.0 — ANAMNESE E PRIVACIDADE
+------------------------------------
+A ficha pública passou a coletar uma anamnese mínima voltada à segurança esportiva.
+Dados de saúde são sensíveis. No ambiente Firebase de produção, mantenha-os em área privada e libere o acesso apenas a perfis autorizados.
+O formulário não faz diagnóstico de TDAH, TEA ou qualquer outra condição; ele apenas registra informação fornecida pelo responsável.
+Para TEA, o nível de suporte deve ser preenchido somente se conhecido/informado em laudo ou pelo responsável.

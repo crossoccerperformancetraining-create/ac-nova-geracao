@@ -1,0 +1,25 @@
+NOVA GERAÇÃO MANAGER 6.0
+
+- Nova Anamnese de Saúde na inscrição online.
+- Campos de TDAH, TEA e nível de suporte (quando informado em laudo).
+- Campos de asma/bronquite, convulsões/epilepsia, diabetes e condição cardíaca/restrição.
+- Campo de adaptações e cuidados específicos nos treinos.
+- Avisos de privacidade para dados pessoais sensíveis.
+- Anamnese transferida automaticamente para a ficha do aluno após aprovação da matrícula.
+- Anamnese exibida em área destacada como acesso restrito.
+- Edição da anamnese na ficha interna do aluno.
+- Regras Firebase de exemplo atualizadas para separar registros de saúde.
+
+NOVA GERAÇÃO MANAGER 5.0 — ALTERAÇÕES
+
+- Financeiro redesenhado.
+- Cadastro de aluguel e outras despesas administrativas.
+- Despesas recorrentes e parcelamentos mensais.
+- Pagamentos parciais e histórico de pagamentos.
+- Contas Caixa, PIX e Banco.
+- Categorias financeiras personalizáveis.
+- Alertas de atraso e vencimento.
+- Resultado de caixa e resultado projetado.
+- Fechamento mensal com bloqueio e reabertura.
+- Cancelamento preservando o histórico.
+- Inscrição online atualizada para gravar na base v5.
