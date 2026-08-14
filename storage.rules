@@ -1,13 +1,55 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /public-applications/{applicationId}/{fileName} {
-      allow write: if request.resource.size < 8 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*|application/pdf');
-      allow read: if false;
+    function signedIn() {
+      return request.auth != null;
     }
-    match /clubs/{clubId}/{allPaths=**} {
-      allow read, write: if request.auth != null;
+    function internalFor(clubId) {
+      return signedIn()
+        && request.auth.token.active == true
+        && request.auth.token.clubId == clubId
+        && request.auth.token.role != null;
+    }
+    function adminFor(clubId) {
+      return internalFor(clubId) && request.auth.token.role == 'admin';
+    }
+    function healthFor(clubId) {
+      return internalFor(clubId)
+        && (request.auth.token.role == 'admin'
+          || request.auth.token.role == 'secretaria'
+          || request.auth.token.role == 'coordenacao');
+    }
+
+    match /clubs/{clubId}/branding/{fileName} {
+      allow read: if true;
+      allow write: if adminFor(clubId)
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    match /clubs/{clubId}/applications/{uid}/{appId}/athlete/{fileName} {
+      allow read: if internalFor(clubId);
+      allow write: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    match /clubs/{clubId}/applications/{uid}/{appId}/medical/{fileName} {
+      allow read: if healthFor(clubId);
+      allow write: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.size < 8 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*')
+          || request.resource.contentType == 'application/pdf');
+    }
+
+    match /clubs/{clubId}/students/{studentId}/{fileName} {
+      allow read: if internalFor(clubId);
+      allow write: if internalFor(clubId)
+        && (request.auth.token.role == 'admin' || request.auth.token.role == 'secretaria')
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
     }
   }
 }

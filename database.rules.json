@@ -2,31 +2,116 @@
   "rules": {
     ".read": false,
     ".write": false,
-    "publicApplications": {
-      "$applicationId": {
-        ".read": false,
-        ".write": "!data.exists()",
-        ".validate": "newData.hasChildren(['athleteName','birthDate','category','guardianName','phone','createdAt','status']) && newData.child('status').val() === 'Nova'"
+
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || (root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'admin'))",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['role','clubId','active']) && newData.child('role').isString() && (newData.child('role').val() === 'admin' || newData.child('role').val() === 'secretaria' || newData.child('role').val() === 'coordenacao' || newData.child('role').val() === 'financeiro' || newData.child('role').val() === 'treinador') && newData.child('clubId').isString() && newData.child('active').isBoolean()"
       }
     },
+
     "clubs": {
       "$clubId": {
-        ".read": "auth != null && root.child('members').child($clubId).child(auth.uid).exists()",
-        ".write": "auth != null && root.child('members').child($clubId).child(auth.uid).child('role').val() === 'admin'"
-      }
-    },
-    "healthRecords": {
-      "$clubId": {
-        "$studentId": {
-          ".read": "auth != null && (root.child('members').child($clubId).child(auth.uid).child('role').val() === 'admin' || root.child('members').child($clubId).child(auth.uid).child('role').val() === 'secretaria' || root.child('members').child($clubId).child(auth.uid).child('role').val() === 'treinador' || root.child('members').child($clubId).child(auth.uid).child('role').val() === 'coordenacao')",
-          ".write": "auth != null && (root.child('members').child($clubId).child(auth.uid).child('role').val() === 'admin' || root.child('members').child($clubId).child(auth.uid).child('role').val() === 'secretaria')"
-        }
-      }
-    },
-    "members": {
-      "$clubId": {
-        "$uid": {
-          ".read": "auth != null && auth.uid === $uid",
+        "publicSettings": {
+          ".read": true,
+          ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'admin' && root.child('users').child(auth.uid).child('clubId').val() === $clubId"
+        },
+
+        "settings": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId",
+          ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'admin' && root.child('users').child(auth.uid).child('clubId').val() === $clubId"
+        },
+
+        "applications": {
+          ".indexOn": ["status", "source", "createdAt", "athleteName"],
+          "$appId": {
+            ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')",
+            ".write": "auth != null && ((!data.exists() && newData.child('ownerUid').val() === auth.uid && newData.child('status').val() === 'Nova') || (root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao'))) ",
+            ".validate": "newData.hasChildren(['id','ownerUid','protocol','status','source','athleteName','birthDate','category','shirtSize','school','schoolShift','guardianName','relation','phone','address','dueDay','monthlyFee','medicalConsent','schoolCommitment','participationConsent','privacyConsent','termsVersion','createdAt']) && newData.child('ownerUid').isString() && newData.child('athleteName').isString() && newData.child('athleteName').val().length >= 3 && newData.child('athleteName').val().length <= 180 && newData.child('guardianName').isString() && newData.child('guardianName').val().length >= 3 && newData.child('phone').isString() && newData.child('privacyConsent').val() === true && newData.child('participationConsent').val() === true && newData.child('medicalConsent').val() === true && newData.child('schoolCommitment').val() === true && newData.child('monthlyFee').isNumber() && newData.child('monthlyFee').val() >= 0 && newData.child('createdAt').isNumber()"
+          }
+        },
+
+        "applicationHealth": {
+          "$appId": {
+            ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')",
+            ".write": "auth != null && ((!data.exists() && newData.child('ownerUid').val() === auth.uid && newData.child('privacyConsent').val() === true) || (root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao'))) ",
+            ".validate": "newData.hasChildren(['id','ownerUid','adhdStatus','autismStatus','asthmaStatus','seizureStatus','diabetesStatus','cardiacStatus','healthInfo','privacyConsent','createdAt']) && newData.child('ownerUid').isString() && newData.child('privacyConsent').val() === true && newData.child('healthInfo').isString() && newData.child('healthInfo').val().length <= 2000 && newData.child('createdAt').isNumber()"
+          }
+        },
+
+        "applicationAdmin": {
+          "$appId": {
+            ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')",
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')"
+          }
+        },
+
+        "students": {
+          ".indexOn": ["status", "category", "name", "entry"],
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId",
+          "$studentId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')"
+          }
+        },
+
+        "healthRecords": {
+          "$studentId": {
+            ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')",
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')"
+          }
+        },
+
+        "sessions": {
+          ".indexOn": ["date", "category"],
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId",
+          "$sessionId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao' || root.child('users').child(auth.uid).child('role').val() === 'treinador')"
+          }
+        },
+
+        "categories": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId",
+          "$categoryId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao')"
+          }
+        },
+
+        "games": {
+          ".indexOn": ["date", "category"],
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId",
+          "$gameId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'coordenacao' || root.child('users').child(auth.uid).child('role').val() === 'treinador')"
+          }
+        },
+
+        "transactions": {
+          ".indexOn": ["referenceMonth", "type", "status", "dueDate", "studentId"],
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')",
+          "$transactionId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')"
+          }
+        },
+
+        "accounts": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')",
+          "$accountId": {
+            ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')"
+          }
+        },
+
+        "financeCategories": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')",
+          ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')"
+        },
+
+        "monthClosures": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'secretaria' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')",
+          ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && (root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'financeiro')"
+        },
+
+        "auditLogs": {
+          ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('clubId').val() === $clubId && root.child('users').child(auth.uid).child('role').val() === 'admin'",
           ".write": false
         }
       }

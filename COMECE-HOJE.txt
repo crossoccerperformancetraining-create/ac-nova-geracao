@@ -1,0 +1,24 @@
+NOVA GERAÇÃO MANAGER 7.0 — COMEÇAR HOJE
+
+1) Abra docs/js/firebase-config.js.
+2) Cole EXATAMENTE o objeto de configuração do App Web mostrado no Firebase Console.
+3) Firebase Authentication: ative E-mail/Senha e Anônimo.
+4) Crie o primeiro usuário administrador e copie o UID.
+5) No Realtime Database crie /users/UID com role=admin, clubId=default, active=true.
+6) Na raiz do projeto rode: npm install -g firebase-tools
+7) Rode: firebase login
+8) Rode: firebase use --add
+9) Entre na pasta functions e rode: npm install firebase-functions@latest firebase-admin@latest
+10) Volte à raiz e rode: firebase deploy --only database,storage,functions,hosting
+11) Abra o endereço .web.app gerado.
+12) Faça login como Admin.
+13) Teste /inscricao.html?origem=WhatsApp com foto do atleta.
+14) Abra Inscrições, confira a anamnese e aprove a matrícula.
+15) Confirme o atleta no elenco e a mensalidade no financeiro.
+16) Abra Frequência em um tablet e teste em dois aparelhos.
+
+Se usar GitHub Pages em vez de Firebase Hosting:
+Settings > Pages > Deploy from branch > main > /docs
+Assim o Pages abre o NOVO layout e não o index.html antigo da raiz.
+
+Leia também: SETUP-PASSO-A-PASSO.md
