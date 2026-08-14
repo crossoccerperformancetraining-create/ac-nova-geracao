@@ -1,4 +1,4 @@
-# Privacidade e perfis — Nova Geração Manager 7.0
+# Privacidade e perfis — Nova Geração Manager 7.1
 
 ## Regra de acesso proposta
 
@@ -16,7 +16,7 @@
 
 \* A interface deve mostrar somente os dados necessários à função. As regras do banco podem ser ainda mais segmentadas no futuro se o clube quiser separar a ficha administrativa em nós menores.
 
-## Como a V7 separa os dados
+## Como a V7.1 separa os dados
 
 - `clubs/default/applications`: dados comuns da pré-inscrição.
 - `clubs/default/applicationHealth`: anamnese da pré-inscrição.

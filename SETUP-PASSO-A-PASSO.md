@@ -1,4 +1,4 @@
-# Passo a passo — Nova Geração Manager 7.0 Online
+# Passo a passo — Nova Geração Manager 7.1 Online
 
 Este guia coloca a versão nova para funcionar com login, inscrições, fotos, anamnese, frequência e financeiro sincronizados no Firebase.
 
@@ -6,9 +6,9 @@ Este guia coloca a versão nova para funcionar com login, inscrições, fotos, a
 
 1. No sistema antigo, use o botão de backup/exportação se estiver disponível.
 2. Salve o arquivo JSON em lugar seguro.
-3. Não apague o repositório antigo até testar a versão 7.0.
+3. Não apague o repositório antigo até testar a versão 7.1.
 
-A versão 7.0 também procura automaticamente dados locais das chaves antigas (`acng_v2`, `ng_manager_v3`, `ng_manager_v4`, `ng_manager_v5`) e, quando o Firebase estiver vazio, oferece migrá-los.
+A versão 7.1 também procura automaticamente dados locais das chaves antigas (`acng_v2`, `ng_manager_v3`, `ng_manager_v4`, `ng_manager_v5`) e, quando o Firebase estiver vazio, oferece migrá-los.
 
 ---
 
@@ -52,7 +52,7 @@ Não use regras em "modo de teste" para produção. As regras prontas estão em 
 2. Clique em começar/configurar.
 3. Use o bucket do mesmo projeto.
 
-A versão 7.0 usa Storage para:
+A versão 7.1 usa Storage para:
 
 - foto do atleta;
 - atestado médico;
@@ -233,7 +233,7 @@ Se o Firebase estiver vazio e o navegador possuir dados das versões antigas, ao
 
 Confirme somente após ter feito o backup do passo 0.
 
-As pré-inscrições antigas não são migradas automaticamente porque versões anteriores podiam guardar foto/atestado em formatos locais diferentes. Novas inscrições entram na estrutura segura da V7.
+As pré-inscrições antigas não são migradas automaticamente porque versões anteriores podiam guardar foto/atestado em formatos locais diferentes. Novas inscrições entram na estrutura segura da V7.1.
 
 ---
 
@@ -423,7 +423,7 @@ Depois de publicar:
 1. espere o deploy terminar;
 2. faça `Ctrl + F5`;
 3. abra em janela anônima;
-4. confira se o título mostra **Nova Geração Manager 7.0 Online**.
+4. confira se o título mostra **Nova Geração Manager 7.1 Online**.
 
 ### Firebase Hosting
 
@@ -454,3 +454,21 @@ Depois abra o endereço `.web.app` informado pela CLI.
 13. Criar um treino e testar chamada no tablet.
 14. Testar outro aparelho ao mesmo tempo.
 15. Ativar App Check após todos os testes funcionarem.
+
+
+## Novidades da versão 7.1 — fotos, câmera e documentos
+
+- A foto do atleta passou a ser obrigatória na inscrição.
+- No celular/tablet existe botão **Tirar foto agora** usando a câmera frontal.
+- A foto fica vinculada ao atleta e aparece no elenco e na chamada.
+- Secretaria/coordenação podem atualizar a foto pela ficha do aluno.
+- O atestado pode ser enviado na inscrição **ou depois** pela página `documentos.html`.
+- A Central de Documentos aceita foto ou PDF e valida protocolo + nascimento + últimos 4 números do WhatsApp antes de vincular o arquivo.
+- Atestados e documentos médicos permanecem em caminhos privados do Storage.
+- A ficha interna mostra se o atestado está recebido ou pendente e permite informar validade.
+
+### Link público adicional
+
+`https://SEU-DOMINIO/documentos.html`
+
+Esse link pode ser enviado pelo WhatsApp para responsáveis que ficaram com documento pendente.

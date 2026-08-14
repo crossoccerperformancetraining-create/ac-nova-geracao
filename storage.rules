@@ -47,9 +47,26 @@ service firebase.storage {
     match /clubs/{clubId}/students/{studentId}/{fileName} {
       allow read: if internalFor(clubId);
       allow write: if internalFor(clubId)
-        && (request.auth.token.role == 'admin' || request.auth.token.role == 'secretaria')
+        && (request.auth.token.role == 'admin' || request.auth.token.role == 'secretaria' || request.auth.token.role == 'coordenacao')
         && request.resource.size < 5 * 1024 * 1024
         && request.resource.contentType.matches('image/.*');
+    }
+
+    match /clubs/{clubId}/students/{studentId}/medical/{fileName} {
+      allow read: if healthFor(clubId);
+      allow write: if healthFor(clubId)
+        && request.resource.size < 10 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*') || request.resource.contentType == 'application/pdf');
+    }
+
+    // Área temporária de envio pelo responsável. O usuário anônimo só pode ESCREVER
+    // dentro da própria pasta. A associação com o atleta é validada por Cloud Function.
+    match /clubs/{clubId}/pending-document-submissions/{uid}/{submissionId}/{fileName} {
+      allow read: if healthFor(clubId);
+      allow write: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.size < 10 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*') || request.resource.contentType == 'application/pdf');
     }
   }
 }

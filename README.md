@@ -1,4 +1,4 @@
-# Nova Geração Manager 7.0 Online
+# Nova Geração Manager 7.1 Online
 
 Versão reorganizada do sistema da AC Nova Geração com layout premium azul-marinho/dourado e Firebase como base online.
 
@@ -59,3 +59,21 @@ O arquivo `docs/js/firebase-config.js` contém apenas marcadores. Copie para ele
 Cloud Functions em produção exigem projeto no plano Blaze. Se ainda estiver no Spark, a inscrição, Auth, Realtime Database e Storage podem ser preparados, mas a aprovação automática por Function e a geração mensal agendada devem aguardar o upgrade do plano.
 
 Leia `SETUP-PASSO-A-PASSO.md` antes de publicar.
+
+
+## Novidades da versão 7.1 — fotos, câmera e documentos
+
+- A foto do atleta passou a ser obrigatória na inscrição.
+- No celular/tablet existe botão **Tirar foto agora** usando a câmera frontal.
+- A foto fica vinculada ao atleta e aparece no elenco e na chamada.
+- Secretaria/coordenação podem atualizar a foto pela ficha do aluno.
+- O atestado pode ser enviado na inscrição **ou depois** pela página `documentos.html`.
+- A Central de Documentos aceita foto ou PDF e valida protocolo + nascimento + últimos 4 números do WhatsApp antes de vincular o arquivo.
+- Atestados e documentos médicos permanecem em caminhos privados do Storage.
+- A ficha interna mostra se o atestado está recebido ou pendente e permite informar validade.
+
+### Link público adicional
+
+`https://SEU-DOMINIO/documentos.html`
+
+Esse link pode ser enviado pelo WhatsApp para responsáveis que ficaram com documento pendente.

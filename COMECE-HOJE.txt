@@ -1,4 +1,4 @@
-NOVA GERAÇÃO MANAGER 7.0 — COMEÇAR HOJE
+NOVA GERAÇÃO MANAGER 7.1 — COMEÇAR HOJE
 
 1) Abra docs/js/firebase-config.js.
 2) Cole EXATAMENTE o objeto de configuração do App Web mostrado no Firebase Console.
@@ -22,3 +22,6 @@ Settings > Pages > Deploy from branch > main > /docs
 Assim o Pages abre o NOVO layout e não o index.html antigo da raiz.
 
 Leia também: SETUP-PASSO-A-PASSO.md
+
+
+V7.1: teste também docs/inscricao.html com câmera e docs/documentos.html para envio posterior de atestado/documentos.
